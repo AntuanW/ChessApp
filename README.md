@@ -27,7 +27,6 @@ CHESSBOT - an interactive program that allows users to play chess games on a com
 - Testing and optimization
 
 We are considering using the following libraries:
-
-Chess library - chess game support
-OpenCV - image analysis
-Flask - server + HTTP requests
+- Chess library - chess game support
+- OpenCV - image analysis
+- Flask - server + HTTP requests
