@@ -1,32 +1,36 @@
-# Chessbot
+# CHESSBOT
 
-### System outline:
-
-CHESSBOT - an interactive program that allows users to play chess games on a computer. The program will use the Python chess library (python-chess) to generate the board and make moves.
-
-### CHESSBOT functions:
-
-- Generate the chess board
-- Manage player moves on the board
-- Determine move validity according to chess game rules
-- Determine the end of the game (checkmate, stalemate, draw)
-- Save and load game state
-- Play mode against the computer (with various difficulty levels)
-- Play mode against another player (online)
+CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie partii szachowych na komputerze. Program będzie wykorzystywał bibliotekę szachową pythona (python-chess) do generowania planszy i przeprowadzania ruchów.
 
 
-### Work schedule:
 
-- Generate the chess board
-- Implement player move management
-- Determine move validity according to chess game rules
-- Determine the end of the game
-- Save and load game state
-- Implement play mode against the computer
-- Implement play mode against another player (online)
-- Testing and optimization
+## Funkcje CHESSBOT:
 
-We are considering using the following libraries:
-- Chess library - chess game support
-- OpenCV - image analysis
-- Flask - server + HTTP requests
+1. Generowanie planszy szachowej
+2. Zarządzanie ruchami graczy na planszy
+3. Określenie poprawności ruchów zgodnie z zasadami gry szachowej
+4. Określanie końca gry (szach-mat, pat, remis)
+5. Zapisywanie i wczytywanie stanu gry ???
+6. Tryb gry z komputerem (dostępne różne poziomy trudności)
+7. Tryb gry z innym graczem (online)
+
+## Harmoniogram prac:
+
+1. 2023-04-04
+    1. Generowanie planszy szachowej
+    2. Implementacja przeprowadzania ruchów graczy
+2. 2023-04-18
+    1. Określenie poprawności ruchów zgodnie z zasadami gry
+    2. Określanie końca gry
+3. 2023-05-16
+    1. Zapisywanie i wczytywanie stanu gry
+    2. Implementacja trybu gry z komputerem
+4. 2023-05-30
+    1. Implementacja trybu gry z innym graczem (online)
+    2. Testowanie i optymalizacja
+ 
+## Technologie, których planujemy użyć:
+
+1. Biblioteka chess - obsługa gier szachowych
+2. OpenCV - analiza obrazów
+3. Flask - serwer + zapytania HTTP
