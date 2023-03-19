@@ -10,7 +10,7 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 2. Zarządzanie ruchami graczy na planszy
 3. Określenie poprawności ruchów zgodnie z zasadami gry szachowej
 4. Określanie końca gry (szach-mat, pat, remis)
-5. Zapisywanie i wczytywanie stanu gry ???
+5. Zapisywanie i wczytywanie stanu gry
 6. Tryb gry z komputerem (dostępne różne poziomy trudności)
 7. Tryb gry z innym graczem (online)
 
