@@ -1,6 +1,6 @@
 # Chessbot
 
-###System outline:
+### System outline:
 
 CHESSBOT - an interactive program that allows users to play chess games on a computer. The program will use the Python chess library (python-chess) to generate the board and make moves.
 
