@@ -35,4 +35,4 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 
 1. Biblioteka chess - obsługa gier szachowych
 2. PyGame
-3. Flask - serwer + zapytania HTTP
+3. Flask - serwer + zapytania HTTP / TCP
