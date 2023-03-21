@@ -19,18 +19,20 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 1. 2023-04-04
     1. Generowanie planszy szachowej
     2. Implementacja przeprowadzania ruchów graczy
+    3. Określenie poprawności ruchów zgodnie z zasadami gry
+    4. Określanie końca gry
 2. 2023-04-18
-    1. Określenie poprawności ruchów zgodnie z zasadami gry
-    2. Określanie końca gry
-3. 2023-05-16
     1. Zapisywanie i wczytywanie stanu gry
     2. Implementacja trybu gry z komputerem
+3. 2023-05-16
+    1. Autoryzacja i autentykacja
+    2. Realizacja części backendu
 4. 2023-05-30
-    1. Implementacja trybu gry z innym graczem (online)
-    2. Testowanie i optymalizacja
+    1. Realizacja backend - c.d
+    2. hisoria gier, statystyki, rankingi
  
 ## Technologie, których planujemy użyć:
 
 1. Biblioteka chess - obsługa gier szachowych
-2. OpenCV - analiza obrazów
+2. PyGame
 3. Flask - serwer + zapytania HTTP
