@@ -39,7 +39,6 @@ def draw_game_state(screen, gs):
     draw_board(screen)
     draw_pieces(screen, gs.board)
 
-
 def main():
 
     # INITIAL GAME WINDOW
@@ -77,8 +76,8 @@ def main():
 
                 if len(playerClicks) == 2:
 
-                    print(playerClicks)
-                    print(simulation.board.legal_moves)
+                    # print(playerClicks)
+                    # print(simulation.board.legal_moves)
 
                     start_row, start_col = playerClicks[0][0], playerClicks[0][1]
                     end_row, end_col = playerClicks[1][0], playerClicks[1][1]
@@ -89,7 +88,7 @@ def main():
                     action = start_move + end_move
                     # print(action)
 
-                    for legal_move in simulation.board.legal_moves:
+                    for legal_move in simulation.board.legal_moves: # zmienic
 
                         if legal_move.uci() == action:
 
@@ -101,6 +100,8 @@ def main():
                             break
                     else:
                         print("illegal")
+                        sqSelected = ()
+                        playerClicks = []
 
                     pass
 
