@@ -15,6 +15,7 @@ class GameWindow():
         p.display.set_caption("CHESS")
         self.font1 = p.font.SysFont("Arial", 24, bold=True)
         self.font2 = p.font.SysFont("Arial", 16, bold=True)
+        self.button_rects = []
         self.button_width = 300
         self.button_height = 70
         self.button_padding = 20
@@ -32,7 +33,6 @@ class GameWindow():
         self.btn_img2 = p.transform.scale(self.btn_img2, (self.button_height * 0.8, self.button_height * 0.8))
         self.btn_img3 = p.transform.scale(self.btn_img3, (self.button_height * 0.8, self.button_height * 0.8))
         self.btn_img4 = p.transform.scale(self.btn_img4, (self.button_height * 0.8, self.button_height * 0.8))
-
     def draw_buttons(self):
         button_texts = ["TRYB GRY 1", "TRYB GRY 2", "TRYB GRY 3", "CHESS GM's"]
         button_images = [self.btn_img1, self.btn_img2, self.btn_img3, self.btn_img4]
@@ -40,6 +40,7 @@ class GameWindow():
         for i in range(4):
             button_rect = p.Rect(self.button_x, self.button_y + i * (self.button_height + self.button_padding),
                                  self.button_width, self.button_height)
+
             if i % 2:
                 button_color = BLACK
                 text_color = WHITE
@@ -65,14 +66,37 @@ class GameWindow():
             label_y = self.button_y + i * (self.button_height + self.button_padding) + (
                     self.button_height - label.get_height()) // 2
             self.screen.blit(label, (label_x, label_y))
+    def handle_button_click(self, button_index):
+        if button_index == 0:
+            print("Button 1 clicked")
+        elif button_index == 1:
+            print("Button 2 clicked")
+        elif button_index == 2:
+            print("Button 3 clicked")
+        elif button_index == 3:
+            print("Button 4 clicked")
 
     def run(self):
+
         running = True
+
         while running:
 
             for event in p.event.get():
+
                 if event.type == p.QUIT:
                     running = False
+
+                elif event.type == p.MOUSEBUTTONUP:
+
+                    mouse_pos = p.mouse.get_pos()
+
+                    for i in range(4):
+                        button_rect = p.Rect(self.button_x, self.button_y + i * (self.button_height + self.button_padding),
+                                             self.button_width, self.button_height)
+
+                        if button_rect.collidepoint(mouse_pos):
+                            self.handle_button_click(i)
 
             self.screen.fill(WHITE)
             self.draw_buttons()
@@ -84,7 +108,6 @@ class GameWindow():
             self.clock.tick(60)
 
         p.quit()
-
 
 x = GameWindow()
 x.run()

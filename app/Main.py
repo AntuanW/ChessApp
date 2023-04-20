@@ -19,8 +19,10 @@ def main():
     while running:
 
         for e in p.event.get():
+
             if e.type == p.QUIT:
                 running = False
+
             elif e.type == p.MOUSEBUTTONDOWN:
 
                 location = p.mouse.get_pos()
@@ -29,14 +31,17 @@ def main():
                 col = location[0] // SQ_SIZE
 
                 if sqSelected == (row, col):
+
                     sqSelected = ()
                     playerClicks = []
+
                 else:
+
                     sqSelected = (row, col)
                     playerClicks.append(sqSelected)
 
-                    # legal moves drawing
-
+                    # draw circles for legal moves
+                    # detect_legal_moves_and_draw_circles(sqSelected, screen, simulation.board)
 
                 if len(playerClicks) == 2:
 
@@ -47,7 +52,6 @@ def main():
                     end_move = colsToRanks[end_col] + rowsToRanks[end_row]
 
                     action = start_move + end_move
-                    # print(action)
 
                     for legal_move in simulation.board.legal_moves:
 

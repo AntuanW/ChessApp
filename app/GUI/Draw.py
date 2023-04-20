@@ -1,4 +1,3 @@
-import chess
 import pygame as p
 
 # GLOBAL VARIABLES
@@ -9,10 +8,24 @@ SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
 IMAGES = {}
 
+WHITE = p.Color("White")
+BLACK = p.Color("Black")
+GRAY = p.Color("Gray")
+RED = p.Color("Red")
+LIGHT_GRAY_WITH_OPACITY = p.Color(222, 222, 222, 100)
+
 ranksToRows = {"1": 7, "2": 6, "3": 5, "4": 4, "5": 3, "6": 2, "7": 1, "8": 0}
 rowsToRanks = {v: k for k, v in ranksToRows.items()}
 filesToCols = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7}
 colsToRanks = {v: k for k, v in filesToCols.items()}
+
+def get_uci_move(sqSelected):
+
+    start_row = sqSelected[0]
+    start_col = sqSelected[1]
+
+    return colsToRanks[start_col] + rowsToRanks[start_row]
+
 
 def load_images():
     pieces = ["p", "r", "n", "b", "q", "k", "P", "R", "N", "B", "Q", "K"]
@@ -23,7 +36,7 @@ def load_images():
             IMAGES[piece] = p.transform.scale(p.image.load("../resources/ChessImg/w" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
 
 def draw_board(screen):
-    colors = [p.Color("white"), p.Color("gray")]
+    colors = [WHITE, GRAY]
     for r in range(DIMENSION):
         for c in range(DIMENSION):
             color = colors[(r + c) % 2]
@@ -41,4 +54,38 @@ def draw_pieces(screen, board):
 
 def draw_game_state(screen, gs):
     draw_board(screen)
+    # draw_circle(4, 1, screen)
+    # draw_circle(4, 2, screen)
     draw_pieces(screen, gs.board)
+
+def detect_legal_moves_and_draw_circles(sqSelected, screen, board):
+
+    start_row = sqSelected[0]
+    start_col = sqSelected[1]
+
+    piece = convert(start_row, start_col, board)
+
+    if piece != None:
+
+        uci_move = get_uci_move(sqSelected)
+
+        for legal_move in board.legal_moves:
+
+            legal_start_move = legal_move.uci()[0:2]
+
+            end_col = filesToCols[legal_move.uci()[2]]
+            end_row = ranksToRows[legal_move.uci()[3]]
+
+            if legal_start_move == uci_move:
+                draw_circle(end_row, end_col, screen)
+
+    return True
+
+def draw_circle(row, column, screen):
+
+    center_x = column * SQ_SIZE + SQ_SIZE // 2
+    center_y = row * SQ_SIZE + SQ_SIZE // 2
+
+    radius = SQ_SIZE // 5
+
+    p.draw.circle(screen, LIGHT_GRAY_WITH_OPACITY, (center_x, center_y), radius)
