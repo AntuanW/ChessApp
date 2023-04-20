@@ -18,11 +18,12 @@ class GameState:
         self.game_type = game_type
 
 
-    def makeMove(self, action):
+    def makePlayerMove(self, action):
 
         move = chess.Move.from_uci(action)
-        self.board.push(move) # player move
-        self.engine.make_best_move(self.board) # computer move
+        self.board.push(move)
 
+    def makeComputerMove(self):
 
+        self.engine.make_best_move(self.board)
 

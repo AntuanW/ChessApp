@@ -23,10 +23,10 @@ class GameWindow():
         self.label_x = (WIDTH - self.font1.render("CHESS.COM SUCKS, WE ARE BETTER", True, BLACK).get_width()) // 2
         self.label_y = self.button_y - self.font1.get_height() - 40
 
-        self.btn_img1 = p.image.load("../../resources/bN.png").convert_alpha()
-        self.btn_img2 = p.image.load("../../resources/wQ.png").convert_alpha()
-        self.btn_img3 = p.image.load("../../resources/bR.png").convert_alpha()
-        self.btn_img4 = p.image.load("../../resources/wB.png").convert_alpha()
+        self.btn_img1 = p.image.load("../../resources/ChessImg/bN.png").convert_alpha()
+        self.btn_img2 = p.image.load("../../resources/ChessImg/wQ.png").convert_alpha()
+        self.btn_img3 = p.image.load("../../resources/ChessImg/bR.png").convert_alpha()
+        self.btn_img4 = p.image.load("../../resources/ChessImg/wB.png").convert_alpha()
 
         self.btn_img1 = p.transform.scale(self.btn_img1, (self.button_height * 0.8, self.button_height * 0.8))
         self.btn_img2 = p.transform.scale(self.btn_img2, (self.button_height * 0.8, self.button_height * 0.8))

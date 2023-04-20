@@ -151,7 +151,7 @@ class ChessEngine:
 
     def selectMove(self, depth, board):
         try:
-            move = chess.polyglot.MemoryMappedReader("../resources/Perfect2017.bin").weighted_choice(board).move
+            move = chess.polyglot.MemoryMappedReader("../resources/ChessImg/Perfect2017.bin").weighted_choice(board).move
             return move
         except:
             bestMove = chess.Move.null()
