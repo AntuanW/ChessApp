@@ -1,5 +1,4 @@
 import pygame as p
-
 WIDTH, HEIGHT = 512, 512
 
 WHITE = p.Color("White")
@@ -7,22 +6,28 @@ BLACK = p.Color("Black")
 HOVER_WHITE = p.Color(225, 225, 225)
 HOVER_BLACK = p.Color(65, 65, 65)
 
-class GameWindow():
+class ModeWindow():
     def __init__(self):
         p.init()
         self.screen = p.display.set_mode((WIDTH, HEIGHT))
         self.clock = p.time.Clock()
-        p.display.set_caption("CHESS")
-        self.font1 = p.font.SysFont("Arial", 24, bold=True)
-        self.font2 = p.font.SysFont("Arial", 16, bold=True)
+        p.display.set_caption("CHESS ME!")
+        self.font1 = p.font.SysFont("Arial", 30, bold=True)
+        self.font2 = p.font.SysFont("Arial", 20, bold=True)
+        self.font3 = p.font.SysFont("Arial", 16, bold=True)
+        self.font4 = p.font.SysFont("Arial", 10)
         self.button_rects = []
         self.button_width = 300
         self.button_height = 70
         self.button_padding = 20
         self.button_x = (WIDTH - self.button_width) // 2
         self.button_y = HEIGHT // 4
-        self.label_x = (WIDTH - self.font1.render("CHESS.COM SUCKS, WE ARE BETTER", True, BLACK).get_width()) // 2
-        self.label_y = self.button_y - self.font1.get_height() - 40
+
+        self.label1_x = (WIDTH - self.font1.render("CHESS.ME.COM", True, BLACK).get_width()) // 2
+        self.label1_y = self.button_y - self.font1.get_height() - 60
+
+        self.label2_x = (WIDTH - self.font2.render("CHESS.COM SUCKS, WE ARE BETTER", True, BLACK).get_width()) // 2
+        self.label2_y = self.button_y - self.font2.get_height() - 20
 
         self.btn_img1 = p.image.load("../../resources/ChessImg/bN.png").convert_alpha()
         self.btn_img2 = p.image.load("../../resources/ChessImg/wQ.png").convert_alpha()
@@ -61,11 +66,11 @@ class GameWindow():
                     self.button_height - self.btn_img1.get_height()) // 2
             self.screen.blit(button_images[i], (button_image_x, button_image_y))
 
-            label = self.font2.render(button_texts[i], True, text_color)
-            label_x = self.button_x + self.button_width // 2 - label.get_width() // 2
-            label_y = self.button_y + i * (self.button_height + self.button_padding) + (
+            label = self.font3.render(button_texts[i], True, text_color)
+            label2_x = self.button_x + self.button_width // 2 - label.get_width() // 2
+            label2_y = self.button_y + i * (self.button_height + self.button_padding) + (
                     self.button_height - label.get_height()) // 2
-            self.screen.blit(label, (label_x, label_y))
+            self.screen.blit(label, (label2_x, label2_y))
     def handle_button_click(self, button_index):
         if button_index == 0:
             print("Button 1 clicked")
@@ -75,11 +80,9 @@ class GameWindow():
             print("Button 3 clicked")
         elif button_index == 3:
             print("Button 4 clicked")
-
     def run(self):
 
         running = True
-
         while running:
 
             for event in p.event.get():
@@ -90,24 +93,26 @@ class GameWindow():
                 elif event.type == p.MOUSEBUTTONUP:
 
                     mouse_pos = p.mouse.get_pos()
-
                     for i in range(4):
                         button_rect = p.Rect(self.button_x, self.button_y + i * (self.button_height + self.button_padding),
                                              self.button_width, self.button_height)
 
                         if button_rect.collidepoint(mouse_pos):
                             self.handle_button_click(i)
+                            running = False
 
             self.screen.fill(WHITE)
             self.draw_buttons()
 
-            label = self.font1.render("CHESS.COM SUCKS, WE ARE BETTER", True, BLACK)
-            self.screen.blit(label, (self.label_x, self.label_y))
+            label1 = self.font1.render("CHESS.ME.COM", True, BLACK)
+            self.screen.blit(label1, (self.label1_x, self.label1_y))
+
+            label2 = self.font2.render("CHESS.COM SUCKS, WE ARE BETTER", True, BLACK)
+            self.screen.blit(label2, (self.label2_x, self.label2_y))
 
             p.display.flip()
             self.clock.tick(60)
 
         p.quit()
 
-x = GameWindow()
-x.run()
+ModeWindow().run()
