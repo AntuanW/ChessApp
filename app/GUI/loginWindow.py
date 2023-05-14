@@ -1,8 +1,5 @@
 import pygame as p
-
-
 class LoginWindow:
-
     def __init__(self):
         p.init()
         self.width, self.height = 800, 600
@@ -76,8 +73,10 @@ class LoginWindow:
                                                   self.register_button_width, self.register_button_height)
 
                     if register_button_rect.collidepoint(mouse_pos):
-                        # You can add code here to transition to the registration window
-                        print("Don't have an account? Sign up!")
+                        self.running = False
+                        from app.GUI.RegistrationWindow import RegistrationWindow
+                        RegistrationWindow().run()
+                        print("Switching to registration window")
 
             self.screen.fill(self.white)
 
@@ -114,5 +113,4 @@ class LoginWindow:
 
         p.quit()
 
-LoginWindow().run()
 
