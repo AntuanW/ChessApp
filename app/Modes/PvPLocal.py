@@ -1,3 +1,5 @@
+import chess
+
 from app import GameEngine
 from app.GUI.Draw import *
 
@@ -15,6 +17,10 @@ def game():
     sqSelected = ()
     playerClicks = []
     moveMade = False
+
+    draw_game_state(screen, simulation)
+    clock.tick(MAX_FPS)
+    p.display.flip()
 
     while running:
 
@@ -51,32 +57,24 @@ def game():
                     start_move = colsToRanks[start_col] + rowsToRanks[start_row]
                     end_move = colsToRanks[end_col] + rowsToRanks[end_row]
 
-                    action = start_move + end_move
+                    action = chess.Move.from_uci(start_move + end_move)
 
-                    for legal_move in simulation.board.legal_moves:
+                    if action in simulation.board.legal_moves:
+                        sqSelected = ()
+                        playerClicks = []
 
-                        if legal_move.uci() == action:
-                            sqSelected = ()
-                            playerClicks = []
-
-                            simulation.makePlayerMove(action)
-                            moveMade = True
-
-                            break
+                        simulation.makePlayerMove(action.uci())
+                        moveMade = True
+                        break
                     else:
                         print("illegal")
                         sqSelected = ()
                         playerClicks = []
 
-                    pass
+        if moveMade:
+            draw_game_state(screen, simulation)
 
-            # elif e.type == p.KEYDOWN:
-            #     if e.key == p.K_z:
-            #         pass
+            clock.tick(MAX_FPS)
+            p.display.flip()
 
-        draw_game_state(screen, simulation)
-
-        clock.tick(MAX_FPS)
-        p.display.flip()
-
-        moveMade = False
+            moveMade = False
