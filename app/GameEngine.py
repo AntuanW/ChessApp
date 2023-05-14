@@ -18,9 +18,7 @@ class GameState:
         self.game_type = game_type
 
 
-    def makePlayerMove(self, action):
-
-        move = chess.Move.from_uci(action)
+    def makePlayerMove(self, move):
         self.board.push(move)
 
     def makeComputerMove(self):

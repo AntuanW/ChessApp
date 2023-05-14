@@ -63,7 +63,7 @@ def game():
                         sqSelected = ()
                         playerClicks = []
 
-                        simulation.makePlayerMove(action.uci())
+                        simulation.makePlayerMove(action)
                         moveMade = True
                         break
                     else:
