@@ -1,2 +1,3 @@
+#to install use: pip install -r requirements.txt
 chess
 pygame
