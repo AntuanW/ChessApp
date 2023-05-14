@@ -1,5 +1,9 @@
 import pygame as p
+import requests
+
+
 class LoginWindow:
+
     def __init__(self):
         p.init()
         self.width, self.height = 800, 600
@@ -66,6 +70,26 @@ class LoginWindow:
                     elif log_in_button_rect.collidepoint(mouse_pos):
                         print("Username:", self.username)
                         print("Password:", self.password)
+
+                        # CHECKING USER CREDENTIALS
+
+                        data = {
+                            "username": self.username,
+                            "password": self.password,
+                        }
+
+                        try:
+                            response = requests.post("http://localhost:8080/login", json=data)
+                            if response.status_code == 200:
+                                print("User logged in successfully!")
+                                self.running = False
+                            else:
+                                print("Failed to log in user. Status code:", response.status_code)
+
+                        except requests.exceptions.RequestException as e:
+                            print("Error occurred during the request:", str(e))
+
+
                     else:
                         self.input_active = ""
 
@@ -112,5 +136,7 @@ class LoginWindow:
             p.display.flip()
 
         p.quit()
+
+# LoginWindow().run()
 
 

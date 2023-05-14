@@ -1,4 +1,5 @@
 import pygame as p
+import requests
 class RegistrationWindow:
 
     def __init__(self):
@@ -92,7 +93,6 @@ class RegistrationWindow:
                         LoginWindow().run()
                         print("Switching to login window")
 
-
             self.screen.fill(self.white)
 
             p.draw.rect(self.screen, self.gray,
@@ -148,9 +148,30 @@ class RegistrationWindow:
     def register_user(self):
         if self.username and self.password and self.repeat_password:
             if self.password == self.repeat_password:
-                # self.display_message("Registration successful!")
-                print("Username:", self.username)
-                print("Password:", self.password)
+                # print("Username:", self.username)
+                # print("Password:", self.password)
+
+                # POSTING NEW USER
+
+                data = {
+                    "username": self.username,
+                    "password": self.password,
+                    "pvComputer": [],
+                    "pvpLocal": [],
+                    "pvpOnline": []
+                }
+
+                try:
+                    response = requests.post("http://localhost:8080/register", json=data)
+                    if response.status_code == 200:
+                        print("User registered successfully!")
+                        self.running = False
+
+                    else:
+                        print("Failed to register user. Status code:", response.status_code)
+                except requests.exceptions.RequestException as e:
+                    print("Error occurred during the request:", str(e))
+
             else:
                 print("Passwords do not match.")
                 # self.display_message("Passwords do not match!")
@@ -159,3 +180,4 @@ class RegistrationWindow:
             # self.display_message("Please fill in all fields!")
 
 
+# RegistrationWindow().run()
