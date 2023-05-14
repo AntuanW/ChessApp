@@ -1,22 +1,15 @@
 import chess
 import ChessEngine
-from enum import Enum
 
-class GameType(Enum):
-    LOCAL = 0  # 1vs1 on the same device
-    MULTIPLAYER = 1  # 1vs1 online
-    SINGLEPLAYER = 2  # 1vs engine
 
 class GameState:
-    def __init__(self, game_save=None, game_type=GameType.LOCAL):
+    def __init__(self, game_save=None, depth=2):
         if game_save is None:
             self.board = chess.Board()
         else:
             self.board = chess.Board(game_save)
 
-        self.engine = ChessEngine.ChessEngine()
-        self.game_type = game_type
-
+        self.engine = ChessEngine.ChessEngine(depth)
 
     def makePlayerMove(self, move):
         self.board.push(move)
@@ -24,4 +17,3 @@ class GameState:
     def makeComputerMove(self):
 
         self.engine.make_best_move(self.board)
-

@@ -1,20 +1,36 @@
+import chess
+
 from app import GameEngine
 from app.GUI.Draw import *
 
 
-def game():
+def game(player_colour=chess.WHITE, dificulty=2, save=None):
     p.init()
     screen = p.display.set_mode((WIDTH, HEIGHT))
     clock = p.time.Clock()
     screen.fill(p.Color("White"))
     load_images()
 
-    simulation = GameEngine.GameState()
+    if save is None:
+        simulation = GameEngine.GameState(depth=dificulty)
+        starting_move_number = 1
+    else:
+        simulation = GameEngine.GameState(game_save=save, depth=dificulty)
+        starting_move_number = int(save[len(save)-1])
+        if player_colour==chess.WHITE and simulation.board.turn==chess.BLACK: starting_move_number += 1
+
 
     running = True
     sqSelected = ()
     playerClicks = []
     moveMade = False
+
+    if (player_colour == chess.BLACK and simulation.board.turn == True) or (player_colour == chess.WHITE and simulation.board.turn == False):
+        simulation.makeComputerMove()
+
+    draw_game_state(screen, simulation)
+    clock.tick(MAX_FPS)
+    p.display.flip()
 
     while running:
 
@@ -51,34 +67,38 @@ def game():
                     start_move = colsToRanks[start_col] + rowsToRanks[start_row]
                     end_move = colsToRanks[end_col] + rowsToRanks[end_row]
 
-                    action = start_move + end_move
+                    action = chess.Move.from_uci(start_move + end_move)
 
-                    for legal_move in simulation.board.legal_moves:
-
-                        if legal_move.uci() == action:
-                            sqSelected = ()
-                            playerClicks = []
-
-                            simulation.makePlayerMove(action)
-                            moveMade = True
-
-                            break
+                    if action in simulation.board.legal_moves:
+                        sqSelected = ()
+                        playerClicks = []
+                        simulation.makePlayerMove(action)
+                        moveMade = True
                     else:
                         print("illegal")
                         sqSelected = ()
                         playerClicks = []
 
-                    pass
+            elif e.type == p.KEYDOWN:
+                print(simulation.board.fullmove_number)
+                if e.key == p.K_z and simulation.board.fullmove_number - starting_move_number >= 1:
+                    simulation.board.pop()
+                    simulation.board.pop()
+                    sqSelected = ()
+                    playerClicks = []
 
-            # elif e.type == p.KEYDOWN:
-            #     if e.key == p.K_z:
-            #         pass
-
-        draw_game_state(screen, simulation)
-
-        clock.tick(MAX_FPS)
-        p.display.flip()
+                    draw_game_state(screen, simulation)
+                    clock.tick(MAX_FPS)
+                    p.display.flip()
 
         if moveMade:
+            draw_game_state(screen, simulation)
+            clock.tick(MAX_FPS)
+            p.display.flip()
+
             simulation.makeComputerMove()
+
+            draw_game_state(screen, simulation)
+            clock.tick(MAX_FPS)
+            p.display.flip()
             moveMade = False
