@@ -6,6 +6,7 @@ BLACK = p.Color("Black")
 HOVER_WHITE = p.Color(225, 225, 225)
 HOVER_BLACK = p.Color(65, 65, 65)
 
+
 class ModeWindow():
     def __init__(self):
         p.init()
@@ -29,10 +30,11 @@ class ModeWindow():
         self.label2_x = (WIDTH - self.font2.render("CHESS.COM SUCKS, WE ARE BETTER", True, BLACK).get_width()) // 2
         self.label2_y = self.button_y - self.font2.get_height() - 20
 
-        self.btn_img1 = p.image.load("../../resources/ChessImg/bN.png").convert_alpha()
-        self.btn_img2 = p.image.load("../../resources/ChessImg/wQ.png").convert_alpha()
-        self.btn_img3 = p.image.load("../../resources/ChessImg/bR.png").convert_alpha()
-        self.btn_img4 = p.image.load("../../resources/ChessImg/wB.png").convert_alpha()
+        self.btn_img1 = p.image.load("../resources/ChessImg/bN.png").convert_alpha()
+        self.btn_img2 = p.image.load("../resources/ChessImg/wQ.png").convert_alpha()
+        self.btn_img3 = p.image.load("../resources/ChessImg/bR.png").convert_alpha()
+        self.btn_img4 = p.image.load("../resources/ChessImg/wB.png").convert_alpha()
+
 
         self.btn_img1 = p.transform.scale(self.btn_img1, (self.button_height * 0.8, self.button_height * 0.8))
         self.btn_img2 = p.transform.scale(self.btn_img2, (self.button_height * 0.8, self.button_height * 0.8))
@@ -72,12 +74,21 @@ class ModeWindow():
                     self.button_height - label.get_height()) // 2
             self.screen.blit(label, (label2_x, label2_y))
     def handle_button_click(self, button_index):
+
         if button_index == 0:
             print("Button 1 clicked")
+
+            from app.GUI.ModeWindow.PVC import PVC
+            PVC().run()
+
         elif button_index == 1:
             print("Button 2 clicked")
+
+
         elif button_index == 2:
             print("Button 3 clicked")
+
+
         elif button_index == 3:
             print("Button 4 clicked")
     def run(self):
@@ -115,4 +126,3 @@ class ModeWindow():
 
         p.quit()
 
-ModeWindow().run()

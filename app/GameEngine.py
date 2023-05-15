@@ -1,7 +1,6 @@
 import chess
 import ChessEngine
 
-
 class GameState:
     def __init__(self, game_save=None, depth=2):
         if game_save is None:

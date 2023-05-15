@@ -3,7 +3,6 @@ import chess
 from app import GameEngine
 from app.GUI.Draw import *
 
-
 def game(player_colour=chess.WHITE, dificulty=2, save=None):
     p.init()
     screen = p.display.set_mode((WIDTH, HEIGHT))
@@ -101,3 +100,6 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
             clock.tick(MAX_FPS)
             p.display.flip()
             moveMade = False
+
+
+# game(chess.WHITE)

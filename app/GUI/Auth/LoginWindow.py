@@ -1,6 +1,8 @@
 import pygame as p
 import requests
 
+from app.GUI.ModeWindow.ModeWindow import ModeWindow
+
 
 class LoginWindow:
 
@@ -8,7 +10,7 @@ class LoginWindow:
         p.init()
         self.width, self.height = 800, 600
         self.screen = p.display.set_mode((self.width, self.height))
-        p.display.set_caption("Log in Window")
+        p.display.set_caption("Login Window")
 
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
@@ -38,11 +40,10 @@ class LoginWindow:
             for event in p.event.get():
                 if event.type == p.QUIT:
                     self.running = False
+                    p.quit()
                 elif event.type == p.KEYDOWN:
-                    if event.key == p.K_RETURN:
-                        print("Username:", self.username)
-                        print("Password:", self.password)
-                    elif event.key == p.K_BACKSPACE:
+
+                    if event.key == p.K_BACKSPACE:
                         if self.username and self.input_active == "username":
                             self.username = self.username[:-1]
                         elif self.password and self.input_active == "password":
@@ -79,10 +80,15 @@ class LoginWindow:
                         }
 
                         try:
+                            print("Logging in...")
                             response = requests.post("http://localhost:8080/login", json=data)
                             if response.status_code == 200:
                                 print("User logged in successfully!")
+                                # p.quit()
                                 self.running = False
+
+                                ModeWindow().run()
+
                             else:
                                 print("Failed to log in user. Status code:", response.status_code)
 
@@ -97,8 +103,9 @@ class LoginWindow:
                                                   self.register_button_width, self.register_button_height)
 
                     if register_button_rect.collidepoint(mouse_pos):
+                        # p.quit()
                         self.running = False
-                        from app.GUI.RegistrationWindow import RegistrationWindow
+                        from app.GUI.Auth.RegistrationWindow import RegistrationWindow
                         RegistrationWindow().run()
                         print("Switching to registration window")
 

@@ -37,7 +37,7 @@ def login():
 
     data = request.get_json()
 
-    print(data)
+    # print(data)
 
     username = data.get('username')
     password = data.get('password')
