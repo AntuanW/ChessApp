@@ -4,14 +4,17 @@ from app import GameEngine
 from app.GUI.Draw import *
 
 
-def game():
+def game(save=None):
     p.init()
     screen = p.display.set_mode((WIDTH, HEIGHT))
     clock = p.time.Clock()
     screen.fill(p.Color("White"))
     load_images()
 
-    simulation = GameEngine.GameState()
+    if save is None:
+        simulation = GameEngine.GameState()
+    else:
+        simulation = GameEngine.GameState(game_save=save)
 
     running = True
     sqSelected = ()

@@ -9,11 +9,10 @@ class GameState:
         else:
             self.board = chess.Board(game_save)
 
-        self.engine = ChessEngine.ChessEngine(depth)
+        self.engine = ChessEngine.ChessEngine(self.board, depth)
 
     def makePlayerMove(self, move):
-        self.board.push(move)
+        self.engine.make_move(move)
 
     def makeComputerMove(self):
-
-        self.engine.make_best_move(self.board)
+        self.engine.make_best_move()

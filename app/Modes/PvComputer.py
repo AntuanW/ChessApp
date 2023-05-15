@@ -80,7 +80,6 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
                         playerClicks = []
 
             elif e.type == p.KEYDOWN:
-                print(simulation.board.fullmove_number)
                 if e.key == p.K_z and simulation.board.fullmove_number - starting_move_number >= 1:
                     simulation.board.pop()
                     simulation.board.pop()
