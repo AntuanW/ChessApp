@@ -20,10 +20,14 @@ def game(save=None):
     sqSelected = ()
     playerClicks = []
     moveMade = False
+    gameStatus = simulation.isGameRunning()
 
     draw_game_state(screen, simulation)
     clock.tick(MAX_FPS)
     p.display.flip()
+
+    if not gameStatus:
+        draw_end_screen(screen, simulation.getGameStatus())
 
     while running:
 
@@ -32,7 +36,7 @@ def game(save=None):
             if e.type == p.QUIT:
                 running = False
 
-            elif e.type == p.MOUSEBUTTONDOWN:
+            elif e.type == p.MOUSEBUTTONDOWN and gameStatus:
 
                 location = p.mouse.get_pos()
 
@@ -76,6 +80,10 @@ def game(save=None):
 
         if moveMade:
             draw_game_state(screen, simulation)
+            gameStatus = simulation.isGameRunning()
+            if not gameStatus:
+                draw_end_screen(screen, simulation.getGameStatus())
+                clock.tick(MAX_FPS)
 
             clock.tick(MAX_FPS)
             p.display.flip()

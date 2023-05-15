@@ -1,4 +1,5 @@
 import pygame as p
+import chess
 
 # GLOBAL VARIABLES
 
@@ -89,3 +90,37 @@ def draw_circle(row, column, screen):
     radius = SQ_SIZE // 5
 
     p.draw.circle(screen, LIGHT_GRAY_WITH_OPACITY, (center_x, center_y), radius)
+
+def draw_end_screen(screen, outcome):
+
+    screen.fill(WHITE)
+    p.display.set_caption("GAME OVER!")
+
+    font = p.font.Font(None, 52)
+
+    game_over_text = font.render("Game Over due to:", True, BLACK)
+    game_over_text_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 3 - 100))
+
+    result_text = font.render(outcome.termination.name, True, BLACK)
+    result_text_rect = result_text.get_rect(center=(WIDTH // 2, HEIGHT // 3))
+
+    if outcome.winner is True:
+        winner_color = "White"
+    elif outcome.winner is False:
+        winner_color = "Black"
+    else:
+        winner_color = "None"
+
+    winner_text = font.render("Winner: " + winner_color, True, BLACK)
+    winner_text_rect = winner_text.get_rect(center=(WIDTH // 2, HEIGHT // 3 + 100))
+
+    # Rysowanie przyczyny konca gry
+    screen.blit(game_over_text, game_over_text_rect)
+
+    # Rysowanie result
+    screen.blit(result_text, result_text_rect)
+
+    screen.blit(winner_text, winner_text_rect)
+
+    # Aktualizacja ekranu
+    p.display.flip()
