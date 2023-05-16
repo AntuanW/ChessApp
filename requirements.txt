@@ -1,9 +1,11 @@
 #to install use: pip install -r requirements.txt
-chess~=1.9.4
-pygame~=2.3.0
-pymongo~=4.3.3
-python-dotenv~=1.0.0
-requests~=2.30.0
-Flask~=2.3.2
+chess
+pygame
+pymongo
+python-dotenv
+requests
+Flask
 dnspython
 Flask-SocketIO
+python-socketio
+certifi

@@ -1,3 +1,4 @@
+import certifi
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
@@ -15,6 +16,9 @@ class MongoConnection:
         self.uri = f"mongodb+srv://{username}:{password}@cluster0.rsuv7ei.mongodb.net/?retryWrites=true&w=majority"
 
     def initMongoConnection(self):
-        self.client = MongoClient(self.uri)
+        self.client = MongoClient(self.uri, tlsCAFile=certifi.where())
         self.db = self.client["chess-application"]
         self.users = self.db["users"]
+        print("HelloWorld!")
+        print(username)
+        print(password)

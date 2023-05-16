@@ -15,4 +15,4 @@ if __name__ == "__main__":
     #PvPLocal.game("4k3/8/8/8/1Q5B/8/8/4K3 w - - 0 1")
     #PvPLocal.game("4k3/8/8/8/8/8/8/4K3 w - - 0 1")
     pass
-    #LoginWindow().run()
+    LoginWindow().run()
