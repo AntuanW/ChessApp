@@ -40,12 +40,10 @@ class ModeWindow():
         # self.btn_img3 = p.image.load("../../../resources/ChessImg/bR.png").convert_alpha()
         # self.btn_img4 = p.image.load("../../../resources/ChessImg/wB.png").convert_alpha()
 
-
         self.btn_img1 = p.transform.scale(self.btn_img1, (self.button_height * 0.8, self.button_height * 0.8))
         self.btn_img2 = p.transform.scale(self.btn_img2, (self.button_height * 0.8, self.button_height * 0.8))
         self.btn_img3 = p.transform.scale(self.btn_img3, (self.button_height * 0.8, self.button_height * 0.8))
         self.btn_img4 = p.transform.scale(self.btn_img4, (self.button_height * 0.8, self.button_height * 0.8))
-
 
         # self.btn_img1 = p.transform.scale(self.btn_img1, (self.button_height * 0.6, self.button_height * 0.6))
         # self.btn_img2 = p.transform.scale(self.btn_img2, (self.button_height * 0.6, self.button_height * 0.6))
@@ -89,6 +87,7 @@ class ModeWindow():
 
         if button_index == 0:
             print("Button 1 clicked")
+
             # from app.GUI.ModeWindow.PVC import PVC
             # PVC().run()
 
@@ -96,10 +95,8 @@ class ModeWindow():
             print("Button 2 clicked")
             # print(app.config.curr_nick)
 
-
         elif button_index == 2:
             print("Button 3 clicked")
-
 
         elif button_index == 3:
             print("Button 4 clicked")

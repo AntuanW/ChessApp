@@ -31,9 +31,10 @@ def register():
         response = {'message': 'User registered successfully!'}
         return jsonify(response), 200
 
-    except Exception as e:
-        response = {'error': str(e)}
-        return jsonify(response), 500
+    except requests.exceptions.RequestException as e:
+        print("Error occurred during the request:", str(e))
+        return jsonify({'message': 'An error occurred during the request.'}), 500
+
 
 @app.route('/login', methods=['POST'])
 def login():

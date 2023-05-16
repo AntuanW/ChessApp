@@ -5,7 +5,6 @@ from app.config import set_nick
 
 from app.GUI.ModeWindow.ModeWindow import ModeWindow
 
-
 class LoginWindow:
 
     def __init__(self):
@@ -86,12 +85,13 @@ class LoginWindow:
                             response = requests.post("http://localhost:8080/login", json=data)
                             if response.status_code == 200:
                                 print("User logged in successfully!")
-                                # p.quit()
+                                p.quit()
                                 self.running = False
 
-                                print("saving nick to global variable")
+                                print("saving username to global variable")
                                 set_nick(self.username)
 
+                                print("Switching to mode window")
                                 ModeWindow().run()
 
                             else:
