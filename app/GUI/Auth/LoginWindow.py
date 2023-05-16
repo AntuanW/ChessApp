@@ -1,6 +1,8 @@
 import pygame as p
 import requests
 
+from app.config import set_nick
+
 from app.GUI.ModeWindow.ModeWindow import ModeWindow
 
 
@@ -84,8 +86,11 @@ class LoginWindow:
                             response = requests.post("http://localhost:8080/login", json=data)
                             if response.status_code == 200:
                                 print("User logged in successfully!")
-                                # p.quit()
+                                p.quit()
                                 self.running = False
+
+                                print("saving nick to global variable")
+                                set_nick(self.username)
 
                                 ModeWindow().run()
 
@@ -106,8 +111,9 @@ class LoginWindow:
                         # p.quit()
                         self.running = False
                         from app.GUI.Auth.RegistrationWindow import RegistrationWindow
-                        RegistrationWindow().run()
                         print("Switching to registration window")
+                        RegistrationWindow().run()
+
 
             self.screen.fill(self.white)
 

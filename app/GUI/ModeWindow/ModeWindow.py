@@ -1,11 +1,11 @@
 import pygame as p
+
 WIDTH, HEIGHT = 512, 512
 
 WHITE = p.Color("White")
 BLACK = p.Color("Black")
 HOVER_WHITE = p.Color(225, 225, 225)
 HOVER_BLACK = p.Color(65, 65, 65)
-
 
 class ModeWindow():
     def __init__(self):
@@ -77,12 +77,12 @@ class ModeWindow():
 
         if button_index == 0:
             print("Button 1 clicked")
-
-            from app.GUI.ModeWindow.PVC import PVC
-            PVC().run()
+            # from app.GUI.ModeWindow.PVC import PVC
+            # PVC().run()
 
         elif button_index == 1:
             print("Button 2 clicked")
+            # print(app.config.curr_nick)
 
 
         elif button_index == 2:
@@ -100,6 +100,7 @@ class ModeWindow():
 
                 if event.type == p.QUIT:
                     running = False
+                    p.quit()
 
                 elif event.type == p.MOUSEBUTTONUP:
 
@@ -110,6 +111,7 @@ class ModeWindow():
 
                         if button_rect.collidepoint(mouse_pos):
                             self.handle_button_click(i)
+                            # p.quit()
                             running = False
 
             self.screen.fill(WHITE)

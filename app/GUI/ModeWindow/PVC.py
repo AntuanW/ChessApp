@@ -3,7 +3,7 @@ import pygame as p
 
 from app.GUI.ModeWindow.ModeWindow import ModeWindow
 
-from app.Modes import PvComputer
+# from app.Modes import PvComputer
 
 class PVC:
 
