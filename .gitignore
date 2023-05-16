@@ -22,5 +22,3 @@ build/
 dist/
 
 __pycache__
-
-app/Main.py
