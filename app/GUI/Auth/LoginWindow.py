@@ -86,7 +86,7 @@ class LoginWindow:
                             response = requests.post("http://localhost:8080/login", json=data)
                             if response.status_code == 200:
                                 print("User logged in successfully!")
-                                p.quit()
+                                # p.quit()
                                 self.running = False
 
                                 print("saving nick to global variable")

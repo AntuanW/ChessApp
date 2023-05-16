@@ -94,7 +94,6 @@ def login():
 #         return jsonify({'message': 'An error occurred during the request.'}), 500
 
 
-
 @socketio.on('send_message')
 def handle_send_message(data):
 

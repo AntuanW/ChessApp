@@ -35,13 +35,25 @@ class ModeWindow():
         self.btn_img3 = p.image.load("../resources/ChessImg/bR.png").convert_alpha()
         self.btn_img4 = p.image.load("../resources/ChessImg/wB.png").convert_alpha()
 
+        # self.btn_img1 = p.image.load("../../../resources/ChessImg/bN.png").convert_alpha()
+        # self.btn_img2 = p.image.load("../../../resources/ChessImg/wQ.png").convert_alpha()
+        # self.btn_img3 = p.image.load("../../../resources/ChessImg/bR.png").convert_alpha()
+        # self.btn_img4 = p.image.load("../../../resources/ChessImg/wB.png").convert_alpha()
+
 
         self.btn_img1 = p.transform.scale(self.btn_img1, (self.button_height * 0.8, self.button_height * 0.8))
         self.btn_img2 = p.transform.scale(self.btn_img2, (self.button_height * 0.8, self.button_height * 0.8))
         self.btn_img3 = p.transform.scale(self.btn_img3, (self.button_height * 0.8, self.button_height * 0.8))
         self.btn_img4 = p.transform.scale(self.btn_img4, (self.button_height * 0.8, self.button_height * 0.8))
+
+
+        # self.btn_img1 = p.transform.scale(self.btn_img1, (self.button_height * 0.6, self.button_height * 0.6))
+        # self.btn_img2 = p.transform.scale(self.btn_img2, (self.button_height * 0.6, self.button_height * 0.6))
+        # self.btn_img3 = p.transform.scale(self.btn_img3, (self.button_height * 0.6, self.button_height * 0.6))
+        # self.btn_img4 = p.transform.scale(self.btn_img4, (self.button_height * 0.6, self.button_height * 0.6))
     def draw_buttons(self):
-        button_texts = ["TRYB GRY 1", "TRYB GRY 2", "TRYB GRY 3", "CHESS GM's"]
+        # button_texts = ["TRYB GRY 1", "TRYB GRY 2", "TRYB GRY 3", "CHESS GM's"]
+        button_texts = ["Player VS Computer", "Player VS Player (Local)", "Player VS Player (Online)", "CHESS GM's"]
         button_images = [self.btn_img1, self.btn_img2, self.btn_img3, self.btn_img4]
 
         for i in range(4):
@@ -128,3 +140,4 @@ class ModeWindow():
 
         p.quit()
 
+# ModeWindow().run()

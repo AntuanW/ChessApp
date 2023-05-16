@@ -8,7 +8,7 @@ from app.GUI.ModeWindow.ModeWindow import ModeWindow
 class PVC:
 
     def __init__(self):
-        p.init()
+        # p.init()
         self.window_width = 512
         self.window_height = 512
         self.window_title = "Player VS Computer Mode Window"
@@ -137,5 +137,4 @@ class PVC:
 
         p.quit()
 
-
-
+# PVC().run()
