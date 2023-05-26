@@ -1,6 +1,7 @@
 import pygame as p
 from app.GUI.ModeWindow.PVC import PVC
 
+
 class ModeWindow:
     def __init__(self):
         p.init()
@@ -9,6 +10,7 @@ class ModeWindow:
         self.BLACK = p.Color("Black")
         self.HOVER_WHITE = p.Color(225, 225, 225)
         self.HOVER_BLACK = p.Color(65, 65, 65)
+        self.running = True
 
         self.screen = p.display.set_mode((self.WIDTH, self.HEIGHT))
         self.clock = p.time.Clock()
@@ -75,46 +77,57 @@ class ModeWindow:
                     self.button_height - label.get_height()) // 2
             self.screen.blit(label, (label_x, label_y))
 
-    def handle_button_click(self, button_index):
-        if button_index == 0:
-            print("Button 1 clicked")
-            PVC().run()
-        elif button_index == 1:
-            print("Button 2 clicked")
-        elif button_index == 2:
-            print("Button 3 clicked")
-        elif button_index == 3:
-            print("Button 4 clicked")
+    def handle_button_click(self, event):
+        button_index = -1
+
+        for i in range(4):
+            button_rect = p.Rect(self.button_x, self.button_y + i * (self.button_height + self.button_padding),
+                                 self.button_width, self.button_height)
+
+            if button_rect.collidepoint(event.pos):
+                button_index = i
+                break
+
+        if button_index != -1:
+            if button_index == 0:
+                print("Button 1 clicked")
+                PVC().run()
+            elif button_index == 1:
+                print("Button 2 clicked")
+            elif button_index == 2:
+                print("Button 3 clicked")
+            elif button_index == 3:
+                print("Button 4 clicked")
+
+    def draw(self):
+
+        self.screen.fill(self.WHITE)
+        self.draw_buttons()
+
+        label1 = self.font1.render("CHESS.ME.COM", True, self.BLACK)
+        self.screen.blit(label1, (self.label1_x, self.label1_y))
+
+        label2 = self.font2.render("CHESS.COM SUCKS, WE ARE BETTER", True, self.BLACK)
+        self.screen.blit(label2, (self.label2_x, self.label2_y))
+
+        p.display.flip()
 
     def run(self):
-        running = True
-        while running:
+
+        while self.running:
+
             for event in p.event.get():
+
                 if event.type == p.QUIT:
-                    running = False
+                    self.running = False
                     p.quit()
+
                 elif event.type == p.MOUSEBUTTONUP:
-                    mouse_pos = p.mouse.get_pos()
-                    for i in range(4):
-                        button_rect = p.Rect(self.button_x, self.button_y + i * (self.button_height + self.button_padding),
-                                             self.button_width, self.button_height)
+                    self.handle_button_click(event)
+                    self.running = False
 
-                        if button_rect.collidepoint(mouse_pos):
-                            self.handle_button_click(i)
-                            running = False
-
-            self.screen.fill(self.WHITE)
-            self.draw_buttons()
-
-            label1 = self.font1.render("CHESS.ME.COM", True, self.BLACK)
-            self.screen.blit(label1, (self.label1_x, self.label1_y))
-
-            label2 = self.font2.render("CHESS.COM SUCKS, WE ARE BETTER", True, self.BLACK)
-            self.screen.blit(label2, (self.label2_x, self.label2_y))
-
-            p.display.flip()
-            self.clock.tick(60)
+            if self.running:
+                self.draw()
 
         p.quit()
 
-# ModeWindow().run()

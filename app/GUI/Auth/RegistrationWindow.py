@@ -59,6 +59,7 @@ class RegistrationWindow:
                 self.repeat_password += event.unicode
 
     def handle_mouse_click(self):
+
         mouse_pos = p.mouse.get_pos()
 
         input_box_username_rect = p.Rect(self.input_box_x, self.input_box_y - 135, self.input_box_width,
@@ -125,6 +126,7 @@ class RegistrationWindow:
 
     def switch_to_login_window(self):
         self.running = False
+        p.quit()
         from app.GUI.Auth.LoginWindow import LoginWindow
         print("Switching to login window")
         LoginWindow().run()

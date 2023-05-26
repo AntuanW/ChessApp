@@ -76,6 +76,7 @@ class LoginWindow:
             self.switch_to_registration_window()
 
     def log_in_user(self):
+
         print("Username:", self.username)
         print("Password:", self.password)
 
@@ -108,6 +109,7 @@ class LoginWindow:
 
     def switch_to_registration_window(self):
         self.running = False
+        p.quit()
         print("Switching to registration window")
         RegistrationWindow().run()
 
