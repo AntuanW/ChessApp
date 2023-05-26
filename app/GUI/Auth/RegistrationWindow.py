@@ -130,6 +130,9 @@ class RegistrationWindow:
         LoginWindow().run()
 
     def draw(self):
+
+        self.screen.fill(self.white)
+
         p.draw.rect(self.screen, self.gray,
                     (self.input_box_x, self.input_box_y - 135, self.input_box_width, self.input_box_height), 2)
         p.draw.rect(self.screen, self.gray,
@@ -173,19 +176,25 @@ class RegistrationWindow:
                     self.login_button_y + self.login_button_height // 2))
         self.screen.blit(login_button_label, login_button_label_rect)
 
+        p.display.flip()
+
     def run(self):
+
         while self.running:
+
             for event in p.event.get():
+
                 if event.type == p.QUIT:
                     self.running = False
+                    p.quit()
+
                 elif event.type == p.KEYDOWN:
                     self.handle_input(event)
 
                 elif event.type == p.MOUSEBUTTONDOWN:
                     self.handle_mouse_click()
 
-            self.screen.fill(self.white)
-            self.draw()
-            p.display.flip()
+            if self.running:
+                self.draw()
 
         p.quit()

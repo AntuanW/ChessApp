@@ -19,6 +19,7 @@ rowsToRanks = {v: k for k, v in ranksToRows.items()}
 filesToCols = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7}
 colsToRanks = {v: k for k, v in filesToCols.items()}
 
+
 def get_uci_move(sqSelected):
 
     start_row = sqSelected[0]
@@ -35,6 +36,7 @@ def load_images():
         else:
             IMAGES[piece] = p.transform.scale(p.image.load("../resources/ChessImg/w" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
 
+
 def draw_board(screen):
     colors = [WHITE, GRAY]
     for r in range(DIMENSION):
@@ -42,8 +44,10 @@ def draw_board(screen):
             color = colors[(r + c) % 2]
             p.draw.rect(screen, color, p.Rect(c * SQ_SIZE, r * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
+
 def convert(r, c, board):
     return board.piece_at(r * 8 + c).__str__()
+
 
 def draw_pieces(screen, board):
     for r in range(DIMENSION):
@@ -52,11 +56,13 @@ def draw_pieces(screen, board):
             if piece != "None":
                 screen.blit(IMAGES[piece], p.Rect(c * SQ_SIZE, (DIMENSION - r - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
+
 def draw_game_state(screen, gs):
     draw_board(screen)
     # draw_circle(4, 1, screen)
     # draw_circle(4, 2, screen)
     draw_pieces(screen, gs.board)
+
 
 def detect_legal_moves_and_draw_circles(sqSelected, screen, board):
 
@@ -80,6 +86,7 @@ def detect_legal_moves_and_draw_circles(sqSelected, screen, board):
                 draw_circle(end_row, end_col, screen)
 
     return True
+
 
 def draw_circle(row, column, screen):
 

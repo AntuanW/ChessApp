@@ -49,7 +49,10 @@ class LoginWindow:
             elif self.input_active == "password" and len(self.password) < 10:
                 self.password += event.unicode
 
-    def handle_mouse_click(self, mouse_pos):
+    def handle_mouse_click(self):
+
+        mouse_pos = p.mouse.get_pos()
+
         input_box_username_rect = p.Rect(self.input_box_x, self.input_box_y - 135, self.input_box_width,
                                          self.input_box_height)
         input_box_password_rect = p.Rect(self.input_box_x, self.input_box_y - 55, self.input_box_width,
@@ -144,16 +147,20 @@ class LoginWindow:
         p.display.flip()
 
     def run(self):
+
         while self.running:
+
             for event in p.event.get():
+
                 if event.type == p.QUIT:
                     self.running = False
                     p.quit()
+
                 elif event.type == p.KEYDOWN:
                     self.handle_input(event)
+
                 elif event.type == p.MOUSEBUTTONDOWN:
-                    mouse_pos = p.mouse.get_pos()
-                    self.handle_mouse_click(mouse_pos)
+                    self.handle_mouse_click()
 
             if self.running:
                 self.draw()
