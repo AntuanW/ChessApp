@@ -1,9 +1,9 @@
 import chess
 import pygame as p
 
-from app.GUI.ModeWindow.ModeWindow import ModeWindow
 
 # from app.Modes import PvComputer
+
 
 class PVC:
 
@@ -90,6 +90,7 @@ class PVC:
                         # p.quit()
                         self.running = False
 
+                        from app.GUI.ModeWindow.ModeWindow import ModeWindow
                         ModeWindow().run()
                         print("Switching back window")
 

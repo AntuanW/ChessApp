@@ -1,7 +1,6 @@
 import pygame as p
 import chess
 
-# GLOBAL VARIABLES
 
 WIDTH = HEIGHT = 512
 DIMENSION = 8
@@ -114,13 +113,10 @@ def draw_end_screen(screen, outcome):
     winner_text = font.render("Winner: " + winner_color, True, BLACK)
     winner_text_rect = winner_text.get_rect(center=(WIDTH // 2, HEIGHT // 3 + 100))
 
-    # Rysowanie przyczyny konca gry
     screen.blit(game_over_text, game_over_text_rect)
 
-    # Rysowanie result
     screen.blit(result_text, result_text_rect)
 
     screen.blit(winner_text, winner_text_rect)
 
-    # Aktualizacja ekranu
     p.display.flip()

@@ -19,6 +19,6 @@ class MongoConnection:
         self.client = MongoClient(self.uri, tlsCAFile=certifi.where())
         self.db = self.client["chess-application"]
         self.users = self.db["users"]
-        print("HelloWorld!")
-        print(username)
-        print(password)
+        # print("HelloWorld!")
+        # print(username)
+        # print(password)
