@@ -28,6 +28,7 @@ def game(save=None):
 
     if not gameStatus:
         draw_end_screen(screen, simulation.getGameStatus())
+        running = False
 
     while running:
 

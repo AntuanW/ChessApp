@@ -23,9 +23,17 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
     sqSelected = ()
     playerClicks = []
     moveMade = False
+    gameStatus = simulation.isGameRunning()
+    if not gameStatus:
+        draw_end_screen(screen, simulation.getGameStatus())
+        clock.tick(MAX_FPS)
 
     if (player_colour == chess.BLACK and simulation.board.turn == True) or (player_colour == chess.WHITE and simulation.board.turn == False):
         simulation.makeComputerMove()
+        gameStatus = simulation.isGameRunning()
+        if not gameStatus:
+            draw_end_screen(screen, simulation.getGameStatus())
+            clock.tick(MAX_FPS)
 
     draw_game_state(screen, simulation)
     clock.tick(MAX_FPS)
@@ -80,8 +88,8 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
 
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_z and simulation.board.fullmove_number - starting_move_number >= 1:
-                    simulation.board.pop()
-                    simulation.board.pop()
+                    simulation.engine.unmake_move()
+                    simulation.engine.unmake_move()
                     sqSelected = ()
                     playerClicks = []
 
@@ -94,12 +102,23 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
             clock.tick(MAX_FPS)
             p.display.flip()
 
-            simulation.makeComputerMove()
+            gameStatus = simulation.isGameRunning()
+            if not gameStatus:
+                if not gameStatus:
+                    draw_end_screen(screen, simulation.getGameStatus())
+                    clock.tick(MAX_FPS)
 
+            simulation.makeComputerMove()
             draw_game_state(screen, simulation)
             clock.tick(MAX_FPS)
             p.display.flip()
             moveMade = False
+
+            gameStatus = simulation.isGameRunning()
+            if not gameStatus:
+                if not gameStatus:
+                    draw_end_screen(screen, simulation.getGameStatus())
+                    clock.tick(MAX_FPS)
 
 
 # game(chess.WHITE)
