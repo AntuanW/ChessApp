@@ -112,9 +112,9 @@ class ChessEngine:
         kingsq = kingsq + sum([-self.kingstable[chess.square_mirror(i)]
                                for i in self.board.pieces(chess.KING, chess.BLACK)])
 
-        boardvalue = material + pawnsq + knightsq + bishopsq + rooksq + queensq + kingsq
+        self.boardvalue = material + pawnsq + knightsq + bishopsq + rooksq + queensq + kingsq
 
-        return boardvalue
+        return self.boardvalue
 
     def evaluate_board(self):
 
@@ -180,7 +180,6 @@ class ChessEngine:
                     movingpiece - 1]
                 self.boardvalue = self.boardvalue + self.tables[movingpiece - 1][mov.to_square] - \
                                   self.tables[mov.promotion - 1][mov.to_square]
-
         return mov
 
     def make_move(self, mov):
