@@ -1,6 +1,8 @@
 import chess
 import pygame as p
 
+from app.Modes import PvComputer
+
 
 class PVC:
     def __init__(self):
@@ -48,11 +50,11 @@ class PVC:
         print("Starting your game")
 
         self.running = False
-        # p.quit()
+        p.quit()
 
         # STARTING GAME
 
-        # PvComputer.game(color, self.difficulty_level)
+        PvComputer.game(color, self.difficulty_level)
 
     def handle_statistics_button_click(self):
         print("Go to statistics")

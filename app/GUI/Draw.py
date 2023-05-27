@@ -97,6 +97,7 @@ def draw_circle(row, column, screen):
 
     p.draw.circle(screen, LIGHT_GRAY_WITH_OPACITY, (center_x, center_y), radius)
 
+
 def draw_end_screen(screen, outcome):
 
     screen.fill(WHITE)
