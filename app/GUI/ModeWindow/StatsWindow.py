@@ -12,6 +12,7 @@ class StatsWindow:
         self.WIDTH, self.HEIGHT = 512, 512
         self.WHITE = p.Color("White")
         self.BLACK = p.Color("Black")
+        self.gray = (188, 188, 188)
         self.HOVER_WHITE = p.Color(225, 225, 225)
         self.HOVER_BLACK = p.Color(65, 65, 65)
         self.running = True
@@ -66,6 +67,29 @@ class StatsWindow:
         except requests.exceptions.RequestException as e:
             print("Error occurred during the request:", str(e))
 
+    def handle_go_back_click(self):
+
+        p.quit()
+        self.running = False
+
+        from app.GUI.ModeWindow.ModeWindow import ModeWindow
+        ModeWindow().run()
+        print("Switching back window")
+
+    def handle_event(self, event):
+
+        if event.type == p.QUIT:
+            self.running = False
+
+        elif event.type == p.MOUSEBUTTONDOWN:
+
+            mouse_pos = p.mouse.get_pos()
+
+            go_back_rect = p.Rect(390, 20, 100, 25)
+
+            if go_back_rect.collidepoint(mouse_pos):
+                self.handle_go_back_click()
+
     def draw(self):
 
         self.screen.fill(self.WHITE)
@@ -82,6 +106,12 @@ class StatsWindow:
         label4 = self.font1.render(f"loses: {self.loses}", True, self.BLACK)
         self.screen.blit(label4, (self.label4_x, self.label4_y))
 
+        go_back_rect = p.Rect(390, 20, 100, 25)
+        p.draw.rect(self.screen, self.gray, go_back_rect)
+        register_text = self.font3.render("Go back", True, self.BLACK)
+        register_text_rect = register_text.get_rect(center=(438, 33))
+        self.screen.blit(register_text, register_text_rect)
+
         p.display.flip()
 
     def run(self):
@@ -92,12 +122,7 @@ class StatsWindow:
 
             for event in p.event.get():
 
-                if event.type == p.QUIT:
-                    self.running = False
-                    p.quit()
-
-                # elif event.type == p.MOUSEBUTTONUP:
-                #     self.running = False
+                self.handle_event(event)
 
             if self.running:
                 self.draw()

@@ -14,12 +14,3 @@ def get_key_by_value(value):
             return key
 
 
-mode = GameMode.PLAYER_VS_COMPUTER
-
-data = {
-        "mode": mode.value}
-
-req_enum_val = data['mode']
-
-enum = get_key_by_value(req_enum_val)
-print(enum)

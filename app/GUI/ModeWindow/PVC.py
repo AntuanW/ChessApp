@@ -1,5 +1,4 @@
 import chess
-import pygame as p
 
 from app.Enums.modeEnum import GameMode
 from app.Modes import PvComputer
@@ -16,7 +15,7 @@ class PVC:
 
         self.WHITE = (255, 255, 255)
         self.BLACK = (0, 0, 0)
-        self.gray = (128, 128, 128)
+        self.gray = (188, 188, 188)
         self.green = (0, 255, 0)
 
         self.font1 = p.font.SysFont("Arial", 20, bold=True)

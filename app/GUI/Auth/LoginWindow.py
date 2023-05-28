@@ -1,7 +1,6 @@
 import pygame as p
 import requests
 
-from app import config
 from app.config import set_username
 from app.GUI.ModeWindow.ModeWindow import ModeWindow
 from app.GUI.Auth.RegistrationWindow import RegistrationWindow
@@ -11,13 +10,13 @@ class LoginWindow:
 
     def __init__(self):
         p.init()
-        self.width, self.height = 800, 600
+        self.width, self.height = 500, 500
         self.screen = p.display.set_mode((self.width, self.height))
         p.display.set_caption("Login Window")
 
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
-        self.gray = (128, 128, 128)
+        self.gray = (188, 188, 188)
         self.green = (0, 255, 0)
 
         self.font1 = p.font.SysFont("Arial", 20, bold=True)
@@ -54,11 +53,11 @@ class LoginWindow:
 
         mouse_pos = p.mouse.get_pos()
 
-        input_box_username_rect = p.Rect(self.input_box_x, self.input_box_y - 135, self.input_box_width,
+        input_box_username_rect = p.Rect(self.input_box_x+15, self.input_box_y - 100, self.input_box_width,
                                          self.input_box_height)
-        input_box_password_rect = p.Rect(self.input_box_x, self.input_box_y - 55, self.input_box_width,
+        input_box_password_rect = p.Rect(self.input_box_x+15, self.input_box_y - 20, self.input_box_width,
                                          self.input_box_height)
-        log_in_button_rect = p.Rect(self.input_box_x, self.input_box_y + 30, self.input_box_width,
+        log_in_button_rect = p.Rect(self.input_box_x+15, self.input_box_y + 60, self.input_box_width,
                                     self.input_box_height)
 
         if input_box_username_rect.collidepoint(mouse_pos):
@@ -119,24 +118,24 @@ class LoginWindow:
         self.screen.fill(self.white)
 
         p.draw.rect(self.screen, self.gray,
-                    (self.input_box_x, self.input_box_y - 135, self.input_box_width, self.input_box_height), 2)
+                    (self.input_box_x + 15, self.input_box_y - 100, self.input_box_width, self.input_box_height), 2)
         p.draw.rect(self.screen, self.gray,
-                    (self.input_box_x, self.input_box_y - 55, self.input_box_width, self.input_box_height), 2)
+                    (self.input_box_x + 15, self.input_box_y - 20, self.input_box_width, self.input_box_height), 2)
 
         username_label = self.font1.render("Username:", True, self.black)
-        username_label_rect = username_label.get_rect(center=(self.input_box_x - 100, self.input_box_y - 120))
+        username_label_rect = username_label.get_rect(center=(self.input_box_x - 50, self.input_box_y - 80))
         self.screen.blit(username_label, username_label_rect)
 
         password_label = self.font1.render("Password:", True, self.black)
-        password_label_rect = password_label.get_rect(center=(self.input_box_x - 100, self.input_box_y - 40))
+        password_label_rect = password_label.get_rect(center=(self.input_box_x - 50, self.input_box_y))
         self.screen.blit(password_label, password_label_rect)
 
-        self.screen.blit(self.font1.render(self.username, True, self.black), (self.input_box_x + 7, self.input_box_y - 128))
-        self.screen.blit(self.font1.render("*" * len(self.password), True, self.black), (self.input_box_x + 7, self.input_box_y - 43))
+        self.screen.blit(self.font1.render(self.username, True, self.black), (self.input_box_x + 24, self.input_box_y - 92))
+        self.screen.blit(self.font1.render("*" * len(self.password), True, self.black), (self.input_box_x + 24, self.input_box_y - 8))
 
-        log_in_button = p.Rect(self.input_box_x, self.input_box_y + 30, self.input_box_width, self.input_box_height)
+        log_in_button = p.Rect(self.input_box_x + 15, self.input_box_y + 60, self.input_box_width, self.input_box_height)
         p.draw.rect(self.screen, self.gray, log_in_button, 2)
-        self.screen.blit(self.font1.render("Log in", True, self.black), (self.input_box_x + 72, self.input_box_y + 37))
+        self.screen.blit(self.font1.render("Log in", True, self.black), (self.input_box_x + 86, self.input_box_y + 68))
 
         p.draw.rect(self.screen, self.gray, (self.register_button_x, self.register_button_y, self.register_button_width, self.register_button_height))
         register_text = self.font2.render("Don't have an account? Sign up!", True, self.black)
@@ -144,9 +143,9 @@ class LoginWindow:
         self.screen.blit(register_text, register_text_rect)
 
         if self.input_active == "username":
-            p.draw.rect(self.screen, self.green, (self.input_box_x - 3, self.input_box_y - 138, self.input_box_width + 6, self.input_box_height + 6), 3)
+            p.draw.rect(self.screen, self.green, (self.input_box_x +12, self.input_box_y - 103, self.input_box_width + 6, self.input_box_height + 6), 3)
         elif self.input_active == "password":
-            p.draw.rect(self.screen, self.green, (self.input_box_x - 3, self.input_box_y - 58, self.input_box_width + 6, self.input_box_height + 6), 3)
+            p.draw.rect(self.screen, self.green, (self.input_box_x + 12, self.input_box_y - 23, self.input_box_width + 6, self.input_box_height + 6), 3)
 
         p.display.flip()
 
