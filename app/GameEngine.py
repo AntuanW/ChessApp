@@ -1,14 +1,15 @@
 import chess
 import ChessEngine
 
+
 class GameState:
-    def __init__(self, game_save=None, depth=2):
+    def __init__(self, game_save=None, difficulty=1):
         if game_save is None:
             self.board = chess.Board()
         else:
             self.board = chess.Board(game_save)
 
-        self.engine = ChessEngine.ChessEngine(self.board, depth)
+        self.engine = ChessEngine.ChessEngine(self.board, difficulty)
 
     def makePlayerMove(self, move):
         self.engine.make_move(move)
