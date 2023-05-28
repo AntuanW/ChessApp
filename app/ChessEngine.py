@@ -1,12 +1,36 @@
 import chess
 import chess.polyglot
+import random
+
+"""
+Poziomy trudności:
+01 - 100% szans na ruch losowy, depth = 1
+02 -  30% szans na ruch losowy, depth = 1
+03 -  20% szans na ruch losowy, depth = 1
+04 -  10% szans na ruch losowy, depth = 1
+05 -  30% szans na ruch losowy, depth = 2
+06 -  20% szans na ruch losowy, depth = 2
+07 -  10% szans na ruch losowy, depth = 2
+08 -  20% szans na ruch losowy, depth = 3
+09 -  10% szans na ruch losowy, depth = 3
+10 -   0% szans na ruch losowy, depth = 3
+"""
 
 
 class ChessEngine:
-    def __init__(self, board, depth=2):
+    def __init__(self, board, difficulty):
         self.board = board
 
-        self.depth = depth
+        self.difficulty = difficulty
+
+        self.depth = 1
+
+        if difficulty in (1, 2, 3, 4):
+            self.depth = 1
+        elif difficulty in (5, 6, 7):
+            self.depth = 2
+        elif difficulty in (8, 9, 10):
+            self.depth = 3
 
         self.pawntable = [
             0, 0, 0, 0, 0, 0, 0, 0,
@@ -195,9 +219,9 @@ class ChessEngine:
 
     def quiesce(self, alpha, beta):
         stand_pat = self.evaluate_board()
-        if (stand_pat >= beta):
+        if stand_pat >= beta:
             return beta
-        if (alpha < stand_pat):
+        if alpha < stand_pat:
             alpha = stand_pat
 
         for move in self.board.legal_moves:
@@ -206,29 +230,37 @@ class ChessEngine:
                 score = -self.quiesce(-beta, -alpha)
                 self.unmake_move()
 
-                if (score >= beta):
+                if score >= beta:
                     return beta
-                if (score > alpha):
+                if score > alpha:
                     alpha = score
         return alpha
 
     def alphabeta(self, alpha, beta, depthleft):
         bestscore = -9999
-        if (depthleft == 0):
+        if depthleft == 0:
             return self.quiesce(alpha, beta)
         for move in self.board.legal_moves:
             self.make_move(move)
             score = -self.alphabeta(-beta, -alpha, depthleft - 1)
             self.unmake_move()
-            if (score >= beta):
+            if score >= beta:
                 return score
-            if (score > bestscore):
+            if score > bestscore:
                 bestscore = score
-            if (score > alpha):
+            if score > alpha:
                 alpha = score
         return bestscore
 
     def selectmove(self, depth):
+        if self.handicap():
+            bestMove = chess.Move.null()
+            moves = list(self.board.legal_moves)
+            if len(moves) != 0:
+                bestMove = random.choice(moves)
+            self.movehistory.append(bestMove)
+            return bestMove
+
         try:
             move = chess.polyglot.MemoryMappedReader("../resources/ChessImg/Perfect2017.bin").weighted_choice(
                 self.board).move
@@ -254,3 +286,16 @@ class ChessEngine:
     def make_best_move(self):
         mov = self.selectmove(self.depth)
         self.make_move(mov)
+
+    def handicap(self):
+        if self.difficulty == 1:
+            return True
+        else:
+            random_number = random.randint(1, 100)
+            if self.difficulty in (2, 5):
+                return random_number <= 30  # 30%
+            elif self.difficulty in (3, 6, 8):
+                return random_number <= 20  # 20%
+            elif self.difficulty in (4, 7, 9):
+                return random_number <= 10  # 10%
+            return False  # 0%

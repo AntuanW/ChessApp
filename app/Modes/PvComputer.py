@@ -3,8 +3,8 @@ import chess
 from app import GameEngine
 from app.GUI.Draw import *
 
-def game(player_colour=chess.WHITE, dificulty=2, save=None):
 
+def game(player_colour=chess.WHITE, difficulty=2, save=None):
     p.init()
     screen = p.display.set_mode((WIDTH, HEIGHT))
     clock = p.time.Clock()
@@ -12,13 +12,12 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
     load_images()
 
     if save is None:
-        simulation = GameEngine.GameState(depth=dificulty)
+        simulation = GameEngine.GameState(difficulty=difficulty)
         starting_move_number = 1
     else:
-        simulation = GameEngine.GameState(game_save=save, depth=dificulty)
-        starting_move_number = int(save[len(save)-1])
-        if player_colour==chess.WHITE and simulation.board.turn==chess.BLACK: starting_move_number += 1
-
+        simulation = GameEngine.GameState(game_save=save, difficulty=difficulty)
+        starting_move_number = int(save[len(save) - 1])
+        if player_colour == chess.WHITE and simulation.board.turn == chess.BLACK: starting_move_number += 1
 
     running = True
     sqSelected = ()
@@ -29,7 +28,8 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
         draw_end_screen(screen, simulation.getGameStatus())
         clock.tick(MAX_FPS)
 
-    if (player_colour == chess.BLACK and simulation.board.turn == True) or (player_colour == chess.WHITE and simulation.board.turn == False):
+    if (player_colour == chess.BLACK and simulation.board.turn == True) or (
+            player_colour == chess.WHITE and simulation.board.turn == False):
         simulation.makeComputerMove()
         gameStatus = simulation.isGameRunning()
         if not gameStatus:
@@ -66,12 +66,12 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
 
                 # if len(playerClicks) == 1:
 
-                    # draw circles for legal moves
-                    # draw_circle(4, 2, screen)/
-                    # draw_board(screen)
-                    # draw_pieces(screen, simulation.board)
-                    # print("working")
-                    # detect_legal_moves_and_draw_circles(sqSelected, screen, simulation.board)
+                # draw circles for legal moves
+                # draw_circle(4, 2, screen)/
+                # draw_board(screen)
+                # draw_pieces(screen, simulation.board)
+                # print("working")
+                # detect_legal_moves_and_draw_circles(sqSelected, screen, simulation.board)
 
                 if len(playerClicks) == 2:
 
@@ -112,21 +112,18 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
 
             gameStatus = simulation.isGameRunning()
             if not gameStatus:
+                draw_end_screen(screen, simulation.getGameStatus())
+                clock.tick(MAX_FPS)
+
+            if gameStatus:
+                simulation.makeComputerMove()
+                draw_game_state(screen, simulation)
+                clock.tick(MAX_FPS)
+                p.display.flip()
+                moveMade = False
+
+                gameStatus = simulation.isGameRunning()
                 if not gameStatus:
-                    draw_end_screen(screen, simulation.getGameStatus())
-                    clock.tick(MAX_FPS)
-
-            simulation.makeComputerMove()
-            draw_game_state(screen, simulation)
-            clock.tick(MAX_FPS)
-            p.display.flip()
-            moveMade = False
-
-            gameStatus = simulation.isGameRunning()
-            if not gameStatus:
-                if not gameStatus:
-                    draw_end_screen(screen, simulation.getGameStatus())
-                    clock.tick(MAX_FPS)
-
-
-# game(chess.WHITE)
+                    if not gameStatus:
+                        draw_end_screen(screen, simulation.getGameStatus())
+                        clock.tick(MAX_FPS)
