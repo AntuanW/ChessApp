@@ -56,11 +56,8 @@ def draw_pieces(screen, board):
             if piece != "None":
                 screen.blit(IMAGES[piece], p.Rect(c * SQ_SIZE, (DIMENSION - r - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
-
 def draw_game_state(screen, gs):
     draw_board(screen)
-    # draw_circle(4, 1, screen)
-    # draw_circle(4, 2, screen)
     draw_pieces(screen, gs.board)
 
 
@@ -75,6 +72,8 @@ def detect_legal_moves_and_draw_circles(sqSelected, screen, board):
 
         uci_move = get_uci_move(sqSelected)
 
+        print(uci_move)
+
         for legal_move in board.legal_moves:
 
             legal_start_move = legal_move.uci()[0:2]
@@ -83,6 +82,7 @@ def detect_legal_moves_and_draw_circles(sqSelected, screen, board):
             end_row = ranksToRows[legal_move.uci()[3]]
 
             if legal_start_move == uci_move:
+                print(legal_move)
                 draw_circle(end_row, end_col, screen)
 
     return True
@@ -96,6 +96,8 @@ def draw_circle(row, column, screen):
     radius = SQ_SIZE // 5
 
     p.draw.circle(screen, LIGHT_GRAY_WITH_OPACITY, (center_x, center_y), radius)
+
+
 
 
 def draw_end_screen(screen, outcome):

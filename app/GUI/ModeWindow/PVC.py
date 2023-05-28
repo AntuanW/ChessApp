@@ -1,7 +1,9 @@
 import chess
 import pygame as p
 
+from app.Enums.modeEnum import GameMode
 from app.Modes import PvComputer
+from app.GUI.ModeWindow.StatsWindow import *
 
 
 class PVC:
@@ -10,6 +12,7 @@ class PVC:
         self.window_width = 512
         self.window_height = 512
         self.window_title = "Player VS Computer Mode Window"
+        self.mode = GameMode.PLAYER_VS_COMPUTER
 
         self.WHITE = (255, 255, 255)
         self.BLACK = (0, 0, 0)
@@ -42,12 +45,15 @@ class PVC:
         self.difficulty_level = int(normalized_value * 10) + 1
 
     def handle_start_button_click(self):
+
         if self.checkbox_value:
-            color = chess.WHITE
-        else:
             color = chess.BLACK
+        else:
+            color = chess.WHITE
 
         print("Starting your game")
+        print(f"Chosen color lvl: ${color}")
+        print(f"Chosen difficulty lvl: ${self.difficulty_level}")
 
         self.running = False
         p.quit()
@@ -58,6 +64,8 @@ class PVC:
 
     def handle_statistics_button_click(self):
         print("Go to statistics")
+        StatsWindow(self.mode).run()
+
 
     def handle_go_back_click(self):
         p.quit()

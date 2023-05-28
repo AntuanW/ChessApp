@@ -4,6 +4,7 @@ from app import GameEngine
 from app.GUI.Draw import *
 
 def game(player_colour=chess.WHITE, dificulty=2, save=None):
+
     p.init()
     screen = p.display.set_mode((WIDTH, HEIGHT))
     clock = p.time.Clock()
@@ -63,7 +64,13 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
                     sqSelected = (row, col)
                     playerClicks.append(sqSelected)
 
+                # if len(playerClicks) == 1:
+
                     # draw circles for legal moves
+                    # draw_circle(4, 2, screen)/
+                    # draw_board(screen)
+                    # draw_pieces(screen, simulation.board)
+                    # print("working")
                     # detect_legal_moves_and_draw_circles(sqSelected, screen, simulation.board)
 
                 if len(playerClicks) == 2:
@@ -85,6 +92,7 @@ def game(player_colour=chess.WHITE, dificulty=2, save=None):
                         print("illegal")
                         sqSelected = ()
                         playerClicks = []
+
 
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_z and simulation.board.fullmove_number - starting_move_number >= 1:

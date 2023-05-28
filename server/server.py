@@ -3,6 +3,7 @@ import json
 
 from flask import Flask, request, jsonify
 from mongoConnection import MongoConnection
+from app.Enums.modeEnum import *
 
 
 app = Flask(__name__)
@@ -60,15 +61,56 @@ def login():
         response = {'message': 'User registered successfully!'}
         return jsonify(response), 200
 
+    except requests.exceptions.RequestException as e:
+        print("Error occurred during the request:", str(e))
+        return jsonify({'message': 'An error occurred during the request.'}), 500
+
+
+@app.route('/stats', methods=['POST'])
+def get_statistics():
+
+    data = request.get_json()
+
+    username = data['username']
+    req_enum_val = data['mode']
+
+    try:
+
+        existing_user = mongo.users.find_one({"username": username})
+
+        enum_val = get_key_by_value(req_enum_val)
+
+        wins = existing_user[enum_val]['wins']
+        losses = existing_user[enum_val]['loses']
+
+        response = {
+            'message': 'User statistics fetched successfully!',
+            'wins': wins,
+            'loses': losses
+        }
+        return jsonify(response), 200
 
     except requests.exceptions.RequestException as e:
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
 
+# @app.route('/delete_users', methods=['DELETE'])
+# def delete_users():
+#     try:
+#         result = mongo.users.delete_many({})
+#
+#         deleted_count = result.deleted_count
+#
+#         response = {'message': f'{deleted_count} users deleted successfully!'}
+#         return jsonify(response), 200
+#
+#     except requests.exceptions.RequestException as e:
+#         print("Error occurred during the request:", str(e))
+#         return jsonify({'message': 'An error occurred during the request.'}), 500
+
+
 if __name__ == '__main__':
     mongo = MongoConnection()
     mongo.initMongoConnection()
     app.run(host='localhost', port=port)
-
-

@@ -1,7 +1,8 @@
 import pygame as p
 import requests
 
-from app.config import set_nick
+from app import config
+from app.config import set_username
 from app.GUI.ModeWindow.ModeWindow import ModeWindow
 from app.GUI.Auth.RegistrationWindow import RegistrationWindow
 
@@ -95,8 +96,9 @@ class LoginWindow:
                 p.quit()
                 self.running = False
 
-                print("saving username to global variable")
-                set_nick(self.username)
+                # print("saving username to global variable")
+                # config.my_username = self.username
+                set_username(self.username)
 
                 print("Switching to mode window")
                 ModeWindow().run()

@@ -1,7 +1,7 @@
 import pygame as p
 import requests
 from app.GUI.ModeWindow.ModeWindow import ModeWindow
-from app.config import set_nick
+from app.config import set_username
 
 
 class RegistrationWindow:
@@ -94,9 +94,21 @@ class RegistrationWindow:
                 data = {
                     "username": self.username,
                     "password": self.password,
-                    "pvComputer": [],
-                    "pvpLocal": [],
-                    "pvpOnline": []
+                    "PLAYER_VS_COMPUTER": {
+                        "games": [],
+                        "wins": 0,
+                        "loses": 0
+                    },
+                    "PLAYER_VS_PLAYER_LOCAL": {
+                        "games": [],
+                        "wins": 0,
+                        "loses": 0
+                    },
+                    "PLAYER_VS_PLAYER_ONLINE": {
+                        "games": [],
+                        "wins": 0,
+                        "loses": 0
+                    },
                 }
 
                 try:
@@ -108,7 +120,7 @@ class RegistrationWindow:
                         self.running = False
 
                         print("Saving nick to global variable")
-                        set_nick(self.username)
+                        set_username(self.username)
 
                         print("You are logged in!")
 
