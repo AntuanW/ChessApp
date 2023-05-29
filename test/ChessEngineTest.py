@@ -1,170 +1,132 @@
-import chess
-import chess.polyglot
-
-pawntable = [
- 0,  0,  0,  0,  0,  0,  0,  0,
- 5, 10, 10,-20,-20, 10, 10,  5,
- 5, -5,-10,  0,  0,-10, -5,  5,
- 0,  0,  0, 20, 20,  0,  0,  0,
- 5,  5, 10, 25, 25, 10,  5,  5,
-10, 10, 20, 30, 30, 20, 10, 10,
-50, 50, 50, 50, 50, 50, 50, 50,
- 0,  0,  0,  0,  0,  0,  0,  0]
-
-knightstable = [
--50,-40,-30,-30,-30,-30,-40,-50,
--40,-20,  0,  5,  5,  0,-20,-40,
--30,  5, 10, 15, 15, 10,  5,-30,
--30,  0, 15, 20, 20, 15,  0,-30,
--30,  5, 15, 20, 20, 15,  5,-30,
--30,  0, 10, 15, 15, 10,  0,-30,
--40,-20,  0,  0,  0,  0,-20,-40,
--50,-40,-30,-30,-30,-30,-40,-50]
-
-bishopstable = [
--20,-10,-10,-10,-10,-10,-10,-20,
--10,  5,  0,  0,  0,  0,  5,-10,
--10, 10, 10, 10, 10, 10, 10,-10,
--10,  0, 10, 10, 10, 10,  0,-10,
--10,  5,  5, 10, 10,  5,  5,-10,
--10,  0,  5, 10, 10,  5,  0,-10,
--10,  0,  0,  0,  0,  0,  0,-10,
--20,-10,-10,-10,-10,-10,-10,-20]
-
-rookstable = [
-  0,  0,  0,  5,  5,  0,  0,  0,
- -5,  0,  0,  0,  0,  0,  0, -5,
- -5,  0,  0,  0,  0,  0,  0, -5,
- -5,  0,  0,  0,  0,  0,  0, -5,
- -5,  0,  0,  0,  0,  0,  0, -5,
- -5,  0,  0,  0,  0,  0,  0, -5,
-  5, 10, 10, 10, 10, 10, 10,  5,
- 0,  0,  0,  0,  0,  0,  0,  0]
-
-queenstable = [
--20,-10,-10, -5, -5,-10,-10,-20,
--10,  0,  0,  0,  0,  0,  0,-10,
--10,  5,  5,  5,  5,  5,  0,-10,
-  0,  0,  5,  5,  5,  5,  0, -5,
- -5,  0,  5,  5,  5,  5,  0, -5,
--10,  0,  5,  5,  5,  5,  0,-10,
--10,  0,  0,  0,  0,  0,  0,-10,
--20,-10,-10, -5, -5,-10,-10,-20]
-
-kingstable = [
- 20, 30, 10,  0,  0, 10, 30, 20,
- 20, 20,  0,  0,  0,  0, 20, 20,
--10,-20,-20,-20,-20,-20,-20,-10,
--20,-30,-30,-40,-40,-30,-30,-20,
--30,-40,-40,-50,-50,-40,-40,-30,
--30,-40,-40,-50,-50,-40,-40,-30,
--30,-40,-40,-50,-50,-40,-40,-30,
--30,-40,-40,-50,-50,-40,-40,-30]
-
-
-def evaluate_board(board):
-    if board.is_checkmate():
-        if board.turn:
-            return -9999
-        else:
-            return 9999
-    if board.is_stalemate():
-        return 0
-    if board.is_insufficient_material():
-        return 0
-
-    wp = len(board.pieces(chess.PAWN, chess.WHITE))
-    bp = len(board.pieces(chess.PAWN, chess.BLACK))
-    wn = len(board.pieces(chess.KNIGHT, chess.WHITE))
-    bn = len(board.pieces(chess.KNIGHT, chess.BLACK))
-    wb = len(board.pieces(chess.BISHOP, chess.WHITE))
-    bb = len(board.pieces(chess.BISHOP, chess.BLACK))
-    wr = len(board.pieces(chess.ROOK, chess.WHITE))
-    br = len(board.pieces(chess.ROOK, chess.BLACK))
-    wq = len(board.pieces(chess.QUEEN, chess.WHITE))
-    bq = len(board.pieces(chess.QUEEN, chess.BLACK))
-
-    material = 100 * (wp - bp) + 320 * (wn - bn) + 330 * (wb - bb) + 500 * (wr - br) + 900 * (wq - bq)
-
-    pawnsq = sum([pawntable[i] for i in board.pieces(chess.PAWN, chess.WHITE)])
-    pawnsq = pawnsq + sum([-pawntable[chess.square_mirror(i)]
-                           for i in board.pieces(chess.PAWN, chess.BLACK)])
-    knightsq = sum([knightstable[i] for i in board.pieces(chess.KNIGHT, chess.WHITE)])
-    knightsq = knightsq + sum([-knightstable[chess.square_mirror(i)]
-                               for i in board.pieces(chess.KNIGHT, chess.BLACK)])
-    bishopsq = sum([bishopstable[i] for i in board.pieces(chess.BISHOP, chess.WHITE)])
-    bishopsq = bishopsq + sum([-bishopstable[chess.square_mirror(i)]
-                               for i in board.pieces(chess.BISHOP, chess.BLACK)])
-    rooksq = sum([rookstable[i] for i in board.pieces(chess.ROOK, chess.WHITE)])
-    rooksq = rooksq + sum([-rookstable[chess.square_mirror(i)]
-                           for i in board.pieces(chess.ROOK, chess.BLACK)])
-    queensq = sum([queenstable[i] for i in board.pieces(chess.QUEEN, chess.WHITE)])
-    queensq = queensq + sum([-queenstable[chess.square_mirror(i)]
-                             for i in board.pieces(chess.QUEEN, chess.BLACK)])
-    kingsq = sum([kingstable[i] for i in board.pieces(chess.KING, chess.WHITE)])
-    kingsq = kingsq + sum([-kingstable[chess.square_mirror(i)]
-                           for i in board.pieces(chess.KING, chess.BLACK)])
-
-    eval = material + pawnsq + knightsq + bishopsq + rooksq + queensq + kingsq
-    if board.turn:
-        return eval
-    else:
-        return -eval
-
-
-def alphabeta( alpha, beta, depthleft, board):
-    bestscore = -9999
-    if( depthleft == 0 ):
-        return quiesce( alpha, beta, board)
-    for move in board.legal_moves:
-        board.push(move)
-        score = -alphabeta( -beta, -alpha, depthleft - 1, board)
-        board.pop()
-        if( score >= beta ):
-            return score
-        if( score > bestscore ):
-            bestscore = score
-        if( score > alpha ):
-            alpha = score
-    return bestscore
-
-
-def quiesce( alpha, beta, board):
-    stand_pat = evaluate_board(board)
-    if( stand_pat >= beta ):
-        return beta
-    if( alpha < stand_pat ):
-        alpha = stand_pat
-
-    for move in board.legal_moves:
-        if board.is_capture(move):
-            board.push(move)
-            score = -quiesce( -beta, -alpha, board)
-            board.pop()
-
-            if( score >= beta ):
-                return beta
-            if( score > alpha ):
-                alpha = score
-    return alpha
-
-
-def selectmove(depth, board):
-    try:
-        move = chess.polyglot.MemoryMappedReader("bookfish.bin").weighted_choice(board).move()
-        return move
-    except:
-        bestMove = chess.Move.null()
-        bestValue = -99999
-        alpha = -100000
-        beta = 100000
-        for move in board.legal_moves:
-            board.push(move)
-            boardValue = -alphabeta(-beta, -alpha, depth-1, board)
-            if boardValue > bestValue:
-                bestValue = boardValue;
-                bestMove = move
-            if( boardValue > alpha ):
-                alpha = boardValue
-            board.pop()
-        return bestMove
+# import chess
+#
+# from app import GameEngine
+# from app.GUI.Draw import *
+# from app.Modes.Ultis import *
+#
+#
+# def game(player_colour=chess.WHITE, difficulty=2, save=None):
+#     # p.init()
+#     # screen = p.display.set_mode((WIDTH, HEIGHT))
+#     # clock = p.time.Clock()
+#     # screen.fill(p.Color("White"))
+#     # load_images()
+#     screen, clock = init_screen()
+#
+#     # if save is None:
+#     #     simulation = GameEngine.GameState(difficulty=difficulty)
+#     #     starting_move_number = 1
+#     # else:
+#     #     simulation = GameEngine.GameState(game_save=save, difficulty=difficulty)
+#     #     starting_move_number = int(save[len(save) - 1])
+#     #     if player_colour == chess.WHITE and simulation.board.turn == chess.BLACK: starting_move_number += 1
+#     simulation, starting_move_number = make_computer_game(difficulty, save, player_colour)
+#
+#     running = True
+#     sqSelected = ()
+#     playerClicks = []
+#     moveMade = False
+#     gameStatus = simulation.isGameRunning()
+#     if not gameStatus:
+#         draw_end_screen(screen, simulation.getGameStatus())
+#         clock.tick(MAX_FPS)
+#
+#     if (player_colour == chess.BLACK and simulation.board.turn == True) or (
+#             player_colour == chess.WHITE and simulation.board.turn == False):
+#         simulation.makeComputerMove()
+#         gameStatus = simulation.isGameRunning()
+#         if not gameStatus:
+#             draw_end_screen(screen, simulation.getGameStatus())
+#             clock.tick(MAX_FPS)
+#
+#     draw_game_state(screen, simulation)
+#     clock.tick(MAX_FPS)
+#     p.display.flip()
+#
+#     while running:
+#
+#         for e in p.event.get():
+#
+#             if e.type == p.QUIT:
+#                 running = False
+#
+#             elif e.type == p.MOUSEBUTTONDOWN:
+#
+#                 location = p.mouse.get_pos()
+#
+#                 row = location[1] // SQ_SIZE
+#                 col = location[0] // SQ_SIZE
+#
+#                 if sqSelected == (row, col):
+#
+#                     sqSelected = ()
+#                     playerClicks = []
+#
+#                 else:
+#
+#                     sqSelected = (row, col)
+#                     playerClicks.append(sqSelected)
+#
+#                 # if len(playerClicks) == 1:
+#
+#                 # draw circles for legal moves
+#                 # draw_circle(4, 2, screen)/
+#                 # draw_board(screen)
+#                 # draw_pieces(screen, simulation.board)
+#                 # print("working")
+#                 # detect_legal_moves_and_draw_circles(sqSelected, screen, simulation.board)
+#
+#                 if len(playerClicks) == 2:
+#
+#                     start_row, start_col = playerClicks[0][0], playerClicks[0][1]
+#                     end_row, end_col = playerClicks[1][0], playerClicks[1][1]
+#
+#                     start_move = colsToRanks[start_col] + rowsToRanks[start_row]
+#                     end_move = colsToRanks[end_col] + rowsToRanks[end_row]
+#
+#                     action = chess.Move.from_uci(start_move + end_move)
+#
+#                     if action in simulation.board.legal_moves:
+#                         sqSelected = ()
+#                         playerClicks = []
+#                         simulation.makePlayerMove(action)
+#                         moveMade = True
+#                     else:
+#                         print("illegal")
+#                         sqSelected = ()
+#                         playerClicks = []
+#
+#
+#             elif e.type == p.KEYDOWN:
+#                 if e.key == p.K_z and simulation.board.fullmove_number - starting_move_number >= 1:
+#                     simulation.engine.unmake_move()
+#                     simulation.engine.unmake_move()
+#                     sqSelected = ()
+#                     playerClicks = []
+#
+#                     draw_game_state(screen, simulation)
+#                     clock.tick(MAX_FPS)
+#                     p.display.flip()
+#
+#         if moveMade:
+#             draw_game_state(screen, simulation)
+#             clock.tick(MAX_FPS)
+#             p.display.flip()
+#
+#             gameStatus = simulation.isGameRunning()
+#             if not gameStatus:
+#                 draw_end_screen(screen, simulation.getGameStatus())
+#                 clock.tick(MAX_FPS)
+#
+#             if gameStatus:
+#                 simulation.makeComputerMove()
+#                 draw_game_state(screen, simulation)
+#                 clock.tick(MAX_FPS)
+#                 p.display.flip()
+#                 moveMade = False
+#
+#                 gameStatus = simulation.isGameRunning()
+#                 if not gameStatus:
+#                     if not gameStatus:
+#                         draw_end_screen(screen, simulation.getGameStatus())
+#                         clock.tick(MAX_FPS)
