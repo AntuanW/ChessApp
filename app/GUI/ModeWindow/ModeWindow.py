@@ -34,17 +34,17 @@ class ModeWindow:
 
         self.btn_images = [
             p.transform.scale(p.image.load("../resources/ChessImg/bN.png").convert_alpha(),
-                              (int(self.button_height * 0.8), int(self.button_height * 0.8))),
+                              (int(self.button_height * 0.6), int(self.button_height * 0.6))),
             p.transform.scale(p.image.load("../resources/ChessImg/wQ.png").convert_alpha(),
-                              (int(self.button_height * 0.8), int(self.button_height * 0.8))),
+                              (int(self.button_height * 0.6), int(self.button_height * 0.6))),
             p.transform.scale(p.image.load("../resources/ChessImg/bR.png").convert_alpha(),
-                              (int(self.button_height * 0.8), int(self.button_height * 0.8))),
+                              (int(self.button_height * 0.6), int(self.button_height * 0.6))),
             p.transform.scale(p.image.load("../resources/ChessImg/wB.png").convert_alpha(),
-                              (int(self.button_height * 0.8), int(self.button_height * 0.8)))
+                              (int(self.button_height * 0.6), int(self.button_height * 0.6)))
         ]
 
     def draw_buttons(self):
-        button_texts = ["Player VS Computer", "Player VS Player (Local)", "Player VS Player (Online)", "CHESS GM's"]
+        button_texts = ["Player VS Computer", "Player VS Player [Local]", "Top Players", "CHESS GMs"]
 
         for i in range(4):
             button_rect = p.Rect(self.button_x, self.button_y + i * (self.button_height + self.button_padding),
@@ -90,7 +90,9 @@ class ModeWindow:
 
         if button_index != -1:
             if button_index == 0:
-                print("Button 1 clicked")
+                # print("Button 1 clicked")
+                self.running = False
+                p.quit()
                 PVC().run()
             elif button_index == 1:
                 print("Button 2 clicked")

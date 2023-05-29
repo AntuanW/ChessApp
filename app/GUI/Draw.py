@@ -1,6 +1,4 @@
 import pygame as p
-import chess
-
 
 WIDTH = HEIGHT = 512
 DIMENSION = 8
@@ -99,7 +97,6 @@ def draw_circle(row, column, screen):
 
 
 
-
 def draw_end_screen(screen, outcome):
 
     screen.fill(WHITE)
@@ -124,9 +121,7 @@ def draw_end_screen(screen, outcome):
     winner_text_rect = winner_text.get_rect(center=(WIDTH // 2, HEIGHT // 3 + 100))
 
     screen.blit(game_over_text, game_over_text_rect)
-
     screen.blit(result_text, result_text_rect)
-
     screen.blit(winner_text, winner_text_rect)
 
     p.display.flip()

@@ -95,6 +95,58 @@ def get_statistics():
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
 
+import datetime
+
+@app.route('/score', methods=['PUT'])
+def update_score():
+
+    data = request.get_json()
+    username = data['username']
+    score = data['score']
+    game_state = data['game_state']
+
+    try:
+        existing_user = mongo.users.find_one({"username": username})
+
+        if not existing_user:
+            response = {'message': 'No user found'}
+            return jsonify(response), 401
+
+        if score == 0:
+            mongo.users.update_one(
+                {"username": username},
+                {"$inc": {"PLAYER_VS_COMPUTER.loses": 1}}
+            )
+        elif score == 1:
+            mongo.users.update_one(
+                {"username": username},
+                {"$inc": {"PLAYER_VS_COMPUTER.wins": 1}}
+            )
+        else:
+            response = {'message': 'Invalid score value'}
+            return jsonify(response), 400
+
+        game_info = {
+            "game_state": game_state,
+            "date": datetime.datetime.now().strftime("%Y-%m-%d")
+        }
+        mongo.users.update_one(
+            {"username": username},
+            {"$push": {"PLAYER_VS_COMPUTER.games": game_info}}
+        )
+
+        response = {
+            'message': 'Score updated successfully!',
+        }
+
+        return jsonify(response), 200
+
+    except requests.exceptions.RequestException as e:
+        print("Error occurred during the request:", str(e))
+        return jsonify({'message': 'An error occurred during the request.'}), 500
+
+
+
 # @app.route('/delete_users', methods=['DELETE'])
 # def delete_users():
 #     try:

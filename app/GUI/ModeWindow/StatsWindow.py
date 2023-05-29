@@ -72,8 +72,8 @@ class StatsWindow:
         p.quit()
         self.running = False
 
-        from app.GUI.ModeWindow.ModeWindow import ModeWindow
-        ModeWindow().run()
+        from app.GUI.ModeWindow.PVC import PVC
+        PVC().run()
         print("Switching back window")
 
     def handle_event(self, event):

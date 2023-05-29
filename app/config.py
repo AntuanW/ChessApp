@@ -1,4 +1,5 @@
-my_username = None
+# my_username = None
+my_username = "kalkulator"
 my_opponent = None
 
 
