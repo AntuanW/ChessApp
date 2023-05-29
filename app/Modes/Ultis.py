@@ -1,5 +1,5 @@
 import pygame.time
-
+import chess
 from app import GameEngine
 from app.GUI.Draw import *
 

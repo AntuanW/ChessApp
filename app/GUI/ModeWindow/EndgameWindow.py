@@ -11,7 +11,7 @@ BLACK = (0, 0, 0)
 
 
 class EndgameWindow:
-    def __init__(self, score, game_state, outcome):
+    def __init__(self, score, game_state, outcome):  # (0/1/None, "string", Outcome)
         p.init()
         self.score = score
         self.window_width = 512
@@ -99,4 +99,4 @@ class EndgameWindow:
             self.draw()
 
 
-EndgameWindow(0, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1", "outcome").run()
+# EndgameWindow(0, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1", outcome="").run()
