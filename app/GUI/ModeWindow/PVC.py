@@ -4,7 +4,7 @@ from app.Enums.modeEnum import GameMode
 from app.Modes import PvComputer
 from app.GUI.ModeWindow.StatsWindow import *
 
-
+# Player VS Computer
 class PVC:
     def __init__(self):
         p.init()

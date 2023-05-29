@@ -1,3 +1,5 @@
+import time
+
 import pygame.time
 import chess
 from app import GameEngine
@@ -33,9 +35,12 @@ def make_local_game(save):
         return GameEngine.GameState(save)
 
 
-def draw_game(screen, simulation: GameEngine.GameState, player_color):
+def draw_game(screen, simulation: GameEngine.GameState, player_color, game_mode):
     if not simulation.isGameRunning():
-        return EndgameWindow(player_color, simulation.board.fen(), simulation.board.outcome(), simulation.engine.difficulty).run()
+        draw_game_state(screen, simulation)
+        p.display.flip()
+        time.sleep(3)
+        return EndgameWindow(player_color, simulation.board.fen(), simulation.board.outcome(), simulation.engine.difficulty, game_mode).run()
     else:
         draw_game_state(screen, simulation)
         p.display.flip()

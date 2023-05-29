@@ -2,6 +2,8 @@ import requests
 import json
 
 from flask import Flask, request, jsonify
+from pymongo import DESCENDING
+
 from mongoConnection import MongoConnection
 from app.Enums.modeEnum import *
 
@@ -104,6 +106,7 @@ def update_score():
     username = data['username']
     score = data['score']
     game_state = data['game_state']
+    difficulty = data['difficulty']
 
     try:
         existing_user = mongo.users.find_one({"username": username})
@@ -122,13 +125,17 @@ def update_score():
                 {"username": username},
                 {"$inc": {"PLAYER_VS_COMPUTER.wins": 1}}
             )
+        elif score == None: # draw
+            pass
+
         else:
             response = {'message': 'Invalid score value'}
             return jsonify(response), 400
 
         game_info = {
             "game_state": game_state,
-            "date": datetime.datetime.now().strftime("%Y-%m-%d")
+            "date": datetime.datetime.now().strftime("%Y-%m-%d"),
+            "difficulty": difficulty
         }
         mongo.users.update_one(
             {"username": username},
@@ -145,6 +152,53 @@ def update_score():
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
+
+@app.route('/top_players', methods=['GET'])
+def get_top_players():
+
+    try:
+
+        pipeline = [
+            {
+                '$project': {
+                    'username': 1,
+                    'ranking': {
+                        '$cond': {
+                            'if': {'$ne': ['$PLAYER_VS_COMPUTER.loses', 0]},
+                            'then': {'$divide': ['$PLAYER_VS_COMPUTER.wins', '$PLAYER_VS_COMPUTER.loses']},
+                            'else': '$PLAYER_VS_COMPUTER.wins'
+                        }
+                    }
+                }
+            },
+            {
+                '$sort': {'ranking': DESCENDING}
+            },
+            {
+                '$limit': 10
+            }
+        ]
+
+        result = mongo.users.aggregate(pipeline)
+
+        top_10 = []
+        for player in result:
+            username = player['username']
+            ranking = player['ranking']
+            top_10.append({'playername': username, 'ranking': ranking})
+
+
+        response = {
+            'top_10': top_10,
+            'message': "Top 10 players fetched successfully from database"
+        }
+
+        return jsonify(response)
+
+
+    except requests.exceptions.RequestException as e:
+        print("Error occurred during the request:", str(e))
+        return jsonify({'message': 'An error occurred during the request.'}), 500
 
 
 # @app.route('/delete_users', methods=['DELETE'])

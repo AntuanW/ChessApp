@@ -2,7 +2,7 @@ import pygame as p
 import requests
 import chess
 
-# from app.GUI.ModeWindow.ModeWindow import ModeWindow
+from app.Enums.modeEnum import GameMode
 from app.config import get_username
 
 WIDTH = 800
@@ -13,7 +13,7 @@ BLACK = (0, 0, 0)
 
 class EndgameWindow:
     def __init__(self, our_color: chess.Color, game_state: str,
-                 outcome: chess.Outcome, difficulty: int):  # (0/1/None, "string", Outcome)
+                 outcome: chess.Outcome, difficulty: int, game_mode):
         p.init()
         self.window_width = 512
         self.window_height = 512
@@ -28,7 +28,12 @@ class EndgameWindow:
         self.winner_color = self.get_winner_color()
         self.difficulty = difficulty
 
-        self.add_score()
+        if game_mode == GameMode.PLAYER_VS_COMPUTER:
+            print("saving to database mode: PVC")
+            self.add_score()
+
+        else:
+            print("not saving to database mode: PVP Local")
 
         self.screen = p.display.set_mode((self.window_width, self.window_height))
         p.display.set_caption(self.window_title)
@@ -45,7 +50,8 @@ class EndgameWindow:
         data = {
             "username": get_username(),
             "score": self.score,
-            "game_state": self.game_state
+            "game_state": self.game_state,
+            "difficulty": self.difficulty
         }
         try:
             print("Adding score to the database...")
@@ -105,9 +111,13 @@ class EndgameWindow:
                 elif event.type == p.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         if self.button_area.collidepoint(event.pos):
-                            # ModeWindow().run()
                             self.running = False
-                    self.draw()
+                            p.quit()
+                            from app.GUI.ModeWindow.ModeWindow import ModeWindow
+                            ModeWindow().run()
+
+                    if self.running:
+                        self.draw()
         return False
 
     def setScore(self):

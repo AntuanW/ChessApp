@@ -1,5 +1,7 @@
 import pygame as p
 from app.GUI.ModeWindow.PVC import PVC
+from app.GUI.ModeWindow.RankingWindow import RankingWindow
+from app.Modes.PvPLocal import game
 
 
 class ModeWindow:
@@ -89,17 +91,14 @@ class ModeWindow:
                 break
 
         if button_index != -1:
-            if button_index == 0:
-                # print("Button 1 clicked")
-                self.running = False
-                p.quit()
-                PVC().run()
-            elif button_index == 1:
-                print("Button 2 clicked")
-            elif button_index == 2:
-                print("Button 3 clicked")
+            if button_index == 0:  PVC().run()
+            elif button_index == 1: game()
+            elif button_index == 2: RankingWindow().run()
             elif button_index == 3:
-                print("Button 4 clicked")
+                pass
+
+            self.running = False
+            p.quit()
 
     def draw(self):
 

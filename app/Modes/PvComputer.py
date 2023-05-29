@@ -1,7 +1,10 @@
+from app.Enums.modeEnum import GameMode
 from app.Modes.Ultis import *
 
 
 def game(player_colour=chess.WHITE, difficulty=2, save=None):
+
+    game_mode = GameMode.PLAYER_VS_COMPUTER
     screen, clock = init_screen()
 
     simulation, starting_move_number = make_computer_game(
@@ -11,12 +14,10 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
     sqSelected = []
     playerClicks = []
 
-    running = draw_game(screen, simulation, player_colour)
-
     if is_computer_starting(player_colour, simulation) and simulation.isGameRunning():
         simulation.makeComputerMove()
 
-    running = draw_game(screen, simulation, player_colour)
+    running = draw_game(screen, simulation, player_colour, game_mode)
 
     while running:
         for e in p.event.get():
@@ -29,12 +30,12 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
 
             elif e.type == p.KEYDOWN and simulation.isGameRunning():
                 handle_undo(simulation, starting_move_number, sqSelected, playerClicks)
-                running = draw_game(screen, simulation, player_colour)
+                running = draw_game(screen, simulation, player_colour, game_mode)
 
         if moveMade:
-            running = draw_game(screen, simulation, player_colour)
+            running = draw_game(screen, simulation, player_colour, game_mode)
 
             if simulation.isGameRunning():
                 simulation.makeComputerMove()
-                running = draw_game(screen, simulation, player_colour)
+                running = draw_game(screen, simulation, player_colour, game_mode)
                 moveMade = False
