@@ -1,7 +1,7 @@
 import pygame.time
 
-from app.GUI.Draw import *
 from app import GameEngine
+from app.GUI.Draw import *
 
 
 def init_screen():
