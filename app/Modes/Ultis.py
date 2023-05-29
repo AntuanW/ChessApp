@@ -2,6 +2,7 @@ import pygame.time
 import chess
 from app import GameEngine
 from app.GUI.Draw import *
+from app.GUI.ModeWindow.EndgameWindow import EndgameWindow
 
 
 def init_screen():
@@ -32,13 +33,13 @@ def make_local_game(save):
         return GameEngine.GameState(save)
 
 
-def draw_game(screen, simulation: GameEngine.GameState, clock: pygame.time.Clock):
+def draw_game(screen, simulation: GameEngine.GameState, player_color):
     if not simulation.isGameRunning():
-        draw_end_screen(screen, simulation.getGameStatus())
-        clock.tick(MAX_FPS)
+        return EndgameWindow(player_color, simulation.board.fen(), simulation.board.outcome(), simulation.engine.difficulty).run()
     else:
         draw_game_state(screen, simulation)
-    p.display.flip()
+        p.display.flip()
+        return True
 
 
 def is_computer_starting(player_colour: chess.Color, simulation: GameEngine.GameState):

@@ -11,12 +11,12 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
     sqSelected = []
     playerClicks = []
 
-    draw_game(screen, simulation, clock)
+    running = draw_game(screen, simulation, player_colour)
 
     if is_computer_starting(player_colour, simulation) and simulation.isGameRunning():
         simulation.makeComputerMove()
 
-    draw_game(screen, simulation, clock)
+    running = draw_game(screen, simulation, player_colour)
 
     while running:
         for e in p.event.get():
@@ -29,12 +29,12 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
 
             elif e.type == p.KEYDOWN and simulation.isGameRunning():
                 handle_undo(simulation, starting_move_number, sqSelected, playerClicks)
-                draw_game(screen, simulation, clock)
+                running = draw_game(screen, simulation, player_colour)
 
         if moveMade:
-            draw_game(screen, simulation, clock)
+            running = draw_game(screen, simulation, player_colour)
 
             if simulation.isGameRunning():
                 simulation.makeComputerMove()
-                draw_game(screen, simulation, clock)
+                running = draw_game(screen, simulation, player_colour)
                 moveMade = False

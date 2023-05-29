@@ -1,5 +1,6 @@
 import pygame as p
 import requests
+import chess
 
 # from app.GUI.ModeWindow.ModeWindow import ModeWindow
 from app.config import get_username
@@ -11,18 +12,21 @@ BLACK = (0, 0, 0)
 
 
 class EndgameWindow:
-    def __init__(self, score, game_state, outcome):  # (0/1/None, "string", Outcome)
+    def __init__(self, our_color: chess.Color, game_state: str,
+                 outcome: chess.Outcome, difficulty: int):  # (0/1/None, "string", Outcome)
         p.init()
-        self.score = score
         self.window_width = 512
         self.window_height = 512
         self.window_title = "Game over"
         self.game_state = game_state
         self.font = p.font.Font(None, 52)
         self.button_font = p.font.Font(None, 30)
-        self.winner_color = self.get_winner_color()
         self.running = True
+        self.our_color = our_color
         self.outcome = outcome
+        self.score = self.setScore()
+        self.winner_color = self.get_winner_color()
+        self.difficulty = difficulty
 
         self.add_score()
 
@@ -43,7 +47,6 @@ class EndgameWindow:
             "score": self.score,
             "game_state": self.game_state
         }
-
         try:
             print("Adding score to the database...")
             response = requests.put("http://localhost:8080/score", json=data)
@@ -61,8 +64,7 @@ class EndgameWindow:
         game_over_text = self.font.render("Game Over due to:", True, BLACK)
         game_over_text_rect = game_over_text.get_rect(center=(WIDTH // 3.1, HEIGHT // 3 - 100))
 
-        # result_text = self.font.render(self.outcome.termination.name, True, BLACK)
-        result_text = self.font.render("checkmate", True, BLACK)
+        result_text = self.font.render(self.outcome.termination.name, True, BLACK)
         result_text_rect = result_text.get_rect(center=(WIDTH // 3.1, HEIGHT // 3))
 
         winner_text = self.font.render(self.winner_color, True, BLACK)
@@ -76,7 +78,7 @@ class EndgameWindow:
         button_rect = button_text.get_rect(center=(self.window_width // 2, self.window_height - 50))
         button_padding = 15
         self.button_area = p.Rect(button_rect.left - button_padding, button_rect.top - button_padding,
-                             button_rect.width + 2 * button_padding, button_rect.height + 2 * button_padding)
+                                  button_rect.width + 2 * button_padding, button_rect.height + 2 * button_padding)
 
         p.draw.rect(self.screen, p.Color(188, 188, 188), self.button_area)
         self.screen.blit(button_text, button_rect)
@@ -85,6 +87,7 @@ class EndgameWindow:
 
     def run(self):
         self.running = True
+        self.draw()
         while self.running:
             for event in p.event.get():
                 if event.type == p.QUIT:
@@ -95,8 +98,13 @@ class EndgameWindow:
                         if self.button_area.collidepoint(event.pos):
                             # ModeWindow().run()
                             self.running = False
+                    self.draw()
+        return False
 
-            self.draw()
-
-
-# EndgameWindow(0, "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1", outcome="").run()
+    def setScore(self):
+        if self.outcome.winner is None:
+            return None
+        elif self.outcome.winner == self.our_color:
+            return 1
+        else:
+            return 0
