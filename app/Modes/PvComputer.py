@@ -32,9 +32,8 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
                 moveMade = handle_player_move(sqSelected, playerClicks, simulation)
 
             elif e.type == p.KEYDOWN and simulation.isGameRunning():
-                if e.key == p.K_z and simulation.board.fullmove_number - starting_move_number >= 1:
-                    handle_undo(simulation, starting_move_number, sqSelected, playerClicks)
-                    draw_game(screen, simulation, clock)
+                handle_undo(simulation, starting_move_number, sqSelected, playerClicks)
+                draw_game(screen, simulation, clock)
 
         if moveMade:
             draw_game(screen, simulation, clock)
