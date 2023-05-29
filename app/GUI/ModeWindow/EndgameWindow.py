@@ -67,7 +67,16 @@ class EndgameWindow:
         result_text = self.font.render(self.outcome.termination.name, True, BLACK)
         result_text_rect = result_text.get_rect(center=(WIDTH // 3.1, HEIGHT // 3))
 
-        winner_text = self.font.render(self.winner_color, True, BLACK)
+        if self.our_color is None:
+            if self.outcome.winner:
+                out = "White Won!"
+            elif self.outcome.winner is not None:
+                out = "Black Won!"
+            else:
+                out = ""
+            winner_text = self.font.render(out, True, BLACK)
+        else:
+            winner_text = self.font.render(self.winner_color, True, BLACK)
         winner_text_rect = winner_text.get_rect(center=(WIDTH // 3.1, HEIGHT // 3 + 100))
 
         self.screen.blit(game_over_text, game_over_text_rect)

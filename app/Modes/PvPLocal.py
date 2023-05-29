@@ -10,7 +10,7 @@ def game(save=None):
     sqSelected = []
     playerClicks = []
 
-    draw_game(screen, simulation, clock)
+    running = draw_game(screen, simulation, None)
 
     while running:
 
@@ -23,5 +23,5 @@ def game(save=None):
                 moveMade = handle_player_move(sqSelected, playerClicks, simulation)
 
         if moveMade:
-            draw_game(screen, simulation, clock)
+            running = draw_game(screen, simulation, None)
             moveMade = False
