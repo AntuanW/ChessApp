@@ -1,5 +1,5 @@
 import chess
-import ChessEngine
+from app.ChessEngine import ChessEngine
 
 
 class GameState:
@@ -9,7 +9,7 @@ class GameState:
         else:
             self.board = chess.Board(game_save)
 
-        self.engine = ChessEngine.ChessEngine(self.board, difficulty)
+        self.engine = ChessEngine(self.board, difficulty)
 
     def makePlayerMove(self, move):
         self.engine.make_move(move)
