@@ -3,7 +3,7 @@ import chess
 from app.Modes import PvComputer
 from saves import saves
 
-save = saves[5]
+save = saves[6]
 our_color = chess.WHITE
 difficulty = 1
 

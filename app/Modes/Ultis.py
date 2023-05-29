@@ -40,7 +40,8 @@ def draw_game(screen, simulation: GameEngine.GameState, player_color, game_mode)
         draw_game_state(screen, simulation)
         p.display.flip()
         time.sleep(3)
-        return EndgameWindow(player_color, simulation.board.fen(), simulation.board.outcome(), simulation.engine.difficulty, game_mode).run()
+        return EndgameWindow(player_color, simulation.board.fen(), simulation.board.outcome(),
+                             simulation.engine.difficulty, game_mode).run()
     else:
         draw_game_state(screen, simulation)
         p.display.flip()
@@ -106,7 +107,35 @@ def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEng
             simulation.makePlayerMove(action)
             print("[CONSOLE] Move made: ", action)
             return True
+        action.promotion = chess.QUEEN  # fake promotion
+        if action in simulation.board.legal_moves:
+            reset_move_arrays(sqSelected, playerClicks)
+            action.promotion = promotion_prompt()
+            simulation.makePlayerMove(action)
+            print("[CONSOLE] Move made: ", action)
+            return True
         else:
             reset_move_arrays(sqSelected, playerClicks)
             print("[CONSOLE] ILLEGAL MOVE")
             return False
+
+
+def promotion_prompt():
+    print("[CONSOLE] Select piece:")
+    print("1 -> Queen")
+    print("2 -> Bishop")
+    print("3 -> Rook")
+    print("4 -> Knight")
+    while True:
+        prom = input("Selected piece:")
+        match prom:
+            case '1':
+                return chess.QUEEN
+            case '2':
+                return chess.BISHOP
+            case '3':
+                return chess.ROOK
+            case '4':
+                return chess.KNIGHT
+            case _:
+                print("[CONSOLE] INVALID NUMBER")
