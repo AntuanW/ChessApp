@@ -37,14 +37,14 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 2. PyGame
 3. Flask - serwer + zapytania HTTP / TCP
 
-## Feedback po prezentowaniu, dodatkowe przemyślenia (od najwazniejszych/najłatwiejszych do najtrudniejszych):
-- oznaczenie, czyj jest ruch:
+## Feedback po prezentowaniu, plan prac przed oddaniem projektu(od najwazniejszych/najłatwiejszych do najtrudniejszych):
+- [ ] oznaczenie, czyj jest ruch:
   (przypominajka: ```simulation.board.turn() -> True | False```, True to białe)
-- brak możliwości klikania w puste pola/ pola z figurami przeciwnika [DONE]
-- narysowane możliwe ruchy po kliknięciu figury
-- przycisk cofający do menu wyboru trybu (bez zapisywania itp., pomysł aby nie tzeba było wychodzić x, co sprawia ze trzeba znów sie logować)
-- okno GM's (może być zastąpiona przyciskiem "wczytaj ostatnią grę z komputerem")
-- numeracja wierszy, kolumn na planszy
-- GUI promocji piona
-- zapisywanie, wczytywanie stanu gry (pomysł: zapisywanie może być aktywowane klawiszem s, informacja "Nacisnij s aby zapisac może być w tytule okna dla oszczędności czasu i okien")
-- tryb gry z innym graczem
+- [x] brak możliwości klikania w puste pola/ pola z figurami przeciwnika
+- [ ] narysowane możliwe ruchy po kliknięciu figury
+- [ ] przycisk cofający do menu wyboru trybu (bez zapisywania itp., pomysł aby nie tzeba było wychodzić x, co sprawia ze trzeba znów sie logować)
+- [ ] okno GM's (może być zastąpiona przyciskiem "wczytaj ostatnią grę z komputerem")
+- [ ] numeracja wierszy, kolumn na planszy
+- [ ] GUI promocji piona
+- [ ] zapisywanie, wczytywanie stanu gry (pomysł: zapisywanie może być aktywowane klawiszem s, informacja "Nacisnij s aby zapisac może być w tytule okna dla oszczędności czasu i okien")
+- [ ] tryb gry z innym graczem
