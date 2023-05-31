@@ -98,7 +98,10 @@ def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEng
     handle_mouse_buttons(sqSelected, playerClicks)
 
     if len(playerClicks) == 1:
-        print("[CONSOLE] Selected:", make_selected_str(playerClicks))
+        if can_be_clicked(make_selected_str(playerClicks), simulation.board):
+            print("[CONSOLE] Selected:", make_selected_str(playerClicks))
+        else:
+            reset_move_arrays(sqSelected, playerClicks)
 
     elif len(playerClicks) == 2:
         action = chess.Move.from_uci(make_move_str(playerClicks))
@@ -139,3 +142,16 @@ def promotion_prompt():
                 return chess.KNIGHT
             case _:
                 print("[CONSOLE] INVALID NUMBER")
+
+
+def can_be_clicked(str_square: str, board: chess.Board):
+    square = chess.parse_square(str_square)
+
+    if board.color_at(square) is not board.turn:
+        return False
+    else:
+        possible_starts = set(map(lambda x: x.uci()[:2], board.legal_moves))
+        if str_square in possible_starts:
+            return True
+        else:
+            return False
