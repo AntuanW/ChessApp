@@ -38,7 +38,8 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 3. Flask - serwer + zapytania HTTP / TCP
 
 ## Feedback po prezentowaniu, dodatkowe przemyślenia (od najwazniejszych/najłatwiejszych do najtrudniejszych):
-- oznaczenie, czyj jest ruch
+- oznaczenie, czyj jest ruch:
+  (przypominajka: ```simulation.board.turn() -> True | False```, True to białe)
 - brak możliwości klikania w puste pola/ pola z figurami przeciwnika [DONE]
 - narysowane możliwe ruchy po kliknięciu figury
 - przycisk cofający do menu wyboru trybu (bez zapisywania itp., pomysł aby nie tzeba było wychodzić x, co sprawia ze trzeba znów sie logować)
