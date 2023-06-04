@@ -155,3 +155,8 @@ def can_be_clicked(str_square: str, board: chess.Board):
             return True
         else:
             return False
+
+
+def handle_save(board: chess.Board):
+    print(board.fen())
+    pass
