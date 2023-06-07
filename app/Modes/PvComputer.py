@@ -33,7 +33,7 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
                     handle_undo(simulation, starting_move_number, sqSelected, playerClicks)
                     running = draw_game(screen, simulation, player_colour, game_mode)
                 elif e.key == p.K_s:
-                    handle_save(simulation.board)
+                    handle_save(simulation)
                     running = False
 
         if moveMade:

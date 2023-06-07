@@ -124,6 +124,7 @@ def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEng
 
 
 def promotion_prompt():
+    # todo promotion gui
     print("[CONSOLE] Select piece:")
     print("1 -> Queen")
     print("2 -> Bishop")
@@ -157,6 +158,7 @@ def can_be_clicked(str_square: str, board: chess.Board):
             return False
 
 
-def handle_save(board: chess.Board):
-    print(board.fen())
+def handle_save(simulation: GameEngine.GameState):
+    print(simulation.board.fen(), simulation.engine.difficulty)  # (str zapisu gry, siła bota)
+    # todo handle save
     pass
