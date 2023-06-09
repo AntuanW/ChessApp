@@ -96,6 +96,7 @@ class RegistrationWindow:
                     "password": self.password,
                     "PLAYER_VS_COMPUTER": {
                         "games": [],
+                        "last_save": {}
                     },
                     "PLAYER_VS_PLAYER_LOCAL": {
                         "games": [],

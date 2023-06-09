@@ -1,21 +1,18 @@
 import requests
 import json
+import datetime
 
 from flask import Flask, request, jsonify
-from pymongo import DESCENDING
 
 from mongoConnection import MongoConnection
 from app.Enums.modeEnum import *
 
-
 app = Flask(__name__)
 port = 8080
-
 
 @app.route('/')
 def hello():
     return 'Server for chess application'
-
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -36,7 +33,6 @@ def register():
     except requests.exceptions.RequestException as e:
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
-
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -67,37 +63,44 @@ def login():
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
-
 @app.route('/stats', methods=['POST'])
 def get_statistics():
 
     data = request.get_json()
 
     username = data['username']
-    req_enum_val = data['mode']
 
     try:
 
-        existing_user = mongo.users.find_one({"username": username})
+        pipeline = [
+            {"$match": {"username": username}},
+            {"$unwind": "$PLAYER_VS_COMPUTER.games"},
+            {"$group": {
+                "_id": "$username",
+                "wins": {"$sum": {"$cond": [{"$eq": ["$PLAYER_VS_COMPUTER.games.res", 1]}, 1, 0]}},
+                "losses": {"$sum": {"$cond": [{"$eq": ["$PLAYER_VS_COMPUTER.games.res", -1]}, 1, 0]}}
+            }}
+        ]
 
-        enum_val = get_key_by_value(req_enum_val)
+        result = mongo.users.aggregate(pipeline)
 
-        wins = existing_user[enum_val]['wins']
-        losses = existing_user[enum_val]['loses']
+        if result:
+            stats = result.next()
+            response = {
+                'message': 'User statistics fetched successfully!',
+                'wins': stats['wins'],
+                'losses': stats['losses']
+            }
+            return jsonify(response), 200
+        else:
+            response = {'message': 'No user found'}
+            return jsonify(response), 401
 
-        response = {
-            'message': 'User statistics fetched successfully!',
-            'wins': wins,
-            'loses': losses
-        }
-        return jsonify(response), 200
+
 
     except requests.exceptions.RequestException as e:
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
-
-
-import datetime
 
 @app.route('/score', methods=['PUT'])
 def update_score():
@@ -136,7 +139,6 @@ def update_score():
     except requests.exceptions.RequestException as e:
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
-
 
 @app.route('/top_players', methods=['GET'])
 def get_top_players():
@@ -196,6 +198,46 @@ def get_top_players():
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
+@app.route('/save_game', methods=['PUT'])
+def save_game():
+
+    data = request.get_json()
+    username = data['username']
+    game_state = data['game_state']
+    difficulty = data['difficulty']
+
+    try:
+        existing_user = mongo.users.find_one({"username": username})
+
+        if not existing_user:
+            response = {'message': 'No user found'}
+            return jsonify(response), 401
+
+
+        game_info = {
+            "game_state": game_state,
+            "date": datetime.datetime.now().strftime("%Y-%m-%d"),
+            "difficulty": difficulty,
+        }
+
+        mongo.users.update_one(
+            {"username": username},
+            {"$set": {"PLAYER_VS_COMPUTER.last_save": game_info}}
+        )
+
+        response = {
+            'message': 'Game state saved successfully!',
+        }
+
+        return jsonify(response), 200
+
+    except requests.exceptions.RequestException as e:
+        print("Error occurred during the request:", str(e))
+        return jsonify({'message': 'An error occurred during the request.'}), 500
+
+    # {"username": username},
+    # {"$push": {"PLAYER_VS_COMPUTER.games": game_info}}
+
 
 
 # @app.route('/delete_users', methods=['DELETE'])
@@ -211,6 +253,7 @@ def get_top_players():
 #     except requests.exceptions.RequestException as e:
 #         print("Error occurred during the request:", str(e))
 #         return jsonify({'message': 'An error occurred during the request.'}), 500
+
 
 
 if __name__ == '__main__':

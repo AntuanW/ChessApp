@@ -17,7 +17,7 @@ class StatsWindow:
         self.HOVER_BLACK = p.Color(65, 65, 65)
         self.running = True
         self.wins = 0
-        self.loses = 0
+        self.losses = 0
 
         self.screen = p.display.set_mode((self.WIDTH, self.HEIGHT))
         self.clock = p.time.Clock()
@@ -40,7 +40,7 @@ class StatsWindow:
         self.label3_x = (self.WIDTH - self.font1.render(f"wins: {self.wins}", True, self.BLACK).get_width()) // 2
         self.label3_y = self.button_y - self.font1.get_height() + 120
 
-        self.label4_x = (self.WIDTH - self.font1.render(f"loses: {self.loses}", True, self.BLACK).get_width()) // 2
+        self.label4_x = (self.WIDTH - self.font1.render(f"loses: {self.losses}", True, self.BLACK).get_width()) // 2
         self.label4_y = self.button_y - self.font1.get_height() + 165
 
     def getStatistics(self):
@@ -57,9 +57,9 @@ class StatsWindow:
                 response = response.json()
                 print(response['message'])
                 self.wins = response['wins']
-                self.loses = response['loses']
-                print(self.wins)
-                print(self.loses)
+                self.losses = response['losses']
+                # print(self.wins)
+                # print(self.losses)
 
             else:
                 print("Failed to fetch statistics. Status code:", response.status_code)
@@ -103,7 +103,7 @@ class StatsWindow:
         label3 = self.font1.render(f"wins: {self.wins}", True, self.BLACK)
         self.screen.blit(label3, (self.label3_x, self.label3_y))
 
-        label4 = self.font1.render(f"loses: {self.loses}", True, self.BLACK)
+        label4 = self.font1.render(f"loses: {self.losses}", True, self.BLACK)
         self.screen.blit(label4, (self.label4_x, self.label4_y))
 
         go_back_rect = p.Rect(390, 20, 100, 25)

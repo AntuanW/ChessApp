@@ -1,10 +1,11 @@
 import time
 
-import pygame.time
 import chess
 from app import GameEngine
 from app.GUI.Draw import *
 from app.GUI.ModeWindow.EndgameWindow import EndgameWindow
+from app.config import get_username
+import requests
 
 
 def init_screen():
@@ -159,6 +160,24 @@ def can_be_clicked(str_square: str, board: chess.Board):
 
 
 def handle_save(simulation: GameEngine.GameState):
-    print(simulation.board.fen(), simulation.engine.difficulty)  # (str zapisu gry, siła bota)
-    # todo handle save
-    pass
+    save_game(simulation.board.fen(), simulation.engine.difficulty)
+
+
+def save_game(game_state, difficulty):
+
+    data = {
+        "username": get_username(),
+        "game_state": game_state,
+        "difficulty": difficulty
+    }
+
+    try:
+        print("saving game state to database...")
+        response = requests.put("http://localhost:8080/save_game", json=data)
+        if response.status_code == 200:
+            print("game state successfully saved to the database")
+        else:
+            print("Failed to save game state to the database. Status code:", response.status_code)
+
+    except requests.exceptions.RequestException as e:
+        print("Error occurred during the request:", str(e))
