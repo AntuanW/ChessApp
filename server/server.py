@@ -104,7 +104,7 @@ def update_score():
 
     data = request.get_json()
     username = data['username']
-    score = data['score']
+    res = data['res']
     game_state = data['game_state']
     difficulty = data['difficulty']
 
@@ -115,27 +115,12 @@ def update_score():
             response = {'message': 'No user found'}
             return jsonify(response), 401
 
-        if score == 0:
-            mongo.users.update_one(
-                {"username": username},
-                {"$inc": {"PLAYER_VS_COMPUTER.loses": 1}}
-            )
-        elif score == 1:
-            mongo.users.update_one(
-                {"username": username},
-                {"$inc": {"PLAYER_VS_COMPUTER.wins": 1}}
-            )
-        elif score == None: # draw
-            pass
-
-        else:
-            response = {'message': 'Invalid score value'}
-            return jsonify(response), 400
 
         game_info = {
             "game_state": game_state,
             "date": datetime.datetime.now().strftime("%Y-%m-%d"),
-            "difficulty": difficulty
+            "difficulty": difficulty,
+            "res": res
         }
         mongo.users.update_one(
             {"username": username},
@@ -155,24 +140,37 @@ def update_score():
 
 @app.route('/top_players', methods=['GET'])
 def get_top_players():
-
     try:
-
         pipeline = [
             {
                 '$project': {
                     'username': 1,
                     'ranking': {
-                        '$cond': {
-                            'if': {'$ne': ['$PLAYER_VS_COMPUTER.loses', 0]},
-                            'then': {'$divide': ['$PLAYER_VS_COMPUTER.wins', '$PLAYER_VS_COMPUTER.loses']},
-                            'else': '$PLAYER_VS_COMPUTER.wins'
+                        '$sum': {
+                            '$map': {
+                                'input': '$PLAYER_VS_COMPUTER.games',
+                                'as': 'game',
+                                'in': {
+                                    '$multiply': [
+                                        5,
+                                        '$$game.difficulty',
+                                        '$$game.res'
+                                    ]
+                                }
+                            }
                         }
                     }
                 }
             },
             {
-                '$sort': {'ranking': DESCENDING}
+                '$addFields': {
+                    'ranking': {
+                        '$add': [1000, '$ranking']
+                    }
+                }
+            },
+            {
+                '$sort': {'ranking': -1}
             },
             {
                 '$limit': 10
@@ -187,18 +185,17 @@ def get_top_players():
             ranking = player['ranking']
             top_10.append({'playername': username, 'ranking': ranking})
 
-
         response = {
             'top_10': top_10,
-            'message': "Top 10 players fetched successfully from database"
+            'message': "Top 10 players fetched successfully from the database"
         }
 
         return jsonify(response)
 
-
     except requests.exceptions.RequestException as e:
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
+
 
 
 # @app.route('/delete_users', methods=['DELETE'])

@@ -96,19 +96,10 @@ class RegistrationWindow:
                     "password": self.password,
                     "PLAYER_VS_COMPUTER": {
                         "games": [],
-                        "wins": 0,
-                        "loses": 0
                     },
                     "PLAYER_VS_PLAYER_LOCAL": {
                         "games": [],
-                        "wins": 0,
-                        "loses": 0
-                    },
-                    "PLAYER_VS_PLAYER_ONLINE": {
-                        "games": [],
-                        "wins": 0,
-                        "loses": 0
-                    },
+                    }
                 }
 
                 try:

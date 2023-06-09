@@ -3,9 +3,9 @@ import chess
 from app.Modes import PvComputer
 from saves import saves
 
-save = saves[6]
+save = saves[5]
 our_color = chess.WHITE
-difficulty = 1
+difficulty = 7
 
 
 if __name__ == '__main__':

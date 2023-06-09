@@ -39,17 +39,17 @@ class EndgameWindow:
         p.display.set_caption(self.window_title)
 
     def get_winner_color(self):
-        if self.score == 0:
+        if self.score == -1:
             return "You lose"
         elif self.score == 1:
             return "You win"
         else:
-            return "None"
+            return "Draw"
 
     def add_score(self):
         data = {
             "username": get_username(),
-            "score": self.score,
+            "res": self.score,
             "game_state": self.game_state,
             "difficulty": self.difficulty
         }
@@ -121,9 +121,6 @@ class EndgameWindow:
         return False
 
     def setScore(self):
-        if self.outcome.winner is None:
-            return None
-        elif self.outcome.winner == self.our_color:
-            return 1
-        else:
-            return 0
+        if self.outcome.winner is None: return 0 # draw
+        elif self.outcome.winner == self.our_color: return 1 # win
+        else: return -1 # lose

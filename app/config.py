@@ -1,6 +1,5 @@
 my_username = None
-my_opponent = None
-
+# my_username = "tomek"
 
 def set_username(username):
     global my_username
@@ -9,6 +8,3 @@ def set_username(username):
 def get_username():
     return my_username
 
-def set_opponent(username):
-    global my_opponent
-    my_opponent = username
