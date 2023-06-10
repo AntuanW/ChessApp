@@ -1,7 +1,6 @@
 from app.Enums.modeEnum import GameMode
 from app.Modes.Ultis import *
 
-
 def game(player_colour=chess.WHITE, difficulty=2, save=None):
 
     game_mode = GameMode.PLAYER_VS_COMPUTER
@@ -34,7 +33,16 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
                     running = draw_game(screen, simulation, player_colour, game_mode)
                 elif e.key == p.K_s:
                     handle_save(simulation)
+                    p.quit()
                     running = False
+                    from app.GUI.ModeWindow.PVC import PVC
+                    PVC().run()
+                elif e.key == p.K_q:
+                    p.quit()
+                    running = False
+                    from app.GUI.ModeWindow.ModeWindow import ModeWindow
+                    ModeWindow().run()
+
 
         if moveMade:
             running = draw_game(screen, simulation, player_colour, game_mode)

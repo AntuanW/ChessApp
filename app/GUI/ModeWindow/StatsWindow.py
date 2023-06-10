@@ -58,8 +58,6 @@ class StatsWindow:
                 print(response['message'])
                 self.wins = response['wins']
                 self.losses = response['losses']
-                # print(self.wins)
-                # print(self.losses)
 
             else:
                 print("Failed to fetch statistics. Status code:", response.status_code)

@@ -235,9 +235,36 @@ def save_game():
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
-    # {"username": username},
-    # {"$push": {"PLAYER_VS_COMPUTER.games": game_info}}
 
+@app.route('/last_saved', methods=['POST'])
+def get_last_saved_game():
+
+    data = request.get_json()
+
+    username = data['username']
+
+    try:
+
+        existing_user = mongo.users.find_one({"username": username})
+
+        if not existing_user:
+            response = {'message': 'No user found'}
+            return jsonify(response), 401
+
+        last_save = existing_user.get('PLAYER_VS_COMPUTER', {}).get('last_save')
+
+        if not last_save:
+            response = {'message': 'No last save found. Not acceptable'}
+            return jsonify(response), 406
+
+        response = last_save
+
+        return jsonify(response), 200
+
+
+    except requests.exceptions.RequestException as e:
+        print("Error occurred during the request:", str(e))
+        return jsonify({'message': 'An error occurred during the request.'}), 500
 
 
 # @app.route('/delete_users', methods=['DELETE'])

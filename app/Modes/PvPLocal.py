@@ -22,7 +22,10 @@ def game(save=None):
                 running = False
 
             elif e.type == p.MOUSEBUTTONDOWN and simulation.isGameRunning():
+
                 moveMade = handle_player_move(sqSelected, playerClicks, simulation)
+
+
 
         if moveMade:
             running = draw_game(screen, simulation, None, game_mode)
