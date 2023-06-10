@@ -22,8 +22,14 @@ def game(save=None):
                 running = False
 
             elif e.type == p.MOUSEBUTTONDOWN and simulation.isGameRunning():
-
                 moveMade = handle_player_move(sqSelected, playerClicks, simulation)
+
+            elif e.type == p.KEYDOWN:
+                if e.key == p.K_q:
+                    p.quit()
+                    running = False
+                    from app.GUI.ModeWindow.ModeWindow import ModeWindow
+                    ModeWindow().run()
 
 
 

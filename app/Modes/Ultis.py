@@ -6,6 +6,7 @@ from app.GUI.Draw import *
 from app.GUI.ModeWindow.EndgameWindow import EndgameWindow
 from app.config import get_username
 import requests
+from app.Enums import modeEnum
 
 
 def init_screen():
@@ -37,6 +38,7 @@ def make_local_game(save):
 
 
 def draw_game(screen, simulation: GameEngine.GameState, player_color, game_mode):
+    p.display.set_caption(give_info(simulation.board.turn, game_mode))
     if not simulation.isGameRunning():
         draw_game_state(screen, simulation)
         p.display.flip()
@@ -47,6 +49,19 @@ def draw_game(screen, simulation: GameEngine.GameState, player_color, game_mode)
         draw_game_state(screen, simulation)
         p.display.flip()
         return True
+
+
+def give_info(turn, mode: modeEnum.GameMode):
+    res = "To move: "
+    if turn:
+        res += "WHITE, "
+    else:
+        res += "BLACK, "
+    res += "controls: Q - quit,"
+    if mode == modeEnum.GameMode.PLAYER_VS_COMPUTER:
+        res += " S - save, Z - undo"
+
+    return res
 
 
 def is_computer_starting(player_colour: chess.Color, simulation: GameEngine.GameState):
@@ -164,7 +179,6 @@ def handle_save(simulation: GameEngine.GameState):
 
 
 def save_game(game_state, difficulty):
-
     data = {
         "username": get_username(),
         "game_state": game_state,
