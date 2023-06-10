@@ -1,4 +1,5 @@
 import chess
+import pylab as p
 
 from app.Enums.modeEnum import GameMode
 from app.Modes import PvComputer
@@ -26,7 +27,9 @@ class PVC:
         self.font1 = p.font.SysFont("Arial", 20, bold=True)
         self.font2 = p.font.SysFont("Arial", 16, bold=True)
 
-        self.font_size = 24
+        self.font_size1 = 24
+        self.font_size2 = 19
+        self.font_size3 = 17
         self.font_color = self.BLACK
 
         self.screen = p.display.set_mode((self.window_width, self.window_height))
@@ -121,7 +124,7 @@ class PVC:
         if self.checkbox_value:
             p.draw.rect(self.screen, self.font_color, checkbox_rect)
 
-        checkbox_label = p.font.Font(None, self.font_size).render("Play as White/Black", True, self.font_color)
+        checkbox_label = p.font.Font(None, self.font_size1).render("Play as White/Black", True, self.font_color)
         self.screen.blit(checkbox_label, (80, 50))
 
         slider_x = 50
@@ -134,23 +137,35 @@ class PVC:
         slider_fill_rect = p.Rect(slider_x, slider_y, int(slider_value * slider_width), slider_height)
         p.draw.rect(self.screen, self.font_color, slider_fill_rect)
 
-        slider_label = p.font.Font(None, self.font_size).render("Difficulty: {}".format(self.difficulty),
-                                                                True, self.font_color)
+        slider_label = p.font.Font(None, self.font_size1).render("Difficulty: {}".format(self.difficulty),
+                                                                 True, self.font_color)
         self.screen.blit(slider_label, (slider_x + slider_width + 20, slider_y))
 
         start_button_rect = p.Rect(50, 150, 200, 50)
         p.draw.rect(self.screen, self.font_color, start_button_rect, 2)
-        start_button_label = p.font.Font(None, self.font_size).render("Start Game", True, self.font_color)
+        start_button_label = p.font.Font(None, self.font_size1).render("Start Game", True, self.font_color)
         self.screen.blit(start_button_label, (105, 168))
 
         load_button_rect = p.Rect(50, 230, 200, 50)
         p.draw.rect(self.screen, self.font_color, load_button_rect, 2)
-        load_button_label = p.font.Font(None, self.font_size).render("Load last saved & Play", True, self.font_color)
+        load_button_label = p.font.Font(None, self.font_size1).render("Load last saved & Play", True, self.font_color)
         self.screen.blit(load_button_label, (63, 248))
+
+        controls_button_rect = p.Rect(50, 310, 412, 80)
+        p.draw.rect(self.screen, self.font_color, controls_button_rect, 2)
+        controls_button_label1 = p.font.Font(None, self.font_size2).render("During the game, you can use the following keyboard buttons:", True, self.font_color)
+        controls_button_label2 = p.font.Font(None, self.font_size3).render("-\"z\" - undo your move", True, self.font_color)
+        controls_button_label3 = p.font.Font(None, self.font_size3).render("-\"s\" - save your game state to the database and return to this window", True, self.font_color)
+        controls_button_label4 = p.font.Font(None, self.font_size3).render("-\"q\" - return to the Mode Window without saving the game state", True, self.font_color)
+
+        self.screen.blit(controls_button_label1, (59, 320))
+        self.screen.blit(controls_button_label2, (61, 339))
+        self.screen.blit(controls_button_label3, (61, 356))
+        self.screen.blit(controls_button_label4, (61, 373))
 
         statistics_button_rect = p.Rect(50, 420, 200, 50)
         p.draw.rect(self.screen, self.font_color, statistics_button_rect, 2)
-        statistics_button_label = p.font.Font(None, self.font_size).render("Show Statistics",
+        statistics_button_label = p.font.Font(None, self.font_size1).render("Show Statistics",
                                                                             True, self.font_color)
         self.screen.blit(statistics_button_label, (90, 437))
 
@@ -204,7 +219,5 @@ class PVC:
                 self.draw()
 
         p.quit()
-
-
 
 

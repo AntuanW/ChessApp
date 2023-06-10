@@ -51,3 +51,5 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
                 simulation.makeComputerMove()
                 running = draw_game(screen, simulation, player_colour, game_mode)
                 moveMade = False
+
+
