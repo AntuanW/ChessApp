@@ -39,9 +39,9 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 
 ## Feedback po prezentowaniu, plan prac przed oddaniem projektu(od najwazniejszych/najłatwiejszych do najtrudniejszych):
 - [ ] GUI promocji piona
-- [x] numeracja wierszy, kolumn na planszy
 - [ ] okno GM's (może być zastąpiona przyciskiem "wczytaj ostatnią grę z komputerem")
 - [ ] narysowane możliwe ruchy po kliknięciu figury
+- [x] numeracja wierszy, kolumn na planszy
 - [x] GUI z controlsami
 - [x] oznaczenie, czyj jest ruch:
 - [x] brak możliwości klikania w puste pola/ pola z figurami przeciwnika
