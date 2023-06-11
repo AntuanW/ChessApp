@@ -72,7 +72,7 @@ def is_computer_starting(player_colour: chess.Color, simulation: GameEngine.Game
     )
 
 
-def handle_mouse_buttons(sqSelected: list, playerClicks: list):
+def handle_mouse_buttons(sqSelected: list, playerClicks: list, screen, simulation):
     location = p.mouse.get_pos()
 
     row = location[1] // SQ_SIZE
@@ -80,6 +80,7 @@ def handle_mouse_buttons(sqSelected: list, playerClicks: list):
 
     if sqSelected == [row, col]:
         reset_move_arrays(sqSelected, playerClicks)
+        draw_game_state(screen, simulation)
         print("[CONSOLE] RESET CLICKS")
     else:
         sqSelected.append(row)
@@ -111,7 +112,7 @@ def handle_undo(simulation: GameEngine.GameState, starting_move_number: int, sqS
 
 
 def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEngine.GameState, screen):
-    handle_mouse_buttons(sqSelected, playerClicks)
+    handle_mouse_buttons(sqSelected, playerClicks, screen, simulation)
 
     if len(playerClicks) == 1:
         if can_be_clicked(make_selected_str(playerClicks), simulation.board):
@@ -130,18 +131,20 @@ def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEng
         action.promotion = chess.QUEEN  # fake promotion
         if action in simulation.board.legal_moves:
             reset_move_arrays(sqSelected, playerClicks)
-            action.promotion = promotion_window(screen, color="w")
+            action.promotion = promotion_window(screen, simulation.board.turn)
             simulation.makePlayerMove(action)
             print("[CONSOLE] Move made: ", action)
             return True
         else:
             reset_move_arrays(sqSelected, playerClicks)
+            draw_game_state(screen, simulation)
             print("[CONSOLE] ILLEGAL MOVE")
             return False
 
 
-def promotion_window(screen, color):
-
+def promotion_window(screen, turn):
+    if turn: color = "w"
+    else: color = "b"
     queen_image = p.transform.scale(p.image.load(f"../resources/ChessImg/{color}Q.png"), (60, 60))
     bishop_image = p.transform.scale(p.image.load(f"../resources/ChessImg/{color}B.png"), (60, 60))
     rook_image = p.transform.scale(p.image.load(f"../resources/ChessImg/{color}R.png"), (60, 60))

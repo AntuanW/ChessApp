@@ -3,7 +3,6 @@ from app.Modes.Ultis import *
 
 
 def game(save=None):
-
     screen, clock = init_screen()
     game_mode = GameMode.PLAYER_VS_PLAYER_LOCAL
     simulation = make_local_game(save)
@@ -30,8 +29,6 @@ def game(save=None):
                     running = False
                     from app.GUI.ModeWindow.ModeWindow import ModeWindow
                     ModeWindow().run()
-
-
 
         if moveMade:
             running = draw_game(screen, simulation, None, game_mode)

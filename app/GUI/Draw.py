@@ -72,6 +72,7 @@ def draw_pieces(screen, board):
 def draw_game_state(screen, gs):
     draw_board(screen)
     draw_pieces(screen, gs.board)
+    p.display.flip()
 
 
 def draw_possible_moves(screen, gs, checked):
