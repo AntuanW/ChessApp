@@ -19,7 +19,6 @@ colsToRanks = {v: k for k, v in filesToCols.items()}
 
 
 def get_uci_move(sqSelected):
-
     start_row = sqSelected[0]
     start_col = sqSelected[1]
 
@@ -30,9 +29,11 @@ def load_images():
     pieces = ["p", "r", "n", "b", "q", "k", "P", "R", "N", "B", "Q", "K"]
     for piece in pieces:
         if piece.islower():
-            IMAGES[piece] = p.transform.scale(p.image.load("../resources/ChessImg/b" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
+            IMAGES[piece] = p.transform.scale(p.image.load("../resources/ChessImg/b" + piece + ".png"),
+                                              (SQ_SIZE, SQ_SIZE))
         else:
-            IMAGES[piece] = p.transform.scale(p.image.load("../resources/ChessImg/w" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
+            IMAGES[piece] = p.transform.scale(p.image.load("../resources/ChessImg/w" + piece + ".png"),
+                                              (SQ_SIZE, SQ_SIZE))
 
 
 def draw_board(screen):
@@ -53,6 +54,20 @@ def draw_pieces(screen, board):
             piece = convert(r, c, board)
             if piece != "None":
                 screen.blit(IMAGES[piece], p.Rect(c * SQ_SIZE, (DIMENSION - r - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+            if r == 0:
+                # Dodanie liter od "a" do "h" w pierwszym wierszu
+                letter = chr(ord("a") + c)
+                font = p.font.SysFont(None, 20)
+                text = font.render(letter, True, p.Color("black"))
+                screen.blit(text,
+                            p.Rect(c * SQ_SIZE + 2, (DIMENSION - r - 1) * SQ_SIZE + SQ_SIZE - 18, SQ_SIZE, SQ_SIZE))
+            if c == 0:
+                # Dodanie cyfr od 1 do 8 w pierwszej kolumnie
+                number = str(r + 1)
+                font = p.font.SysFont(None, 20)
+                text = font.render(number, True, p.Color("black"))
+                screen.blit(text, p.Rect(c * SQ_SIZE + 2, (DIMENSION - r - 1) * SQ_SIZE + 2, SQ_SIZE, SQ_SIZE))
+
 
 def draw_game_state(screen, gs):
     draw_board(screen)
@@ -60,7 +75,6 @@ def draw_game_state(screen, gs):
 
 
 def detect_legal_moves_and_draw_circles(sqSelected, screen, board):
-
     start_row = sqSelected[0]
     start_col = sqSelected[1]
 
@@ -87,13 +101,9 @@ def detect_legal_moves_and_draw_circles(sqSelected, screen, board):
 
 
 def draw_circle(row, column, screen):
-
     center_x = column * SQ_SIZE + SQ_SIZE // 2
     center_y = row * SQ_SIZE + SQ_SIZE // 2
 
     radius = SQ_SIZE // 5
 
     p.draw.circle(screen, LIGHT_GRAY_WITH_OPACITY, (center_x, center_y), radius)
-
-
-
