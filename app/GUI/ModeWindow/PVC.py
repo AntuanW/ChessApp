@@ -1,5 +1,5 @@
 import chess
-import pylab as p
+import pygame as p
 
 from app.Enums.modeEnum import GameMode
 from app.Modes import PvComputer
