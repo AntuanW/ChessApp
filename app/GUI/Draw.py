@@ -74,6 +74,24 @@ def draw_game_state(screen, gs):
     draw_pieces(screen, gs.board)
 
 
+def draw_possible_moves(screen, gs, checked):
+    draw_board_with_moves(screen, gs.board, checked)
+    draw_pieces(screen, gs.board)
+
+
+def draw_board_with_moves(screen, board, checked):
+    draw_board(screen)
+    possible_ends = list(map(lambda x: x.uci()[2:4], filter(lambda x: x.uci()[0:2] == checked, board.legal_moves)))
+    for x in possible_ends:
+        print(x)
+        c = filesToCols[x[0]]
+        r = ranksToRows[x[1]]
+        print(c, r)
+        p.draw.rect(screen, "ORANGE", p.Rect(c * SQ_SIZE, (DIMENSION - r - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    draw_pieces(screen, board)
+    p.display.flip()
+    
+
 def detect_legal_moves_and_draw_circles(sqSelected, screen, board):
     start_row = sqSelected[0]
     start_col = sqSelected[1]

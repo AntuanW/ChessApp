@@ -1,12 +1,11 @@
 import time
-import pygame as p
-import chess
-import requests
 
+import chess
 from app import GameEngine
 from app.GUI.Draw import *
 from app.GUI.ModeWindow.EndgameWindow import EndgameWindow
 from app.config import get_username
+import requests
 from app.Enums import modeEnum
 
 
@@ -117,6 +116,7 @@ def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEng
     if len(playerClicks) == 1:
         if can_be_clicked(make_selected_str(playerClicks), simulation.board):
             print("[CONSOLE] Selected:", make_selected_str(playerClicks))
+            draw_possible_moves(screen, simulation, make_selected_str(playerClicks))
         else:
             reset_move_arrays(sqSelected, playerClicks)
 
@@ -127,10 +127,10 @@ def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEng
             simulation.makePlayerMove(action)
             print("[CONSOLE] Move made: ", action)
             return True
-        action.promotion = chess.QUEEN
+        action.promotion = chess.QUEEN  # fake promotion
         if action in simulation.board.legal_moves:
             reset_move_arrays(sqSelected, playerClicks)
-            action.promotion = promotion_window(screen, color="w")
+            action.promotion = promotion_prompt()
             simulation.makePlayerMove(action)
             print("[CONSOLE] Move made: ", action)
             return True
@@ -139,93 +139,27 @@ def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEng
             print("[CONSOLE] ILLEGAL MOVE")
             return False
 
-def promotion_window(screen, color):
 
-    queen_image = p.transform.scale(p.image.load(f"../resources/ChessImg/{color}Q.png"), (60, 60))
-    bishop_image = p.transform.scale(p.image.load(f"../resources/ChessImg/{color}B.png"), (60, 60))
-    rook_image = p.transform.scale(p.image.load(f"../resources/ChessImg/{color}R.png"), (60, 60))
-    knight_image = p.transform.scale(p.image.load(f"../resources/ChessImg/{color}N.png"), (60, 60))
-
-    queen_button = p.Rect(50, 200, 70, 70)
-    bishop_button = p.Rect(164, 200, 70, 70)
-    rook_button = p.Rect(278, 200, 70, 70)
-    knight_button = p.Rect(392, 200, 70, 70)
-
-    running = True
-
-    font1 = p.font.Font(None, 40)
-    font2 = p.font.Font(None, 22)
-    font3 = p.font.Font(None, 26)
-    label1 = font1.render("You have been promoted!", True, (255, 255, 255))
-    label2 = font2.render("Choose a piece that you want to obtain upon promotion of a pawn:", True, (255, 255, 255))
-    queen_label = font3.render("Queen", True, (255, 255, 255))
-    bishop_label = font3.render("Bishop", True, (255, 255, 255))
-    rook_label = font3.render(" Rook", True, (255, 255, 255))
-    knight_label = font3.render("Knight", True, (255, 255, 255))
-
-    button_color = (155, 155, 155)
-    button_hover_color = (120, 120, 120)
-
-    queen_hovered = False
-    bishop_hovered = False
-    rook_hovered = False
-    knight_hovered = False
-
-    while running:
-        for event in p.event.get():
-            if event.type == p.QUIT:
-                p.quit()
-                running = False
-            elif event.type == p.MOUSEBUTTONDOWN:
-                mouse_pos = p.mouse.get_pos()
-                if queen_button.collidepoint(mouse_pos):
-                    return chess.QUEEN
-                elif bishop_button.collidepoint(mouse_pos):
-                    return chess.BISHOP
-                elif rook_button.collidepoint(mouse_pos):
-                    return chess.ROOK
-                elif knight_button.collidepoint(mouse_pos):
-                    return chess.KNIGHT
-
-        screen.fill((0, 0, 0))
-
-        screen.blit(label1, (88, 100))
-        screen.blit(label2, (20, 150))
-
-        queen_hovered = queen_button.collidepoint(p.mouse.get_pos())
-        bishop_hovered = bishop_button.collidepoint(p.mouse.get_pos())
-        rook_hovered = rook_button.collidepoint(p.mouse.get_pos())
-        knight_hovered = knight_button.collidepoint(p.mouse.get_pos())
-
-        queen_button_color = button_hover_color if queen_hovered else button_color
-        bishop_button_color = button_hover_color if bishop_hovered else button_color
-        rook_button_color = button_hover_color if rook_hovered else button_color
-        knight_button_color = button_hover_color if knight_hovered else button_color
-
-        p.draw.rect(screen, queen_button_color, queen_button)
-        screen.blit(queen_image, (queen_button.x + 5, queen_button.y + 5))
-        queen_label_rect = queen_label.get_rect(centerx=queen_button.centerx, top=queen_button.bottom + 10)
-        screen.blit(queen_label, queen_label_rect)
-
-        p.draw.rect(screen, bishop_button_color, bishop_button)
-        screen.blit(bishop_image, (bishop_button.x + 5, bishop_button.y + 5))
-        bishop_label_rect = bishop_label.get_rect(centerx=bishop_button.centerx, top=bishop_button.bottom + 10)
-        screen.blit(bishop_label, bishop_label_rect)
-
-        p.draw.rect(screen, rook_button_color, rook_button)
-        screen.blit(rook_image, (rook_button.x + 5, rook_button.y + 5))
-        rook_label_rect = rook_label.get_rect(centerx=rook_button.centerx, top=rook_button.bottom + 10)
-        screen.blit(rook_label, rook_label_rect)
-
-        p.draw.rect(screen, knight_button_color, knight_button)
-        screen.blit(knight_image, (knight_button.x + 5, knight_button.y + 5))
-        knight_label_rect = knight_label.get_rect(centerx=knight_button.centerx, top=knight_button.bottom + 10)
-        screen.blit(knight_label, knight_label_rect)
-
-        p.display.flip()
-
-    p.quit()
-
+def promotion_prompt():
+    # todo promotion gui
+    print("[CONSOLE] Select piece:")
+    print("1 -> Queen")
+    print("2 -> Bishop")
+    print("3 -> Rook")
+    print("4 -> Knight")
+    while True:
+        prom = input("Selected piece:")
+        match prom:
+            case '1':
+                return chess.QUEEN
+            case '2':
+                return chess.BISHOP
+            case '3':
+                return chess.ROOK
+            case '4':
+                return chess.KNIGHT
+            case _:
+                print("[CONSOLE] INVALID NUMBER")
 
 
 def can_be_clicked(str_square: str, board: chess.Board):
