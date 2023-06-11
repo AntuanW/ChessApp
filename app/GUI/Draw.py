@@ -76,53 +76,32 @@ def draw_game_state(screen, gs):
 
 
 def draw_possible_moves(screen, gs, checked):
-    draw_board_with_moves(screen, gs.board, checked)
+    detect_legal_moves_and_draw_legal_rect(checked, screen, gs.board)
     draw_pieces(screen, gs.board)
 
+def detect_legal_moves_and_draw_legal_rect(uci_move, screen, board):
 
-def draw_board_with_moves(screen, board, checked):
     draw_board(screen)
-    possible_ends = list(map(lambda x: x.uci()[2:4], filter(lambda x: x.uci()[0:2] == checked, board.legal_moves)))
-    for x in possible_ends:
-        print(x)
-        c = filesToCols[x[0]]
-        r = ranksToRows[x[1]]
-        print(c, r)
-        p.draw.rect(screen, "ORANGE", p.Rect(c * SQ_SIZE, (DIMENSION - r - 1) * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+    print(uci_move)
+
+    for legal_move in board.legal_moves:
+
+        legal_start_move = legal_move.uci()[0:2]
+
+        end_col = filesToCols[legal_move.uci()[2]]
+        end_row = ranksToRows[legal_move.uci()[3]]
+
+        if legal_start_move == uci_move:
+            draw_legal_rect(end_row, end_col, screen)
+
     draw_pieces(screen, board)
     p.display.flip()
-    
-
-def detect_legal_moves_and_draw_circles(sqSelected, screen, board):
-    start_row = sqSelected[0]
-    start_col = sqSelected[1]
-
-    piece = convert(start_row, start_col, board)
-
-    if piece != None:
-
-        uci_move = get_uci_move(sqSelected)
-
-        print(uci_move)
-
-        for legal_move in board.legal_moves:
-
-            legal_start_move = legal_move.uci()[0:2]
-
-            end_col = filesToCols[legal_move.uci()[2]]
-            end_row = ranksToRows[legal_move.uci()[3]]
-
-            if legal_start_move == uci_move:
-                print(legal_move)
-                draw_circle(end_row, end_col, screen)
 
     return True
 
 
-def draw_circle(row, column, screen):
-    center_x = column * SQ_SIZE + SQ_SIZE // 2
-    center_y = row * SQ_SIZE + SQ_SIZE // 2
+def draw_legal_rect(row, column, screen):
 
-    radius = SQ_SIZE // 5
+    p.draw.rect(screen, "ORANGE", p.Rect(column * SQ_SIZE, row * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
-    p.draw.circle(screen, LIGHT_GRAY_WITH_OPACITY, (center_x, center_y), radius)
+
