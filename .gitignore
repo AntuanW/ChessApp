@@ -22,6 +22,3 @@ build/
 dist/
 
 __pycache__
-
-tests/PVCTest.py
-tests/PVPTest.py
