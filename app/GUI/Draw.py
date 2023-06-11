@@ -82,7 +82,6 @@ def draw_possible_moves(screen, gs, checked):
 def detect_legal_moves_and_draw_legal_rect(uci_move, screen, board):
 
     draw_board(screen)
-    print(uci_move)
 
     for legal_move in board.legal_moves:
 
