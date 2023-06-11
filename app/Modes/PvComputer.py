@@ -25,7 +25,7 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
                 running = False
 
             elif e.type == p.MOUSEBUTTONDOWN and simulation.isGameRunning():
-                moveMade = handle_player_move(sqSelected, playerClicks, simulation)
+                moveMade = handle_player_move(sqSelected, playerClicks, simulation, screen)
 
             elif e.type == p.KEYDOWN and simulation.isGameRunning():
                 if e.key == p.K_z:
