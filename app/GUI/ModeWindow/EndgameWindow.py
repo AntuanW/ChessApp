@@ -14,6 +14,7 @@ BLACK = (0, 0, 0)
 class EndgameWindow:
     def __init__(self, our_color: chess.Color, game_state: str,
                  outcome: chess.Outcome, difficulty: int, game_mode):
+        self.button_area = None
         p.init()
         self.window_width = 512
         self.window_height = 512
