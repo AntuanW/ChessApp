@@ -42,7 +42,7 @@ def draw_game(screen, simulation: GameEngine.GameState, player_color, game_mode)
     if not simulation.isGameRunning():
         draw_game_state(screen, simulation)
         p.display.flip()
-        time.sleep(3)
+        time.sleep(0.5)
         return EndgameWindow(player_color, simulation.board.fen(), simulation.board.outcome(),
                              simulation.engine.difficulty, game_mode).run()
     else:

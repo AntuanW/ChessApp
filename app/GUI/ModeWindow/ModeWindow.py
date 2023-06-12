@@ -46,7 +46,7 @@ class ModeWindow:
         ]
 
     def draw_buttons(self):
-        button_texts = ["Player VS Computer", "Player VS Player [Local]", "Top Players", "CHESS GMs"]
+        button_texts = ["Player VS Computer", "Player VS Player [Local]", "Top Players", "Load Your Last Game"]
 
         for i in range(4):
             button_rect = p.Rect(self.button_x, self.button_y + i * (self.button_height + self.button_padding),
@@ -83,6 +83,7 @@ class ModeWindow:
         button_index = -1
 
         for i in range(4):
+
             button_rect = p.Rect(self.button_x, self.button_y + i * (self.button_height + self.button_padding),
                                  self.button_width, self.button_height)
 
@@ -91,11 +92,11 @@ class ModeWindow:
                 break
 
         if button_index != -1:
+
             if button_index == 0:  PVC().run()
             elif button_index == 1: game()
             elif button_index == 2: RankingWindow().run()
-            elif button_index == 3:
-                pass
+            elif button_index == 3: PVC().handle_load_button_click()
 
             self.running = False
             p.quit()
