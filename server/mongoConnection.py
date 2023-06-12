@@ -17,10 +17,7 @@ class MongoConnection:
         self.client = None
         self.uri = f"mongodb+srv://{username}:{password}@cluster0.rsuv7ei.mongodb.net/?retryWrites=true&w=majority"
 
-    def initMongoConnection(self):
+    def init_mongo_connection(self):
         self.client = MongoClient(self.uri, tlsCAFile=certifi.where())
         self.db = self.client["chess-application"]
         self.users = self.db["users"]
-        # print("HelloWorld!")
-        # print(username)
-        # print(password)

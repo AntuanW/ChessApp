@@ -14,7 +14,7 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
     playerClicks = []
 
     if is_computer_starting(player_colour, simulation) and simulation.isGameRunning():
-        simulation.makeComputerMove()
+        simulation.make_computer_move()
 
     running = draw_game(screen, simulation, player_colour, game_mode)
 
@@ -47,6 +47,6 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
             running = draw_game(screen, simulation, player_colour, game_mode)
 
             if simulation.isGameRunning():
-                simulation.makeComputerMove()
+                simulation.make_computer_move()
                 running = draw_game(screen, simulation, player_colour, game_mode)
                 moveMade = False

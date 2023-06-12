@@ -40,7 +40,7 @@ def make_local_game(save):
 
 def draw_game(screen, simulation: GameEngine.GameState, player_color, game_mode):
     p.display.set_caption(give_info(simulation.board.turn, game_mode))
-    if not simulation.isGameRunning():
+    if not simulation.is_game_running():
         draw_game_state(screen, simulation)
         p.display.flip()
         time.sleep(0.5)
@@ -126,14 +126,14 @@ def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEng
         action = chess.Move.from_uci(make_move_str(playerClicks))
         if action in simulation.board.legal_moves:
             reset_move_arrays(sqSelected, playerClicks)
-            simulation.makePlayerMove(action)
+            simulation.make_player_move(action)
             print("[CONSOLE] Move made: ", action)
             return True
         action.promotion = chess.QUEEN  # fake promotion
         if action in simulation.board.legal_moves:
             reset_move_arrays(sqSelected, playerClicks)
             action.promotion = promotion_window(screen, simulation.board.turn)
-            simulation.makePlayerMove(action)
+            simulation.make_player_move(action)
             print("[CONSOLE] Move made: ", action)
             return True
         else:

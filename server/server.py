@@ -40,8 +40,6 @@ def register():
 def login():
     data = request.get_json()
 
-    # print(data)
-
     username = data.get('username')
     password = data.get('password')
 
@@ -96,8 +94,6 @@ def get_statistics():
         else:
             response = {'message': 'No user found'}
             return jsonify(response), 401
-
-
 
     except requests.exceptions.RequestException as e:
         print("Error occurred during the request:", str(e))
@@ -260,28 +256,12 @@ def get_last_saved_game():
 
         return jsonify(response), 200
 
-
     except requests.exceptions.RequestException as e:
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
 
-# @app.route('/delete_users', methods=['DELETE'])
-# def delete_users():
-#     try:
-#         result = mongo.users.delete_many({})
-#
-#         deleted_count = result.deleted_count
-#
-#         response = {'message': f'{deleted_count} users deleted successfully!'}
-#         return jsonify(response), 200
-#
-#     except requests.exceptions.RequestException as e:
-#         print("Error occurred during the request:", str(e))
-#         return jsonify({'message': 'An error occurred during the request.'}), 500
-
-
 if __name__ == '__main__':
     mongo = MongoConnection()
-    mongo.initMongoConnection()
+    mongo.init_mongo_connection()
     app.run(host='localhost', port=port)

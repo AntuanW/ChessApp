@@ -12,10 +12,10 @@ class GameState:
 
         self.engine = ChessEngine(self.board, difficulty)
 
-    def makePlayerMove(self, move):
+    def make_player_move(self, move):
         self.engine.make_move(move)
 
-    def makeComputerMove(self):
+    def make_computer_move(self):
         self.engine.make_best_move()
 
     def isGameRunning(self):
