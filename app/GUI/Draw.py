@@ -57,14 +57,14 @@ def draw_pieces(screen, board):
             if r == 0:
                 # Dodanie liter od "a" do "h" w pierwszym wierszu
                 letter = chr(ord("a") + c)
-                font = p.font.SysFont(None, 20)
+                font = p.font.SysFont("Arial", 20)
                 text = font.render(letter, True, p.Color("black"))
                 screen.blit(text,
                             p.Rect(c * SQ_SIZE + 2, (DIMENSION - r - 1) * SQ_SIZE + SQ_SIZE - 18, SQ_SIZE, SQ_SIZE))
             if c == 0:
                 # Dodanie cyfr od 1 do 8 w pierwszej kolumnie
                 number = str(r + 1)
-                font = p.font.SysFont(None, 20)
+                font = p.font.SysFont("Arial", 20)
                 text = font.render(number, True, p.Color("black"))
                 screen.blit(text, p.Rect(c * SQ_SIZE + 2, (DIMENSION - r - 1) * SQ_SIZE + 2, SQ_SIZE, SQ_SIZE))
 

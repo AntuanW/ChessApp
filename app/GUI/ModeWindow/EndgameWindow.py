@@ -121,6 +121,9 @@ class EndgameWindow:
         return False
 
     def setScore(self):
-        if self.outcome.winner is None: return 0 # draw
-        elif self.outcome.winner == self.our_color: return 1 # win
-        else: return -1 # lose
+        if self.outcome.winner is None:
+            return 0  # draw
+        elif self.outcome.winner == self.our_color:
+            return 1  # win
+        else:
+            return -1  # lose

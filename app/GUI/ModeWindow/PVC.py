@@ -1,10 +1,10 @@
 import chess
-import pygame as p
 
 from app.Enums.modeEnum import GameMode
 from app.Modes import PvComputer
 from app.GUI.ModeWindow.StatsWindow import *
 import requests
+
 
 # Player VS Computer
 class PVC:
@@ -153,10 +153,14 @@ class PVC:
 
         controls_button_rect = p.Rect(50, 310, 412, 80)
         p.draw.rect(self.screen, self.font_color, controls_button_rect, 2)
-        controls_button_label1 = p.font.Font(None, self.font_size2).render("During the game, you can use the following keyboard buttons:", True, self.font_color)
-        controls_button_label2 = p.font.Font(None, self.font_size3).render("-\"z\" - undo your move", True, self.font_color)
-        controls_button_label3 = p.font.Font(None, self.font_size3).render("-\"s\" - save your game state to the database and return to this window", True, self.font_color)
-        controls_button_label4 = p.font.Font(None, self.font_size3).render("-\"q\" - return to the Mode Window without saving the game state", True, self.font_color)
+        controls_button_label1 = p.font.Font(None, self.font_size2).render(
+            "During the game, you can use the following keyboard buttons:", True, self.font_color)
+        controls_button_label2 = p.font.Font(None, self.font_size3).render("-\"z\" - undo your move", True,
+                                                                           self.font_color)
+        controls_button_label3 = p.font.Font(None, self.font_size3).render(
+            "-\"s\" - save your game state to the database and return to this window", True, self.font_color)
+        controls_button_label4 = p.font.Font(None, self.font_size3).render(
+            "-\"q\" - return to the Mode Window without saving the game state", True, self.font_color)
 
         self.screen.blit(controls_button_label1, (59, 320))
         self.screen.blit(controls_button_label2, (61, 339))
@@ -204,11 +208,12 @@ class PVC:
             print("Error occurred during the request:", str(e))
             return False
 
-
     def get_color_from_str(self, game_state: str):
 
-        if game_state.split(' ')[1] == 'w': return chess.WHITE
-        else: return chess.BLACK
+        if game_state.split(' ')[1] == 'w':
+            return chess.WHITE
+        else:
+            return chess.BLACK
 
     def run(self):
         while self.running:
@@ -219,5 +224,3 @@ class PVC:
                 self.draw()
 
         p.quit()
-
-

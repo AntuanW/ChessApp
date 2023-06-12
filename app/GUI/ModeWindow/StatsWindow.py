@@ -119,14 +119,12 @@ class StatsWindow:
         while self.running:
 
             for event in p.event.get():
-
                 self.handle_event(event)
 
             if self.running:
                 self.draw()
 
         p.quit()
-
 
 # StatsWindow(GameMode.PLAYER_VS_COMPUTER).run()
 # getStatistics()

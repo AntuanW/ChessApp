@@ -143,8 +143,10 @@ def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEng
 
 
 def promotion_window(screen, turn):
-    if turn: color = "w"
-    else: color = "b"
+    if turn:
+        color = "w"
+    else:
+        color = "b"
     queen_image = p.transform.scale(p.image.load(f"../resources/ChessImg/{color}Q.png"), (60, 60))
     bishop_image = p.transform.scale(p.image.load(f"../resources/ChessImg/{color}B.png"), (60, 60))
     rook_image = p.transform.scale(p.image.load(f"../resources/ChessImg/{color}R.png"), (60, 60))

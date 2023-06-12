@@ -62,13 +62,14 @@ class RegistrationWindow:
 
         mouse_pos = p.mouse.get_pos()
 
-        input_box_username_rect = p.Rect(self.input_box_x+15, self.input_box_y - 100, self.input_box_width,
+        input_box_username_rect = p.Rect(self.input_box_x + 15, self.input_box_y - 100, self.input_box_width,
                                          self.input_box_height)
-        input_box_password_rect = p.Rect(self.input_box_x+15, self.input_box_y - 20, self.input_box_width,
+        input_box_password_rect = p.Rect(self.input_box_x + 15, self.input_box_y - 20, self.input_box_width,
                                          self.input_box_height)
-        input_box_repeat_password_rect = p.Rect(self.input_box_x+15, self.input_box_y + 60, self.input_box_width,
+        input_box_repeat_password_rect = p.Rect(self.input_box_x + 15, self.input_box_y + 60, self.input_box_width,
                                                 self.input_box_height)
-        register_button_rect = p.Rect(self.register_button_x+15, self.register_button_y+40, self.register_button_width,
+        register_button_rect = p.Rect(self.register_button_x + 15, self.register_button_y + 40,
+                                      self.register_button_width,
                                       self.register_button_height)
 
         if input_box_username_rect.collidepoint(mouse_pos):
@@ -140,11 +141,11 @@ class RegistrationWindow:
         self.screen.fill(self.white)
 
         p.draw.rect(self.screen, self.gray,
-                    (self.input_box_x+15, self.input_box_y - 100, self.input_box_width, self.input_box_height), 2)
+                    (self.input_box_x + 15, self.input_box_y - 100, self.input_box_width, self.input_box_height), 2)
         p.draw.rect(self.screen, self.gray,
-                    (self.input_box_x+15, self.input_box_y - 20, self.input_box_width, self.input_box_height), 2)
+                    (self.input_box_x + 15, self.input_box_y - 20, self.input_box_width, self.input_box_height), 2)
         p.draw.rect(self.screen, self.gray,
-                    (self.input_box_x+15, self.input_box_y + 60, self.input_box_width, self.input_box_height), 2)
+                    (self.input_box_x + 15, self.input_box_y + 60, self.input_box_width, self.input_box_height), 2)
 
         username_label = self.font1.render("Username:", True, self.black)
         username_label_rect = username_label.get_rect(center=(self.input_box_x - 50, self.input_box_y - 80))
@@ -166,7 +167,7 @@ class RegistrationWindow:
         self.screen.blit(self.font1.render("*" * len(self.repeat_password), True, self.black),
                          (self.input_box_x + 24, self.input_box_y + 72))
 
-        p.draw.rect(self.screen, self.green, (self.register_button_x+15, self.register_button_y+40,
+        p.draw.rect(self.screen, self.green, (self.register_button_x + 15, self.register_button_y + 40,
                                               self.register_button_width, self.register_button_height))
         register_button_label = self.font1.render("Register", True, self.black)
         register_button_label_rect = register_button_label.get_rect(center=(self.width // 2 + 18,

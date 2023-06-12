@@ -74,7 +74,7 @@ class RankingWindow:
         player_spacing = 30
 
         for i, player in enumerate(self.top_10):
-            player_text = f"{i+1}. {player['playername']}  {round(player['ranking'], 2)}"
+            player_text = f"{i + 1}. {player['playername']}  {round(player['ranking'], 2)}"
             player_render = self.font3.render(player_text, True, self.BLACK)
             player_rect = player_render.get_rect(
                 topleft=(self.WIDTH // 2 - 85, player_start_y + i * player_spacing)
@@ -125,4 +125,3 @@ class RankingWindow:
                 self.draw()
 
         p.quit()
-

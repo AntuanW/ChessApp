@@ -31,7 +31,8 @@ class ModeWindow:
         self.label1_x = (self.WIDTH - self.font1.render("CHESS.ME.COM", True, self.BLACK).get_width()) // 2
         self.label1_y = self.button_y - self.font1.get_height() - 60
 
-        self.label2_x = (self.WIDTH - self.font2.render("CHESS.COM SUCKS, WE ARE BETTER", True, self.BLACK).get_width()) // 2
+        self.label2_x = (self.WIDTH - self.font2.render("CHESS.COM SUCKS, WE ARE BETTER", True,
+                                                        self.BLACK).get_width()) // 2
         self.label2_y = self.button_y - self.font2.get_height() - 20
 
         self.btn_images = [
@@ -93,10 +94,14 @@ class ModeWindow:
 
         if button_index != -1:
 
-            if button_index == 0:  PVC().run()
-            elif button_index == 1: game()
-            elif button_index == 2: RankingWindow().run()
-            elif button_index == 3: PVC().handle_load_button_click()
+            if button_index == 0:
+                PVC().run()
+            elif button_index == 1:
+                game()
+            elif button_index == 2:
+                RankingWindow().run()
+            elif button_index == 3:
+                PVC().handle_load_button_click()
 
             self.running = False
             p.quit()
@@ -132,4 +137,3 @@ class ModeWindow:
                 self.draw()
 
         p.quit()
-

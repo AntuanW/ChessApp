@@ -7,10 +7,7 @@ class GameMode(Enum):
     PLAYER_VS_PLAYER_ONLINE = "Player VS Player (Online)"
 
 
-
 def get_key_by_value(value):
     for key, enum_value in GameMode.__members__.items():
         if enum_value.value == value:
             return key
-
-

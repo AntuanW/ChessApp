@@ -275,9 +275,9 @@ class ChessEngine:
                 self.make_move(move)
                 boardValue = -self.alphabeta(-beta, -alpha, depth - 1)
                 if boardValue > bestValue:
-                    bestValue = boardValue;
+                    bestValue = boardValue
                     bestMove = move
-                if (boardValue > alpha):
+                if boardValue > alpha:
                     alpha = boardValue
                 self.unmake_move()
             self.movehistory.append(bestMove)
