@@ -37,7 +37,7 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 2. PyGame
 3. Flask - serwer + zapytania HTTP / TCP
 
-## Feedback po prezentowaniu, plan prac przed oddaniem projektu(od najwazniejszych/najłatwiejszych do najtrudniejszych):
+## Feedback po prezentowaniu:
 - [x] narysowane możliwe ruchy po kliknięciu figury
 - [x] GUI promocji piona
 - [x] numeracja wierszy, kolumn na planszy
