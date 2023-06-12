@@ -94,9 +94,6 @@ class LoginWindow:
                 print("User logged in successfully!")
                 p.quit()
                 self.running = False
-
-                # print("saving username to global variable")
-                # config.my_username = self.username
                 set_username(self.username)
 
                 print("Switching to mode window")

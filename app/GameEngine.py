@@ -18,11 +18,11 @@ class GameState:
     def make_computer_move(self):
         self.engine.make_best_move()
 
-    def isGameRunning(self):
+    def is_game_running(self):
         if self.board.outcome() is not None:
             return False
         else:
             return True
 
-    def getGameStatus(self):
+    def get_game_status(self):
         return self.board.outcome()

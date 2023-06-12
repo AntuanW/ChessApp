@@ -12,17 +12,17 @@ GRAY = p.Color("Gray")
 RED = p.Color("Red")
 LIGHT_GRAY_WITH_OPACITY = p.Color(222, 222, 222, 100)
 
-ranksToRows = {"1": 7, "2": 6, "3": 5, "4": 4, "5": 3, "6": 2, "7": 1, "8": 0}
-rowsToRanks = {v: k for k, v in ranksToRows.items()}
-filesToCols = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7}
-colsToRanks = {v: k for k, v in filesToCols.items()}
+ranks_to_rows = {"1": 7, "2": 6, "3": 5, "4": 4, "5": 3, "6": 2, "7": 1, "8": 0}
+rows_to_ranks = {v: k for k, v in ranks_to_rows.items()}
+files_to_cols = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7}
+cols_to_ranks = {v: k for k, v in files_to_cols.items()}
 
 
-def get_uci_move(sqSelected):
-    start_row = sqSelected[0]
-    start_col = sqSelected[1]
+def get_uci_move(square_selected):
+    start_row = square_selected[0]
+    start_col = square_selected[1]
 
-    return colsToRanks[start_col] + rowsToRanks[start_row]
+    return cols_to_ranks[start_col] + rows_to_ranks[start_row]
 
 
 def load_images():
@@ -87,8 +87,8 @@ def detect_legal_moves_and_draw_legal_rect(uci_move, screen, board):
 
         legal_start_move = legal_move.uci()[0:2]
 
-        end_col = filesToCols[legal_move.uci()[2]]
-        end_row = ranksToRows[legal_move.uci()[3]]
+        end_col = files_to_cols[legal_move.uci()[2]]
+        end_row = ranks_to_rows[legal_move.uci()[3]]
 
         if legal_start_move == uci_move:
             draw_legal_rect(end_row, end_col, screen)

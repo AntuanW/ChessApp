@@ -1,5 +1,4 @@
 import chess
-import requests
 
 from app.Enums.modeEnum import GameMode
 from app.GUI.ModeWindow.StatsWindow import *
@@ -75,6 +74,8 @@ class PVC:
             p.quit()
             self.running = False
             PvComputer.game(self.get_color_from_str(self.game_state), self.last_difficulty, self.game_state)
+            return True
+        return False
 
     def handle_statistics_button_click(self):
         print("Go to statistics")

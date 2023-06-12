@@ -9,11 +9,11 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
     simulation, starting_move_number = make_computer_game(
         difficulty, save, player_colour)
 
-    running, moveMade = True, False
-    sqSelected = []
-    playerClicks = []
+    running, move_made = True, False
+    square_selected = []
+    player_clicks = []
 
-    if is_computer_starting(player_colour, simulation) and simulation.isGameRunning():
+    if is_computer_starting(player_colour, simulation) and simulation.is_game_running():
         simulation.make_computer_move()
 
     running = draw_game(screen, simulation, player_colour, game_mode)
@@ -24,12 +24,12 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
             if e.type == p.QUIT:
                 running = False
 
-            elif e.type == p.MOUSEBUTTONDOWN and simulation.isGameRunning():
-                moveMade = handle_player_move(sqSelected, playerClicks, simulation, screen)
+            elif e.type == p.MOUSEBUTTONDOWN and simulation.is_game_running():
+                move_made = handle_player_move(square_selected, player_clicks, simulation, screen)
 
-            elif e.type == p.KEYDOWN and simulation.isGameRunning():
+            elif e.type == p.KEYDOWN and simulation.is_game_running():
                 if e.key == p.K_z:
-                    handle_undo(simulation, starting_move_number, sqSelected, playerClicks)
+                    handle_undo(simulation, starting_move_number, square_selected, player_clicks)
                     running = draw_game(screen, simulation, player_colour, game_mode)
                 elif e.key == p.K_s:
                     handle_save(simulation)
@@ -43,10 +43,10 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
                     from app.GUI.ModeWindow.ModeWindow import ModeWindow
                     ModeWindow().run()
 
-        if moveMade:
+        if move_made:
             running = draw_game(screen, simulation, player_colour, game_mode)
 
-            if simulation.isGameRunning():
+            if simulation.is_game_running():
                 simulation.make_computer_move()
                 running = draw_game(screen, simulation, player_colour, game_mode)
-                moveMade = False
+                move_made = False

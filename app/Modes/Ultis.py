@@ -73,30 +73,30 @@ def is_computer_starting(player_colour: chess.Color, simulation: GameEngine.Game
     )
 
 
-def handle_mouse_buttons(sqSelected: list, playerClicks: list, screen, simulation):
+def handle_mouse_buttons(square_selected: list, player_clicks: list, screen, simulation):
     location = p.mouse.get_pos()
 
     row = location[1] // SQ_SIZE
     col = location[0] // SQ_SIZE
 
-    if sqSelected == [row, col]:
-        reset_move_arrays(sqSelected, playerClicks)
+    if square_selected == [row, col]:
+        reset_move_arrays(square_selected, player_clicks)
         draw_game_state(screen, simulation)
         print("[CONSOLE] RESET CLICKS")
     else:
-        sqSelected.append(row)
-        sqSelected.append(col)
-        playerClicks.append([row, col])
+        square_selected.append(row)
+        square_selected.append(col)
+        player_clicks.append([row, col])
 
 
 def make_selected_str(playerClicks: list):
     start_row, start_col = playerClicks[0][0], playerClicks[0][1]
-    return colsToRanks[start_col] + rowsToRanks[start_row]
+    return cols_to_ranks[start_col] + rows_to_ranks[start_row]
 
 
 def make_move_str(playerClicks: list):
     end_row, end_col = playerClicks[1][0], playerClicks[1][1]
-    end_move = colsToRanks[end_col] + rowsToRanks[end_row]
+    end_move = cols_to_ranks[end_col] + rows_to_ranks[end_row]
     return make_selected_str(playerClicks) + end_move
 
 

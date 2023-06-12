@@ -125,6 +125,3 @@ class StatsWindow:
                 self.draw()
 
         p.quit()
-
-# StatsWindow(GameMode.PLAYER_VS_COMPUTER).run()
-# getStatistics()
