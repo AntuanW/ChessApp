@@ -1,4 +1,5 @@
 my_username = None
+MAX_FRAMERATE = 5
 
 
 def set_username(username):

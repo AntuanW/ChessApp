@@ -1,5 +1,6 @@
 from app.Enums.modeEnum import GameMode
 from app.Modes.Ultis import *
+from app.config import MAX_FRAMERATE
 
 
 def game(player_colour=chess.WHITE, difficulty=2, save=None):
@@ -17,6 +18,7 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
         simulation.make_computer_move()
 
     running = draw_game(screen, simulation, player_colour, game_mode)
+    clock.tick(MAX_FRAMERATE)
 
     while running:
         for e in p.event.get():
@@ -26,11 +28,13 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
 
             elif e.type == p.MOUSEBUTTONDOWN and simulation.is_game_running():
                 move_made = handle_player_move(square_selected, player_clicks, simulation, screen)
+                clock.tick(MAX_FRAMERATE)
 
             elif e.type == p.KEYDOWN and simulation.is_game_running():
                 if e.key == p.K_z:
                     handle_undo(simulation, starting_move_number, square_selected, player_clicks)
                     running = draw_game(screen, simulation, player_colour, game_mode)
+                    clock.tick(MAX_FRAMERATE)
                 elif e.key == p.K_s:
                     handle_save(simulation)
                     p.quit()
@@ -45,8 +49,10 @@ def game(player_colour=chess.WHITE, difficulty=2, save=None):
 
         if move_made:
             running = draw_game(screen, simulation, player_colour, game_mode)
+            clock.tick(MAX_FRAMERATE)
 
             if simulation.is_game_running():
                 simulation.make_computer_move()
                 running = draw_game(screen, simulation, player_colour, game_mode)
+                clock.tick(MAX_FRAMERATE)
                 move_made = False

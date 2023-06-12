@@ -1,5 +1,6 @@
 from app.Enums.modeEnum import GameMode
 from app.Modes.Ultis import *
+from app.config import MAX_FRAMERATE
 
 
 def game(save=None):
@@ -12,6 +13,7 @@ def game(save=None):
     player_clicks = []
 
     running = draw_game(screen, simulation, None, game_mode)
+    clock.tick(MAX_FRAMERATE)
 
     while running:
 
@@ -22,6 +24,7 @@ def game(save=None):
 
             elif e.type == p.MOUSEBUTTONDOWN and simulation.is_game_running():
                 move_made = handle_player_move(square_selected, player_clicks, simulation, screen)
+                clock.tick(MAX_FRAMERATE)
 
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_q:
@@ -32,4 +35,5 @@ def game(save=None):
 
         if move_made:
             running = draw_game(screen, simulation, None, game_mode)
+            clock.tick(MAX_FRAMERATE)
             move_made = False
