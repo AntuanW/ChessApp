@@ -43,7 +43,7 @@ class StatsWindow:
         self.label4_x = (self.WIDTH - self.font1.render(f"loses: {self.losses}", True, self.BLACK).get_width()) // 2
         self.label4_y = self.button_y - self.font1.get_height() + 165
 
-    def getStatistics(self):
+    def get_statistics(self):
 
         data = {"username": get_username(),
                 "mode": self.mode.value}
@@ -114,7 +114,7 @@ class StatsWindow:
 
     def run(self):
 
-        self.getStatistics()
+        self.get_statistics()
 
         while self.running:
 

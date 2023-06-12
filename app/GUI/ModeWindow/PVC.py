@@ -6,6 +6,13 @@ from app.Modes import PvComputer
 
 
 # Player VS Computer
+def get_color_from_str(game_state: str):
+    if game_state.split(' ')[1] == 'w':
+        return chess.WHITE
+    else:
+        return chess.BLACK
+
+
 class PVC:
     def __init__(self):
         p.init()
@@ -73,7 +80,7 @@ class PVC:
         if self.get_last_saved_game():
             p.quit()
             self.running = False
-            PvComputer.game(self.get_color_from_str(self.game_state), self.last_difficulty, self.game_state)
+            PvComputer.game(get_color_from_str(self.game_state), self.last_difficulty, self.game_state)
             return True
         return False
 
@@ -208,13 +215,6 @@ class PVC:
         except requests.exceptions.RequestException as e:
             print("Error occurred during the request:", str(e))
             return False
-
-    def get_color_from_str(self, game_state: str):
-
-        if game_state.split(' ')[1] == 'w':
-            return chess.WHITE
-        else:
-            return chess.BLACK
 
     def run(self):
         while self.running:

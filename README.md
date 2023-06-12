@@ -1,8 +1,7 @@
 # CHESSBOT
 
-CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie partii szachowych na komputerze. Program będzie wykorzystywał bibliotekę szachową pythona (python-chess) do generowania planszy i przeprowadzania ruchów.
-
-
+CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie partii szachowych na komputerze. Program
+będzie wykorzystywał bibliotekę szachową pythona (python-chess) do generowania planszy i przeprowadzania ruchów.
 
 ## Funkcje CHESSBOT:
 
@@ -30,7 +29,7 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 4. 2023-05-30
     1. Realizacja backend - c.d
     2. hisoria gier, statystyki, rankingi
- 
+
 ## Technologie, których planujemy użyć:
 
 1. Biblioteka chess - obsługa gier szachowych
@@ -38,11 +37,14 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 3. Flask - serwer + zapytania HTTP / TCP
 
 ## Feedback po prezentowaniu:
+
 - [x] narysowane możliwe ruchy po kliknięciu figury
 - [x] GUI promocji piona
 - [x] numeracja wierszy, kolumn na planszy
 - [x] GUI z controlsami
 - [x] oznaczenie, czyj jest ruch:
 - [x] brak możliwości klikania w puste pola/ pola z figurami przeciwnika
-- [x] przycisk cofający do menu wyboru trybu (bez zapisywania itp., pomysł aby nie tzeba było wychodzić x, co sprawia ze trzeba znów sie logować)
-- [x] zapisywanie, wczytywanie stanu gry (pomysł: zapisywanie może być aktywowane klawiszem s, informacja "Nacisnij s aby zapisac może być w tytule okna dla oszczędności czasu i okien")
+- [x] przycisk cofający do menu wyboru trybu (bez zapisywania itp., pomysł aby nie tzeba było wychodzić x, co sprawia ze
+  trzeba znów sie logować)
+- [x] zapisywanie, wczytywanie stanu gry (pomysł: zapisywanie może być aktywowane klawiszem s, informacja "Nacisnij s
+  aby zapisac może być w tytule okna dla oszczędności czasu i okien")

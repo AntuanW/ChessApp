@@ -89,55 +89,55 @@ def handle_mouse_buttons(square_selected: list, player_clicks: list, screen, sim
         player_clicks.append([row, col])
 
 
-def make_selected_str(playerClicks: list):
-    start_row, start_col = playerClicks[0][0], playerClicks[0][1]
+def make_selected_str(player_clicks: list):
+    start_row, start_col = player_clicks[0][0], player_clicks[0][1]
     return cols_to_ranks[start_col] + rows_to_ranks[start_row]
 
 
-def make_move_str(playerClicks: list):
-    end_row, end_col = playerClicks[1][0], playerClicks[1][1]
+def make_move_str(player_clicks: list):
+    end_row, end_col = player_clicks[1][0], player_clicks[1][1]
     end_move = cols_to_ranks[end_col] + rows_to_ranks[end_row]
-    return make_selected_str(playerClicks) + end_move
+    return make_selected_str(player_clicks) + end_move
 
 
-def reset_move_arrays(sqSelected: list, playerClicks: list):
-    sqSelected.clear()
-    playerClicks.clear()
+def reset_move_arrays(sq_selected: list, player_clicks: list):
+    sq_selected.clear()
+    player_clicks.clear()
 
 
-def handle_undo(simulation: GameEngine.GameState, starting_move_number: int, sqSelected: list, playerClicks: list):
+def handle_undo(simulation: GameEngine.GameState, starting_move_number: int, sq_selected: list, player_clicks: list):
     if simulation.board.fullmove_number - starting_move_number >= 1:
         simulation.engine.unmake_move()
         simulation.engine.unmake_move()
-        reset_move_arrays(sqSelected, playerClicks)
+        reset_move_arrays(sq_selected, player_clicks)
 
 
-def handle_player_move(sqSelected: list, playerClicks: list, simulation: GameEngine.GameState, screen):
-    handle_mouse_buttons(sqSelected, playerClicks, screen, simulation)
+def handle_player_move(sq_selected: list, player_clicks: list, simulation: GameEngine.GameState, screen):
+    handle_mouse_buttons(sq_selected, player_clicks, screen, simulation)
 
-    if len(playerClicks) == 1:
-        if can_be_clicked(make_selected_str(playerClicks), simulation.board):
-            print("[CONSOLE] Selected:", make_selected_str(playerClicks))
-            draw_possible_moves(screen, simulation, make_selected_str(playerClicks))
+    if len(player_clicks) == 1:
+        if can_be_clicked(make_selected_str(player_clicks), simulation.board):
+            print("[CONSOLE] Selected:", make_selected_str(player_clicks))
+            draw_possible_moves(screen, simulation, make_selected_str(player_clicks))
         else:
-            reset_move_arrays(sqSelected, playerClicks)
+            reset_move_arrays(sq_selected, player_clicks)
 
-    elif len(playerClicks) == 2:
-        action = chess.Move.from_uci(make_move_str(playerClicks))
+    elif len(player_clicks) == 2:
+        action = chess.Move.from_uci(make_move_str(player_clicks))
         if action in simulation.board.legal_moves:
-            reset_move_arrays(sqSelected, playerClicks)
+            reset_move_arrays(sq_selected, player_clicks)
             simulation.make_player_move(action)
             print("[CONSOLE] Move made: ", action)
             return True
         action.promotion = chess.QUEEN  # fake promotion
         if action in simulation.board.legal_moves:
-            reset_move_arrays(sqSelected, playerClicks)
+            reset_move_arrays(sq_selected, player_clicks)
             action.promotion = promotion_window(screen, simulation.board.turn)
             simulation.make_player_move(action)
             print("[CONSOLE] Move made: ", action)
             return True
         else:
-            reset_move_arrays(sqSelected, playerClicks)
+            reset_move_arrays(sq_selected, player_clicks)
             draw_game_state(screen, simulation)
             print("[CONSOLE] ILLEGAL MOVE")
             return False
@@ -172,11 +172,6 @@ def promotion_window(screen, turn):
 
     button_color = (155, 155, 155)
     button_hover_color = (120, 120, 120)
-
-    queen_hovered = False
-    bishop_hovered = False
-    rook_hovered = False
-    knight_hovered = False
 
     while running:
         for event in p.event.get():

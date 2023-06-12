@@ -6,7 +6,7 @@ class RankingWindow:
     def __init__(self):
         p.init()
         self.top_10 = []
-        self.fetchTopPlayers()
+        self.fetch_top_players()
         self.WIDTH, self.HEIGHT = 512, 512
         self.WHITE = p.Color("White")
         self.BLACK = p.Color("Black")
@@ -27,7 +27,7 @@ class RankingWindow:
         self.button_x = (self.WIDTH - self.button_width) // 2
         self.button_y = self.HEIGHT // 4
 
-    def fetchTopPlayers(self):
+    def fetch_top_players(self):
 
         # FETCHING ARRAY OF TOP 10 PLAYERS
 

@@ -24,7 +24,7 @@ class EndgameWindow:
         self.running = True
         self.our_color = our_color
         self.outcome = outcome
-        self.score = self.setScore()
+        self.score = self.set_score()
         self.winner_color = self.get_winner_color()
         self.difficulty = difficulty
 
@@ -120,7 +120,7 @@ class EndgameWindow:
                         self.draw()
         return False
 
-    def setScore(self):
+    def set_score(self):
         if self.outcome.winner is None:
             return 0  # draw
         elif self.outcome.winner == self.our_color:
