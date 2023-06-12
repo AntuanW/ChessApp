@@ -273,7 +273,7 @@ class ChessEngine:
                 self.board).move
             self.move_history.append(move)
             return move
-        except:
+        except IndexError:
             best_move = chess.Move.null()
             best_value = -99999
             alpha = -100000
