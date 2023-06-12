@@ -106,35 +106,34 @@ class RegistrationWindow:
                 }
 
                 try:
-                    print("Registering...")
+                    print("[SERVER] Registering...")
                     response = requests.post("http://localhost:8080/register", json=data)
                     if response.status_code == 200:
-                        print("User registered successfully!")
+                        print("[SERVER] User registered successfully!")
                         p.quit()
                         self.running = False
 
-                        print("Saving nick to global variable")
                         set_username(self.username)
 
-                        print("You are logged in!")
+                        print("[SERVER] You are logged in!")
 
                         ModeWindow().run()
 
                     else:
-                        print("Failed to register user. Status code:", response.status_code)
+                        print("[SERVER] Failed to register user. Status code:", response.status_code)
                 except requests.exceptions.RequestException as e:
-                    print("Error occurred during the request:", str(e))
+                    print("[SERVER] Error occurred during the request:", str(e))
 
             else:
-                print("Passwords do not match.")
+                print("[SERVER] Passwords do not match.")
         else:
-            print("Please fill in all fields.")
+            print("[SERVER] Please fill in all fields.")
 
     def switch_to_login_window(self):
         self.running = False
         p.quit()
         from app.GUI.Auth.LoginWindow import LoginWindow
-        print("Switching to login window")
+        print("[SERVER] Switching to login window")
         LoginWindow().run()
 
     def draw(self):

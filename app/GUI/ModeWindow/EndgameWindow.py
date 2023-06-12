@@ -29,11 +29,11 @@ class EndgameWindow:
         self.difficulty = difficulty
 
         if game_mode == GameMode.PLAYER_VS_COMPUTER:
-            print("saving to database mode: PVC")
+            print("[SERVER] Saving to database mode: PVC")
             self.add_score()
 
         else:
-            print("not saving to database mode: PVP Local")
+            print("[SERVER] Not saving to database mode: PVP Local")
 
         self.screen = p.display.set_mode((self.window_width, self.window_height))
         p.display.set_caption(self.window_title)
@@ -54,14 +54,14 @@ class EndgameWindow:
             "difficulty": self.difficulty
         }
         try:
-            print("Adding score to the database...")
+            print("[SERVER] Adding score to the database...")
             response = requests.put("http://localhost:8080/score", json=data)
             if response.status_code == 200:
-                print("Score added successfully to the database")
+                print("[SERVER] Score added successfully to the database")
             else:
-                print("Failed to add data to the database. Status code:", response.status_code)
+                print("[SERVER] Failed to add data to the database. Status code:", response.status_code)
         except requests.exceptions.RequestException as e:
-            print("Error occurred during the request:", str(e))
+            print("[SERVER] Error occurred during the request:", str(e))
 
     def draw(self):
         self.screen.fill(WHITE)

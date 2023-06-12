@@ -254,12 +254,12 @@ def save_game(game_state, difficulty):
     }
 
     try:
-        print("saving game state to database...")
+        print("[SERVER] saving game state to database...")
         response = requests.put("http://localhost:8080/save_game", json=data)
         if response.status_code == 200:
-            print("game state successfully saved to the database")
+            print("[SERVER] game state successfully saved to the database")
         else:
-            print("Failed to save game state to the database. Status code:", response.status_code)
+            print("[SERVER] Failed to save game state to the database. Status code:", response.status_code)
 
     except requests.exceptions.RequestException as e:
-        print("Error occurred during the request:", str(e))
+        print("[SERVER] Error occurred during the request:", str(e))

@@ -33,19 +33,18 @@ class RankingWindow:
 
         try:
 
-            print("Getting top 10 players ...")
+            print("[SERVER] Getting top 10 players ...")
             response = requests.get("http://localhost:8080/top_players")
 
             if response.status_code == 200:
                 response = response.json()
                 self.top_10 = response['top_10']
-                # print(self.top_10)
 
             else:
-                print("Failed to fetch top players. Status code:", response.status_code)
+                print("[SERVER] Failed to fetch top players. Status code:", response.status_code)
 
         except requests.exceptions.RequestException as e:
-            print("Error occurred during the request:", str(e))
+            print("[SERVER] Error occurred during the request:", str(e))
 
     def handle_button_click(self, event):
         if event.type == p.QUIT:
@@ -59,7 +58,7 @@ class RankingWindow:
     def handle_go_back_click(self):
         p.quit()
         self.running = False
-        print("Switching back window")
+        print("[SERVER] Switching back window")
         from app.GUI.ModeWindow.ModeWindow import ModeWindow
         ModeWindow().run()
 

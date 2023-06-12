@@ -64,10 +64,6 @@ class PVC:
         else:
             color = chess.WHITE
 
-        print("Starting your game")
-        print(f"Chosen color lvl: ${color}")
-        print(f"Chosen difficulty lvl: ${self.difficulty}")
-
         self.running = False
         p.quit()
 
@@ -76,7 +72,7 @@ class PVC:
         PvComputer.game(color, self.difficulty)
 
     def handle_load_button_click(self):
-        print("Loading your last saved game ...")
+        print("[SERVER] Loading your last saved game ...")
         if self.get_last_saved_game():
             p.quit()
             self.running = False
@@ -85,7 +81,7 @@ class PVC:
         return False
 
     def handle_statistics_button_click(self):
-        print("Go to statistics")
+        print("[SERVER] Going to statistics")
         StatsWindow(self.mode).run()
 
     def handle_go_back_click(self):
@@ -94,7 +90,7 @@ class PVC:
 
         from app.GUI.ModeWindow.ModeWindow import ModeWindow
         ModeWindow().run()
-        print("Switching back window")
+        print("[SERVER] Switching back window")
 
     def handle_event(self, event):
 
@@ -194,26 +190,26 @@ class PVC:
         data = {"username": get_username()}
 
         try:
-            print("Getting last saved game ...")
+            print("[SERVER] Getting last saved game ...")
             response = requests.post("http://localhost:8080/last_saved", json=data)
             if response.status_code == 200:
                 response = response.json()
-                print("Last saved game fetched succesfully from the server!")
+                print("[SERVER] Last saved game fetched succesfully from the server!")
                 self.game_state = response['game_state']
                 self.last_difficulty = response['difficulty']
                 self.date = response['date']
                 return True
 
             elif response.status_code == 406:
-                print("You have no saved game")
+                print("[SERVER] You have no saved game")
                 return False
 
             else:
-                print("Failed to fetch the last saved game. Status code:", response.status_code)
+                print("[SERVER] Failed to fetch the last saved game. Status code:", response.status_code)
                 return False
 
         except requests.exceptions.RequestException as e:
-            print("Error occurred during the request:", str(e))
+            print("[SERVER] Error occurred during the request:", str(e))
             return False
 
     def run(self):

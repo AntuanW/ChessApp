@@ -50,7 +50,7 @@ class StatsWindow:
 
         try:
 
-            print("Getting statistics ...")
+            print("[SERVER] Getting statistics ...")
             response = requests.post("http://localhost:8080/stats", json=data)
 
             if response.status_code == 200:
@@ -60,10 +60,10 @@ class StatsWindow:
                 self.losses = response['losses']
 
             else:
-                print("Failed to fetch statistics. Status code:", response.status_code)
+                print("[SERVER] Failed to fetch statistics. Status code:", response.status_code)
 
         except requests.exceptions.RequestException as e:
-            print("Error occurred during the request:", str(e))
+            print("[SERVER] Error occurred during the request:", str(e))
 
     def handle_go_back_click(self):
 
@@ -72,7 +72,7 @@ class StatsWindow:
 
         from app.GUI.ModeWindow.PVC import PVC
         PVC().run()
-        print("Switching back window")
+        print("[SERVER] Switching back window")
 
     def handle_event(self, event):
 

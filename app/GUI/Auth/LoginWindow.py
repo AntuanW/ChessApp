@@ -77,9 +77,6 @@ class LoginWindow:
 
     def log_in_user(self):
 
-        print("Username:", self.username)
-        print("Password:", self.password)
-
         # CHECKING USER CREDENTIALS
 
         data = {
@@ -88,27 +85,27 @@ class LoginWindow:
         }
 
         try:
-            print("Logging in...")
+            print("[SERVER] Logging in...")
             response = requests.post("http://localhost:8080/login", json=data)
             if response.status_code == 200:
-                print("User logged in successfully!")
+                print("[SERVER] User logged in successfully!")
                 p.quit()
                 self.running = False
                 set_username(self.username)
 
-                print("Switching to mode window")
+                print("[SERVER] Switching to mode window")
                 ModeWindow().run()
 
             else:
-                print("Failed to log in user. Status code:", response.status_code)
+                print("[SERVER] Failed to log in user. Status code:", response.status_code)
 
         except requests.exceptions.RequestException as e:
-            print("Error occurred during the request:", str(e))
+            print("[SERVER] Error occurred during the request:", str(e))
 
     def switch_to_registration_window(self):
         self.running = False
         p.quit()
-        print("Switching to registration window")
+        print("[SERVER] Switching to registration window")
         RegistrationWindow().run()
 
     def draw(self):
