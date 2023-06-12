@@ -38,7 +38,6 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 3. Flask - serwer + zapytania HTTP / TCP
 
 ## Feedback po prezentowaniu, plan prac przed oddaniem projektu(od najwazniejszych/najłatwiejszych do najtrudniejszych):
-- [ ] okno GM's (może być zastąpiona przyciskiem "wczytaj ostatnią grę z komputerem")
 - [x] narysowane możliwe ruchy po kliknięciu figury
 - [x] GUI promocji piona
 - [x] numeracja wierszy, kolumn na planszy
@@ -47,4 +46,3 @@ CHESSBOT - interaktywny program, który umożliwia użytkownikom rozgrywanie par
 - [x] brak możliwości klikania w puste pola/ pola z figurami przeciwnika
 - [x] przycisk cofający do menu wyboru trybu (bez zapisywania itp., pomysł aby nie tzeba było wychodzić x, co sprawia ze trzeba znów sie logować)
 - [x] zapisywanie, wczytywanie stanu gry (pomysł: zapisywanie może być aktywowane klawiszem s, informacja "Nacisnij s aby zapisac może być w tytule okna dla oszczędności czasu i okien")
-- [ ] tryb gry z innym graczem
