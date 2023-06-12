@@ -1,9 +1,9 @@
 import pygame as p
 import requests
 
-from app.config import set_username
-from app.GUI.ModeWindow.ModeWindow import ModeWindow
 from app.GUI.Auth.RegistrationWindow import RegistrationWindow
+from app.GUI.ModeWindow.ModeWindow import ModeWindow
+from app.config import set_username
 
 
 class LoginWindow:
@@ -141,7 +141,7 @@ class LoginWindow:
         self.screen.blit(self.font1.render("Log in", True, self.black), (self.input_box_x + 86, self.input_box_y + 68))
 
         p.draw.rect(self.screen, self.gray, (
-        self.register_button_x, self.register_button_y, self.register_button_width, self.register_button_height))
+            self.register_button_x, self.register_button_y, self.register_button_width, self.register_button_height))
         register_text = self.font2.render("Don't have an account? Sign up!", True, self.black)
         register_text_rect = register_text.get_rect(center=(self.register_button_x + self.register_button_width // 2,
                                                             self.register_button_y + self.register_button_height // 2))
@@ -149,10 +149,10 @@ class LoginWindow:
 
         if self.input_active == "username":
             p.draw.rect(self.screen, self.green, (
-            self.input_box_x + 12, self.input_box_y - 103, self.input_box_width + 6, self.input_box_height + 6), 3)
+                self.input_box_x + 12, self.input_box_y - 103, self.input_box_width + 6, self.input_box_height + 6), 3)
         elif self.input_active == "password":
             p.draw.rect(self.screen, self.green, (
-            self.input_box_x + 12, self.input_box_y - 23, self.input_box_width + 6, self.input_box_height + 6), 3)
+                self.input_box_x + 12, self.input_box_y - 23, self.input_box_width + 6, self.input_box_height + 6), 3)
 
         p.display.flip()
 

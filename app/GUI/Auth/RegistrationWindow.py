@@ -1,5 +1,6 @@
 import pygame as p
 import requests
+
 from app.GUI.ModeWindow.ModeWindow import ModeWindow
 from app.config import set_username
 

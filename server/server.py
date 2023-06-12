@@ -1,18 +1,19 @@
-import requests
-import json
 import datetime
+import json
 
+import requests
 from flask import Flask, request, jsonify
 
 from mongoConnection import MongoConnection
-from app.Enums.modeEnum import *
 
 app = Flask(__name__)
 port = 8080
 
+
 @app.route('/')
 def hello():
     return 'Server for chess application'
+
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -34,9 +35,9 @@ def register():
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
+
 @app.route('/login', methods=['POST'])
 def login():
-
     data = request.get_json()
 
     # print(data)
@@ -63,9 +64,9 @@ def login():
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
+
 @app.route('/stats', methods=['POST'])
 def get_statistics():
-
     data = request.get_json()
 
     username = data['username']
@@ -102,9 +103,9 @@ def get_statistics():
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
+
 @app.route('/score', methods=['PUT'])
 def update_score():
-
     data = request.get_json()
     username = data['username']
     res = data['res']
@@ -117,7 +118,6 @@ def update_score():
         if not existing_user:
             response = {'message': 'No user found'}
             return jsonify(response), 401
-
 
         game_info = {
             "game_state": game_state,
@@ -139,6 +139,7 @@ def update_score():
     except requests.exceptions.RequestException as e:
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
+
 
 @app.route('/top_players', methods=['GET'])
 def get_top_players():
@@ -198,9 +199,9 @@ def get_top_players():
         print("Error occurred during the request:", str(e))
         return jsonify({'message': 'An error occurred during the request.'}), 500
 
+
 @app.route('/save_game', methods=['PUT'])
 def save_game():
-
     data = request.get_json()
     username = data['username']
     game_state = data['game_state']
@@ -212,7 +213,6 @@ def save_game():
         if not existing_user:
             response = {'message': 'No user found'}
             return jsonify(response), 401
-
 
         game_info = {
             "game_state": game_state,
@@ -238,7 +238,6 @@ def save_game():
 
 @app.route('/last_saved', methods=['POST'])
 def get_last_saved_game():
-
     data = request.get_json()
 
     username = data['username']
@@ -280,7 +279,6 @@ def get_last_saved_game():
 #     except requests.exceptions.RequestException as e:
 #         print("Error occurred during the request:", str(e))
 #         return jsonify({'message': 'An error occurred during the request.'}), 500
-
 
 
 if __name__ == '__main__':

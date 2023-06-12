@@ -1,12 +1,13 @@
 import time
 
 import chess
+import requests
+
 from app import GameEngine
+from app.Enums import modeEnum
 from app.GUI.Draw import *
 from app.GUI.ModeWindow.EndgameWindow import EndgameWindow
 from app.config import get_username
-import requests
-from app.Enums import modeEnum
 
 
 def init_screen():

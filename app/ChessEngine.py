@@ -1,6 +1,7 @@
+import random
+
 import chess
 import chess.polyglot
-import random
 
 """
 Poziomy trudności:

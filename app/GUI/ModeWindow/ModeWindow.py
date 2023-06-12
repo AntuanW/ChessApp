@@ -1,4 +1,5 @@
 import pygame as p
+
 from app.GUI.ModeWindow.PVC import PVC
 from app.GUI.ModeWindow.RankingWindow import RankingWindow
 from app.Modes.PvPLocal import game

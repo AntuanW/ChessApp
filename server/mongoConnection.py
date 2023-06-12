@@ -1,12 +1,14 @@
-import certifi
-from pymongo import MongoClient
-from dotenv import load_dotenv
 import os
+
+import certifi
+from dotenv import load_dotenv
+from pymongo import MongoClient
 
 load_dotenv('.env')
 
 username: str = os.getenv("MONGO_USERNAME")
 password: str = os.getenv("MONGO_PASSWORD")
+
 
 class MongoConnection:
     def __init__(self):

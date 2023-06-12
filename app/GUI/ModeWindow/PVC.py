@@ -1,9 +1,9 @@
 import chess
+import requests
 
 from app.Enums.modeEnum import GameMode
-from app.Modes import PvComputer
 from app.GUI.ModeWindow.StatsWindow import *
-import requests
+from app.Modes import PvComputer
 
 
 # Player VS Computer

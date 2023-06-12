@@ -1,6 +1,6 @@
+import chess
 import pygame as p
 import requests
-import chess
 
 from app.Enums.modeEnum import GameMode
 from app.config import get_username

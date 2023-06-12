@@ -1,4 +1,5 @@
 import chess
+
 from app.ChessEngine import ChessEngine
 
 
