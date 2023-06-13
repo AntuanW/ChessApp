@@ -1,5 +1,6 @@
 import pygame as p
 import requests
+from sys import exit
 
 from app.config import get_username, MAX_FRAMERATE
 
@@ -78,6 +79,7 @@ class StatsWindow:
 
         if event.type == p.QUIT:
             self.running = False
+            exit(0)
 
         elif event.type == p.MOUSEBUTTONDOWN:
 
