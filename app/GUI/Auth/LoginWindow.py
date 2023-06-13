@@ -3,13 +3,14 @@ import requests
 
 from app.GUI.Auth.RegistrationWindow import RegistrationWindow
 from app.GUI.ModeWindow.ModeWindow import ModeWindow
-from app.config import set_username
+from app.config import set_username, MAX_FRAMERATE
 
 
 class LoginWindow:
 
     def __init__(self):
         p.init()
+        self.clock = p.time.Clock()
         self.width, self.height = 500, 500
         self.screen = p.display.set_mode((self.width, self.height))
         p.display.set_caption("Login Window")
@@ -168,5 +169,6 @@ class LoginWindow:
 
             if self.running:
                 self.draw()
+                self.clock.tick(MAX_FRAMERATE)
 
         p.quit()

@@ -1,7 +1,7 @@
 import pygame as p
 import requests
 
-from app.config import get_username
+from app.config import get_username, MAX_FRAMERATE
 
 
 class StatsWindow:
@@ -123,5 +123,6 @@ class StatsWindow:
 
             if self.running:
                 self.draw()
+                self.clock.tick(MAX_FRAMERATE)
 
         p.quit()

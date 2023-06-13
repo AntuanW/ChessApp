@@ -3,6 +3,7 @@ import chess
 from app.Enums.modeEnum import GameMode
 from app.GUI.ModeWindow.StatsWindow import *
 from app.Modes import PvComputer
+from app.config import MAX_FRAMERATE
 
 
 # Player VS Computer
@@ -16,6 +17,7 @@ def get_color_from_str(game_state: str):
 class PVC:
     def __init__(self):
         p.init()
+        self.clock = p.time.Clock()
         self.window_width = 512
         self.window_height = 512
         self.window_title = "Player VS Computer Mode Window"
@@ -219,5 +221,6 @@ class PVC:
 
             if self.running:
                 self.draw()
+                self.clock.tick(MAX_FRAMERATE)
 
         p.quit()

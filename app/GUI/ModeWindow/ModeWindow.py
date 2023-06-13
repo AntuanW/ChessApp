@@ -3,11 +3,13 @@ import pygame as p
 from app.GUI.ModeWindow.PVC import PVC
 from app.GUI.ModeWindow.RankingWindow import RankingWindow
 from app.Modes.PvPLocal import game
+from app.config import MAX_FRAMERATE
 
 
 class ModeWindow:
     def __init__(self):
         p.init()
+        self.clock = p.time.Clock()
         self.WIDTH, self.HEIGHT = 512, 512
         self.WHITE = p.Color("White")
         self.BLACK = p.Color("Black")
@@ -136,5 +138,6 @@ class ModeWindow:
 
             if self.running:
                 self.draw()
+                self.clock.tick(MAX_FRAMERATE)
 
         p.quit()

@@ -3,7 +3,7 @@ import pygame as p
 import requests
 
 from app.Enums.modeEnum import GameMode
-from app.config import get_username
+from app.config import get_username, MAX_FRAMERATE
 
 WIDTH = 800
 HEIGHT = 600
@@ -16,6 +16,7 @@ class EndgameWindow:
                  outcome: chess.Outcome, difficulty: int, game_mode):
         self.button_area = None
         p.init()
+        self.clock = p.time.Clock()
         self.window_width = 512
         self.window_height = 512
         self.window_title = "Game over"
@@ -104,6 +105,7 @@ class EndgameWindow:
     def run(self):
         self.running = True
         self.draw()
+        self.clock.tick(MAX_FRAMERATE)
         while self.running:
             for event in p.event.get():
                 if event.type == p.QUIT:
@@ -119,6 +121,7 @@ class EndgameWindow:
 
                     if self.running:
                         self.draw()
+                        self.clock.tick(MAX_FRAMERATE)
         return False
 
     def set_score(self):

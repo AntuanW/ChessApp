@@ -1,10 +1,13 @@
 import pygame as p
 import requests
 
+from app.config import MAX_FRAMERATE
+
 
 class RankingWindow:
     def __init__(self):
         p.init()
+        self.clock = p.time.Clock()
         self.top_10 = []
         self.fetch_top_players()
         self.WIDTH, self.HEIGHT = 512, 512
@@ -122,5 +125,6 @@ class RankingWindow:
 
             if self.running:
                 self.draw()
+                self.clock.tick(MAX_FRAMERATE)
 
         p.quit()
